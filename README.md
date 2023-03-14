@@ -1,2 +1,1 @@
-# Onitama
-Let's do this!!!
+We are creating an onitama simulator
