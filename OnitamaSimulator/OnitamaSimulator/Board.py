@@ -19,6 +19,7 @@ class Board:
     #Attributes
 
     board=None;
+    print("Testing github")
 
     #Methods
 
