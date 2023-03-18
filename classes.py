@@ -7,7 +7,7 @@ class Board:
     def printBoard(self):
         for i in range(5):
             for j in range(5):
-                print(str(arr[i][j].Value()),end=" ")
+                print(str(self.arr[i][j].Value()),end=" ")
             print("")
 
 class Player:
@@ -73,3 +73,6 @@ def initialise():
                 array[i][j] = t
     return array
                 
+array = initialise()
+b = Board(array)
+b.printBoard()
