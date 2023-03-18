@@ -30,6 +30,7 @@ class Card:
         self.name = name
         self.moveset = moveset
         self.colour = colour
+        self.alreadyInGame= False
 
 
     @classmethod
