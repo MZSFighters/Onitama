@@ -3,7 +3,6 @@ class Game:
 
     """
     A class used to represent a single Onitama Game
-
     ...
 
     Attributes
@@ -24,12 +23,10 @@ class Game:
     # Attributes
     player1 = None
     player2= None
-
     board=None
     neutralCard=None;
 
-
-    #Methods Other
+    #Methods
 
 
 

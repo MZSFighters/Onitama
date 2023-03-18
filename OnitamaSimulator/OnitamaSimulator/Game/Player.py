@@ -8,7 +8,7 @@ class Player:
     Attributes
 
     Boolean Colour: Blue is True, red is False -> should be newly assigned each new game
-    Array(Card) Card: Array of the two given cards 
+    Array(Card) Card: Array of the two given cards. 
 
     ----------
     Methods

@@ -80,14 +80,12 @@ class Card:
     @classmethod
     def selectCard(self):
         """
-        Returns card from deck.    
+        Returns a unselected card from the deck.    
         ---------
         Parameters
         ---------
         Raises
         --------
-        Issues
-        may need a list of already picked cards depending on implementation
         """
 
         if (self.Deck==None):
