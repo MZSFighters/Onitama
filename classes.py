@@ -11,9 +11,9 @@ class Board:
             print("")
 
 class Player:
-    def __init__(self, name, boolea, card1, card2):
+    def __init__(self, name, colour, card1, card2):
         self.name = name
-        self.colour = boolea
+        self.colour = colour
         self.card1 = card1
         self.card2 = card2
     
