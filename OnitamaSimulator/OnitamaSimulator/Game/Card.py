@@ -68,7 +68,7 @@ class Card:
         Integer n: size of current deck
         """
 
-        card = self.Deck[random.randint(0,4)]
+        card = self.Deck[random.randint(0,n)]
         if (card.alreadyInGame):
 
             return(self._selectCard(n))
