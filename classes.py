@@ -24,19 +24,16 @@ class Player:
             return "Blue"
     
 
-
-
-
 class Piece:
-    def __init__(self, boo, player):
-        self.boo = boo
-        
+    def __init__(self, isMaster, player):
+        self.isMaster = isMaster
+'''        
     def isSensei(self):
         if(self.boo == True):
             return True
         else:
             return False
-
+'''
 
 
 class Tile:
@@ -63,7 +60,6 @@ def initialise():
     array = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
     p = Piece(False, 1)
     p2 = Piece(True, 1)
-    p3 = 0
     for i in range(5):
         for j in range(5):
             if(i ==0 or i==4):
@@ -73,15 +69,7 @@ def initialise():
                     t = Tile(p, i, j)
                 array[i][j] = t
             else:
-                t = Tile(p3, i, j)
+                t = Tile(None, i, j)
                 array[i][j] = t
     return array
                 
-        
-p = Piece(False, 1)
-t = Tile(p, 4, 3)
-
-boole = t.isSenseiSeat()
-print(boole)
-pie = t.piece.isSensei()
-print(pie)
