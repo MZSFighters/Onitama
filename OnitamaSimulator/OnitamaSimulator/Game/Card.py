@@ -26,8 +26,7 @@ class Card:
     Deck= None
 
     def __init__(self, name: str, colour: bool, moveset ) -> None:
-
-       
+        
         self.name = name
         self.moveset = moveset
         self.colour = colour
