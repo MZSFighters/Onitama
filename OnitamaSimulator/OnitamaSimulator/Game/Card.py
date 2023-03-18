@@ -25,12 +25,6 @@ class Card:
      #Attributes
     Deck= None
 
-    name= None
-    moveset= None
-    colour = None
-    alreadyInGame=False;
-
-
     def __init__(self, name: str, colour: bool, moveset ) -> None:
 
        
