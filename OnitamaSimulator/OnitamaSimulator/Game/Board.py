@@ -22,11 +22,7 @@ class Board:
     
     """
 
-    #Attributes
-    board=None;
-
-    #Methods
-
+    
 
 
 class Board:
