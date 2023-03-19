@@ -25,7 +25,7 @@ class Board:
     
 
 
-class Board:
+
     def __init__(self, arr) -> None:
         self.arr = arr
     
