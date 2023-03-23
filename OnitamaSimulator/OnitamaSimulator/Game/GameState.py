@@ -1,6 +1,6 @@
-#import Board
-#import Piece
-#import Tile
+import Board
+import Piece
+import Tile
 import sqlite3
 import json
 
@@ -68,8 +68,6 @@ class GameState:
         returns it
     
         """
-
-
 
         cursor.execute("SELECT Board FROM GameState1 where turn=(?)", (turn,))
         collect = cursor.fetchone()
