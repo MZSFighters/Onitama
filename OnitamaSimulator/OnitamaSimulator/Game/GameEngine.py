@@ -1,4 +1,6 @@
-import Board, Card
+from Board import Board
+from Player import Player
+from Card import Card
 class Game:
 
     """
@@ -24,10 +26,27 @@ class Game:
     player1 = None
     player2= None
     board=None
-    neutralCard=None;
-
+    neutralCard=None
+    
     #Methods
 
+    def __init__(self, Player1Name="Player1", Player2Name= "Player2") -> None:
+        '''Constructor for a new game'''
+        # Make The Deck
+        Card.makeDeck()
+        # Make the players
+        self.player1 =Player(Player1Name, True )
+        self.player2 =Player(Player1Name, False )
+        #Give each player their set of pieces
+        self.player1.givePieces()
+        self.player2.givePieces()
+        #Populate the  board with their pieces
+        self.board = Board(self.player1, self.player2)
+        #set neutral card
+        self.neutralCard = Card.selectCard()
 
+
+game = Game()
+game.board.printBoard()
 
 
