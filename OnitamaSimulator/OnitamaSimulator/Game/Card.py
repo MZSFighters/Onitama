@@ -1,9 +1,6 @@
-
-from logging import raiseExceptions #for error raises
 import random # for card selector function
 
 class Card:
-
     """Class which represents a Card within the game
 
      ----------
@@ -13,6 +10,8 @@ class Card:
      name(String) - The name of the card
      moveset(2D integer array) - all possible moves a card allows. Each move is is 2-vector [down/up, left/right] down is negative, left is negative
      Colour (Boolean) - True is Blue, red is False
+
+     Internal Attributes
      alreadyInGame (Boolean) - card has already been picked in current game
 
      ------
@@ -33,8 +32,8 @@ class Card:
         self.alreadyInGame= False
 
 
-    @classmethod
-    def makeDeck(self):
+    @staticmethod
+    def makeDeck():
         """
         Makes the deck of cards for the game
 
@@ -43,7 +42,6 @@ class Card:
         Raises
         ------
         """
-
         Deck=[]
         Deck.append(Card( 'Tiger', True, [[-1,0], [2, 0]])) 
         Deck.append(Card( 'Crab', True, [[1,0], [0, 2], [0, -2]])) 
@@ -51,10 +49,10 @@ class Card:
         Deck.append(Card( 'Boar', False, [[0,-1], [0, 1], [1, 0] ])) 
         Deck.append(Card( 'Elephant', False, [[0,1], [0, -1], [1,-1], [1, 1] ]))
 
-        self.Deck = Deck
+        Card.Deck =Deck
 
-    @classmethod
-    def _selectCard(self, n):
+    @staticmethod
+    def _selectCard(n):
         """
         helper function for selectCard.   
         ---------
@@ -62,17 +60,17 @@ class Card:
         Integer n: size of current deck
         """
 
-        card = self.Deck[random.randint(0,n)]
+        card = Card.Deck[random.randint(0,n-1)]
         if (card.alreadyInGame):
 
-            return(self._selectCard(n))
+            return(Card._selectCard(n))
             
         else:
             card.alreadyInGame=True
             return card
      
-    @classmethod
-    def selectCard(self):
+    @staticmethod
+    def selectCard():
         """
         Returns a unselected card from the deck.    
         ---------
@@ -82,9 +80,9 @@ class Card:
         --------
         """
 
-        if (self.Deck==None):
-            raise TypeError("Deck has not been made yet. Call _makeDeck() ")
-
+        if (Card.Deck==None):
+            raise TypeError("Deck has not been made yet. Call makeDeck() ")
         else:
-            return(self._selectCard(len(self.Deck)))
+            return(Card._selectCard(len(Card.Deck)))
+
 
