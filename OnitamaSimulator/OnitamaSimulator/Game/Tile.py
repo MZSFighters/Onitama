@@ -39,4 +39,7 @@ class Tile:
         if(self.piece == None):
             return 0
         else:
-            return 1
+            if (self.piece.colour):
+                return 1
+            else:
+                return 2
