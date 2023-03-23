@@ -15,7 +15,7 @@ class Tile:
     Methods
     -------
        
-    isSenseiSeat(): This method checks if the tile at the given (row,col) coordinate is a master seat/tile or not. It returns true if it is.
+    isMasterSeat(): This method checks if the tile at the given (row,col) coordinate is a master seat/tile or not. It returns true if it is.
     
     Value(): This method checks if a piece exists on the (row,col) coordinate. If yes it returns 1 otherwise a 0. This helps to print the grid.
     """
@@ -27,7 +27,7 @@ class Tile:
        self.row = row
        self.col = col
        
-    def isSenseiSeat(self):
+    def isMasterSeat(self):
         if(self.row == 0 and self.col == 2):
             return True
         elif(self.row == 4 and self.col == 2):
