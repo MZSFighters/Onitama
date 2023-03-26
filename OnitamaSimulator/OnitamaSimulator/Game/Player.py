@@ -23,8 +23,7 @@ class Player:
     def __init__(self, name="testName", colour= True):
         self.name = name
         self.colour = colour
-        self.card1 = Card.selectCard()
-        self.card2 = Card.selectCard()
+        self.cards =[Card.selectCard(), Card.selectCard()]
         self.pieces = None
 
 
@@ -44,6 +43,14 @@ class Player:
         
         self.pieces=pieceList
 
+    def printCards(self):
+        '''Prints a list of the user's card  
+          --------
+          Desired changes
+            should print cards side by side
+            '''
+        for card in self.cards:
+            card.printCard()
 
     #Utility Functions
     def colour(self):

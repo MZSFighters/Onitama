@@ -45,8 +45,43 @@ class Game:
         #set neutral card
         self.neutralCard = Card.selectCard()
 
+    def startGame(self):
+        '''start the Game'''
+        turnNumber=0 # Even turn number means its players1 turn, odd means player2 turn
+
+        if self.player1.colour!= self.neutralCard.colour:
+            turnNumber=1
+
+        while (True):
+
+            if (turnNumber%2==0):
+                player = self.player1
+            else:
+                player = self.player2
+                
+
+            # Now let the user select a card 
+            selectedCard = self.userSelectCard(player)
+
+
+
+            break
+        
+    @staticmethod
+    def userSelectCard(player):
+            '''Function that allows the user to select a card from his hand'''
+            #Print their cards
+            player.printCards()
+            while (True):
+                val = int(input("Which card would you like to use (0 or 1) ?"))
+                if (val==0 or val==1):
+                    return player.cards[val]
+                else:
+                    print("You selected an invalid option. Please try again")
+                    
 
 game = Game()
-game.board.printBoard()
+game.startGame()
+
 
 

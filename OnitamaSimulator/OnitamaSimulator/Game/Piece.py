@@ -4,10 +4,13 @@
      
      isMaster (Boolean) - To keep track of the master pawn piece
      colour (Boolean)
+     row = row of board piece currently occupies
+     col = col of board piece currently occupies
      ----------
      Methods
 
-     colour() return colour of the piece
+     colour(): Boolean - returns colour of the piece
+     setTile(tile): void - places the piece on the specified tile
 """
 
 class Piece:
@@ -17,7 +20,7 @@ class Piece:
         self.row =row 
         self.col =col
 
-    def setTile(self, tiles):
+    def setTile(self, tile):
         '''Place piece on a tile'''
 
     def colour(self):

@@ -1,6 +1,4 @@
 from Tile  import Tile
-from Piece import Piece
-from Player import Player
 
 class Board:
 
@@ -20,8 +18,7 @@ class Board:
     printBoard(): prints the current state of the board as a 5 by 5 grid/matrix whenever the method is called upon.
                   ** When you print the board (0,0) is the top left 
     
-    initialise(): we can call initialise method to give us the initial state of the board when the user starts the game.
-    
+    returnTile(i,j): Return the tile located at position (i,j)
     """
 
     def __init__(self, player1, player2) -> None:

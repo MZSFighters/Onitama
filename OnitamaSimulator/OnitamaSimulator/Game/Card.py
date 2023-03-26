@@ -72,7 +72,7 @@ class Card:
     @staticmethod
     def selectCard():
         """
-        Returns a unselected card from the deck.    
+        Returns a random unselected card from the deck.    
         ---------
         Parameters
         ---------
@@ -84,5 +84,38 @@ class Card:
             raise TypeError("Deck has not been made yet. Call makeDeck() ")
         else:
             return(Card._selectCard(len(Card.Deck)))
+
+    @staticmethod    
+    def selectSpecificCard(name):
+        '''
+        Returns card whose name matches the name parameter
+        -------------
+        Parameters
+        name: String - name of the card wanted
+        '''
+        for card in Card.Deck:
+            if (card.name==name):
+                return card
+        
+    
+    def _printMoveSet(self):
+        '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
+
+        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+        array[2][2]=2 
+        for move in self.moveset:
+            array[2-move[0]][2-move[1]]=1
+        for row in array:
+            print(row)
+
+    def printCard(self):
+        '''Prints the card in the same way the cards are shown in the original game'''
+        print(self.name)
+        print(self.colour)
+        self._printMoveSet()
+
+
+
+
 
 
