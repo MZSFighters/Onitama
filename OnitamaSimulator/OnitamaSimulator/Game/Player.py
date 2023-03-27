@@ -63,10 +63,13 @@ class Player:
             return "Blue"
         
     def previewMoves(self ,card:Card, piece:Piece, board:Board):
-        '''Preview possible moves from piece'''
+        '''Preview possible moves from piece,
+            7s represent possible moves
+        
+        '''
         array:int = [[0]*len(board.arr) for i in range(len(board.arr[0]))]
         array[piece.row][piece.col]=2 
-        # converting the board into an array of ints, i think that this should be part of the board code but i dont want to tamper with too many classes at once
+        #converting the board into an array of ints, i think that this should be part of the board code but i dont want to tamper with too many classes at once
         for row in range(5):
             for col in range(5):
                 array[row][col] = board.arr[row][col].Value()
@@ -74,8 +77,8 @@ class Player:
         for move in card.moveset:
             #Need to flip move based on player, From the moves it looks like we assume we are player 2
             if (self.colour == 1):
-                move[1] = int(move[1]*math.cos(math.pi) - move[0]*math.sin(math.pi))
-                move[0] = int(move[0]*math.cos(math.pi) + move[1]*math.sin(math.pi))
+                move[1] = -1*move[1]
+                move[0] = -1*move[0]
             #Check if the move is within the bounds of the board
             if (((piece.row-move[0] < 5) and (piece.row-move[0] >= 0)) and  (piece.col - move[1] < 5 and piece.col - move[1] >= 0)):
                 array[piece.row-move[0]][piece.col-move[1]]=7

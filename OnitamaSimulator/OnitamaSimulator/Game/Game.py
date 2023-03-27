@@ -60,25 +60,17 @@ class Game:
             else:
                 player = self.player2
                 
-
-            
-            player.previewMoves(selectedCard,selectedPiece,self.board)
             while(True):
                 #  let the user select a card 
                 selectedCard = self.userSelectCard(player)
 
                 # Now a user chooses a piece
                 selectedPiece =self.userSelectPawn(self, player)
-
+                player.previewMoves(selectedCard,selectedPiece,self.board)
 
                 #Show available moves for that card and piece
                 # showavailablemoves(selectedCard, selectedPiece)
-
-
                 break
-
-
-
             break
         
     @staticmethod
@@ -93,30 +85,6 @@ class Game:
                 else:
                     print("You selected an invalid option. Please try again")
 
-    @staticmethod                
-    def userSelectPiece(player:Player):
-        #Player uses xy co-ord to select piece
-        while(True):
-            valx = int(input("Enter piece x position"))
-            valy = int(input("Enter piece y position"))
-            #Need to see if selected piece exists
-            for piece in player.pieces:
-                print(piece.col)
-                print(piece.row)
-
-                if (piece.row == valy and piece.col == valx):
-                    #return the appropriate piece
-                    return piece
-            print("Enter a valid piece co-ordinate")    
-        
-
-
-    
-
-
-
-
-    
     @staticmethod
     def userSelectPawn(self, player):
         '''Function that allows the user to select one of their pawns'''
@@ -137,16 +105,6 @@ class Game:
                 
             print("Invalid coordinates given, please try again")
                 
-
-
-
-
-
-
-
-
-                    
-
 game = Game()
 game.startGame()
 
