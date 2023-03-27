@@ -1,6 +1,7 @@
 from Board import Board
 from Player import Player
 from Card import Card
+from Piece import Piece
 class Game:
 
     """
@@ -48,7 +49,7 @@ class Game:
     def startGame(self):
         '''start the Game'''
         turnNumber=0 # Even turn number means its players1 turn, odd means player2 turn
-
+        self.board.printBoard()
         if self.player1.colour!= self.neutralCard.colour:
             turnNumber=1
 
@@ -62,7 +63,10 @@ class Game:
 
             # Now let the user select a card 
             selectedCard = self.userSelectCard(player)
-
+            # Let the user select a piece
+            selectedPiece = self.userSelectPiece(player)
+            # Show Possible Moves to the player
+            player.previewMoves(selectedCard,selectedPiece,self.board)
 
 
             break
@@ -78,7 +82,28 @@ class Game:
                     return player.cards[val]
                 else:
                     print("You selected an invalid option. Please try again")
-                    
+
+    @staticmethod                
+    def userSelectPiece(player:Player):
+        #Player uses xy co-ord to select piece
+        while(True):
+            valx = int(input("Enter piece x position"))
+            valy = int(input("Enter piece y position"))
+            #Need to see if selected piece exists
+            for piece in player.pieces:
+                print(piece.col)
+                print(piece.row)
+
+                if (piece.row == valy and piece.col == valx):
+                    #return the appropriate piece
+                    return piece
+            print("Enter a valid piece co-ordinate")    
+        
+
+
+    
+
+
 
 game = Game()
 game.startGame()
