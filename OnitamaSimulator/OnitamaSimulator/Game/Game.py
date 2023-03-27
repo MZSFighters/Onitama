@@ -61,11 +61,7 @@ class Game:
                 player = self.player2
                 
 
-            # Now let the user select a card 
-            selectedCard = self.userSelectCard(player)
-            # Let the user select a piece
-            selectedPiece = self.userSelectPiece(player)
-            # Show Possible Moves to the player
+            
             player.previewMoves(selectedCard,selectedPiece,self.board)
             while(True):
                 #  let the user select a card 
@@ -73,6 +69,7 @@ class Game:
 
                 # Now a user chooses a piece
                 selectedPiece =self.userSelectPawn(self, player)
+
 
                 #Show available moves for that card and piece
                 # showavailablemoves(selectedCard, selectedPiece)
