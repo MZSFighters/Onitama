@@ -13,7 +13,7 @@ class Player:
 
     Boolean Colour: Blue is True, red is False -> should be newly assigned each new game
     card1, card2: The two cards that belong to the player
-    List(Pieces) pieces: A list of all Pieces beloning to a player
+    List(Piece) pieces: A list of all Pieces beloning to a player
 
     ----------
     Methods

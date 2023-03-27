@@ -67,6 +67,19 @@ class Game:
             selectedPiece = self.userSelectPiece(player)
             # Show Possible Moves to the player
             player.previewMoves(selectedCard,selectedPiece,self.board)
+            while(True):
+                #  let the user select a card 
+                selectedCard = self.userSelectCard(player)
+
+                # Now a user chooses a piece
+                selectedPiece =self.userSelectPawn(self, player)
+
+                #Show available moves for that card and piece
+                # showavailablemoves(selectedCard, selectedPiece)
+
+
+                break
+
 
 
             break
@@ -104,6 +117,38 @@ class Game:
     
 
 
+
+
+    
+    @staticmethod
+    def userSelectPawn(self, player):
+        '''Function that allows the user to select one of their pawns'''
+        while True:
+            self.board.printBoard()
+            print("Your pieces are at the following positions")
+            for piece in player.pieces:
+                print(piece.row, piece.col)
+
+            selectedPiece = input(" Which piece would you like to select?")
+
+            row = int(selectedPiece[0])
+            col =int(selectedPiece[2])
+
+            for piece in player.pieces:
+                if piece.row == row and piece.col ==col:
+                    return piece
+                
+            print("Invalid coordinates given, please try again")
+                
+
+
+
+
+
+
+
+
+                    
 
 game = Game()
 game.startGame()

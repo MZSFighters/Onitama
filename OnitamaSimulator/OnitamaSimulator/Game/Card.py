@@ -111,7 +111,6 @@ class Card:
     def printCard(self):
         '''Prints the card in the same way the cards are shown in the original game'''
         print(self.name)
-        print(self.colour)
         self._printMoveSet()
 
 
