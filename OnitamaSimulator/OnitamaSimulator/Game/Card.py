@@ -78,11 +78,7 @@ class Card:
     @staticmethod
     def selectCard( cardNum):
         """
-<<<<<<< HEAD
         Returns a specified or a random unselected card from the deck.    
-=======
-        Returns a random unselected card from the deck.    
->>>>>>> a46d4d0a233a742954315e5916447f6e99709ede
         ---------
         Parameters
         cardNum: String of size 1 - returns the card at index cardNum form the deck
