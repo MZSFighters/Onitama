@@ -52,7 +52,7 @@ class Card:
         Card.Deck =Deck
 
     @staticmethod
-    def _selectCard(n):
+    def _selectRandomCard(n):
         """
         helper function for selectCard.   
         ---------
@@ -63,26 +63,55 @@ class Card:
         card = Card.Deck[random.randint(0,n-1)]
         if (card.alreadyInGame):
 
-            return(Card._selectCard(n))
+            return(Card._selectRandomCard(n))
             
         else:
             card.alreadyInGame=True
             return card
      
     @staticmethod
-    def selectCard():
+    def _selectSpecifiedCard(n, cardNum):
+        card = Card.Deck[cardNum]
+        card.alreadyInGame =True
+        return card
+
+    @staticmethod
+    def selectCard( cardNum):
         """
-        Returns a unselected card from the deck.    
+        Returns a specified or a random unselected card from the deck.    
         ---------
         Parameters
+        cardNum: String of size 1 - returns the card at index cardNum form the deck
+                 if cardNum== 'N' picks a random card
         ---------
-        Raises
-        --------
-        """
 
-        if (Card.Deck==None):
-            raise TypeError("Deck has not been made yet. Call makeDeck() ")
+        """
+        if (Card.Deck== None):
+            raise TypeError("Deck is type None, call makeDeck()")
+
+        if (cardNum=='N'):
+            return(Card._selectRandomCard(len(Card.Deck) ))
         else:
-            return(Card._selectCard(len(Card.Deck)))
+            return (Card._selectSpecifiedCard(len(Card.Deck), int(cardNum) ))
+    
+    
+    def _printMoveSet(self):
+        '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
+
+        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+        array[2][2]=2 
+        for move in self.moveset:
+            array[2-move[0]][2-move[1]]=1
+        for row in array:
+            print(row)
+
+    def printCard(self):
+        '''Prints the card in the same way the cards are shown in the original game'''
+        print(self.name)
+        self._printMoveSet()
+
+
+
+
 
 
