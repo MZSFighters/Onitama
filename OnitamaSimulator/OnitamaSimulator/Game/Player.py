@@ -71,23 +71,31 @@ class Player:
         Returns a list of possible moves as 2d co ords
         
         """
-        returnArray = []
-        debugBoard:int = [[0]*len(board.arr) for i in range(len(board.arr[0]))]
+        returnArray = [] # the array that returns possible moves that is used by the move function
+        debugBoard:int = [[0]*len(board.arr) for i in range(len(board.arr[0]))] # the board that debugs the possible moves
         debugBoard[piece.row][piece.col]=2 
         #converting the board into an array of ints, i think that this should be part of the board code but i dont want to tamper with too many classes at once
         for row in range(5):
             for col in range(5):
                 debugBoard[row][col] = board.arr[row][col].Value()
-            
+        
+        intColor = 2
+        if (self.colour):
+            intColor = 1
         for move in card.moveset:
             #Need to flip move based on player, From the moves it looks like we assume we are player 2
-            if (self.colour == 1):
+            if (self.colour == True):
                 move[1] = -1*move[1]
                 move[0] = -1*move[0]
             #Check if the move is within the bounds of the board
-            if (((piece.row-move[0] < 5) and (piece.row-move[0] >= 0)) and  (piece.col - move[1] < 5 and piece.col - move[1] >= 0)):
-                debugBoard[piece.row-move[0]][piece.col-move[1]]=7
-                returnArray.append([piece.row-move[0], piece.col-move[1]])
+            #And check to see if the tile is a friendly piece
+            calcMoveRow = piece.row-move[0]
+            calcMoveCol  = piece.col - move[1]
+     
+            if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
+                if (board.returnTile(calcMoveRow,calcMoveRow).Value() != intColor):
+                    debugBoard[piece.row-move[0]][piece.col-move[1]]=7
+                    returnArray.append([piece.row-move[0], piece.col-move[1]])
 
         #Printing board with possible mpves
         for row in range(5):
@@ -97,8 +105,19 @@ class Player:
         #Return array of possible moves
         return returnArray
     
-    def MakeMove(self, possibleMoves:int):
+    def MakeMove(self, possibleMoves:int, board:Board, pieceFrom:Piece):
         """
         Takes in the pawn and the desired location \n
         Need to check if there is another piece in the way
         """
+        for move in possibleMoves:
+            print(move[0]," ", move[1])
+
+        selectedMove = input(" Which move would you like to select?")
+        row = int(selectedMove[0])
+        col =int(selectedMove[2])
+        #Now I need to make a move 
+        #"to" demarcates the tile we are moving to, "from" is the piece&tile we are moving
+        pieceFrom.row = row
+        pieceFrom.col = col
+

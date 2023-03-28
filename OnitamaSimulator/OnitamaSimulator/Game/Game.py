@@ -37,7 +37,7 @@ class Game:
         Card.makeDeck()
         # Make the players
         self.player1 =Player(Player1Name, True )
-        self.player2 =Player(Player1Name, False )
+        self.player2 =Player(Player2Name, False )
         #Give each player their set of pieces
         self.player1.givePieces()
         self.player2.givePieces()
@@ -66,10 +66,15 @@ class Game:
 
                 # Now a user chooses a piece
                 selectedPiece =self.userSelectPawn(self, player)
-                player.previewMoves(selectedCard,selectedPiece,self.board)
+                possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board)
 
                 #Show available moves for that card and piece
                 # showavailablemoves(selectedCard, selectedPiece)
+                player.MakeMove(possibleMoves,self.board, selectedPiece)
+
+                #reinit the board after the move
+                self.board = Board(self.player1, self.player2)
+                self.board.printBoard()
                 break
             break
         
