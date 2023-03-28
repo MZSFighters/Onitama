@@ -166,7 +166,7 @@ class Player:
                     debugBoard[piece.row-move[0]][piece.col-move[1]]=7
                     returnArray.append([piece.row-move[0], piece.col-move[1]])
 
-        #Printing board with possible mpves
+        #Printing board with possible moves
         for row in range(5):
             for col in range(5):
                 print(debugBoard[row][col] , end = ' ')
@@ -189,4 +189,13 @@ class Player:
         #"to" demarcates the tile we are moving to, "from" is the piece&tile we are moving
         pieceFrom.row = row
         pieceFrom.col = col
+
+
+    def deletePiece(self, piece:Piece):
+        '''
+        removes piece from the game
+        ---------
+        piece:Piece - piece to be removed from the game
+        '''
+        self.pieces.remove(piece)
 
