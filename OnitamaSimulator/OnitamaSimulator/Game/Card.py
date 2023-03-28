@@ -78,7 +78,11 @@ class Card:
     @staticmethod
     def selectCard( cardNum):
         """
+<<<<<<< HEAD
         Returns a specified or a random unselected card from the deck.    
+=======
+        Returns a random unselected card from the deck.    
+>>>>>>> a46d4d0a233a742954315e5916447f6e99709ede
         ---------
         Parameters
         cardNum: String of size 1 - returns the card at index cardNum form the deck
@@ -94,6 +98,38 @@ class Card:
         else:
             return (Card._selectSpecifiedCard(len(Card.Deck), int(cardNum) ))
     
+    
+    def _printMoveSet(self):
+        '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
+
+        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+        array[2][2]=2 
+        for move in self.moveset:
+            array[2-move[0]][2-move[1]]=1
+        for row in array:
+            print(row)
+
+    def printCard(self):
+        '''Prints the card in the same way the cards are shown in the original game'''
+        print(self.name)
+        self._printMoveSet()
+
+
+
+
+
+    @staticmethod    
+    def selectSpecificCard(name):
+        '''
+        Returns card whose name matches the name parameter
+        -------------
+        Parameters
+        name: String - name of the card wanted
+        '''
+        for card in Card.Deck:
+            if (card.name==name):
+                return card
+        
     
     def _printMoveSet(self):
         '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''

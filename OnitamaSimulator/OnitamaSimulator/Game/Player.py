@@ -24,8 +24,13 @@ class Player:
     def __init__(self, name="testName", colour= True):
         self.name = name
         self.colour = colour
+<<<<<<< HEAD
         self.cards =[]
         self.pieces = []
+=======
+        self.cards =[Card.selectCard(), Card.selectCard()]
+        self.pieces = None
+>>>>>>> a46d4d0a233a742954315e5916447f6e99709ede
 
 
     def givePieces(self, coordinates):
@@ -39,6 +44,7 @@ class Player:
         '''
         pieces=[]
 
+<<<<<<< HEAD
         for i in range(0, len(coordinates), 2):
             if coordinates[i]=='N': # this piece is no longer on the board
                 continue
@@ -49,6 +55,16 @@ class Player:
                     pieces.append(Piece( self.colour,False, int(coordinates[i]), int(coordinates[i+1]))) 
 
         self.pieces=pieces               
+=======
+    def printCards(self):
+        '''Prints a list of the user's card  
+          --------
+          Desired changes
+            should print cards side by side
+            '''
+        for card in self.cards:
+            card.printCard()
+>>>>>>> a46d4d0a233a742954315e5916447f6e99709ede
 
     #Utility Functions
     def colour(self):
@@ -115,6 +131,7 @@ class Player:
         #"to" demarcates the tile we are moving to, "from" is the piece&tile we are moving
         pieceFrom.row = row
         pieceFrom.col = col
+<<<<<<< HEAD
 
     def printCard(self):
         '''Prints a list of the user's card  
@@ -190,4 +207,6 @@ class Player:
         #"to" demarcates the tile we are moving to, "from" is the piece&tile we are moving
         pieceFrom.row = row
         pieceFrom.col = col
+=======
+>>>>>>> a46d4d0a233a742954315e5916447f6e99709ede
 

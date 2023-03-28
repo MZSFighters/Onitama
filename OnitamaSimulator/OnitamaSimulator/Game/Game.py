@@ -13,6 +13,10 @@ class Game:
     Player: player1, player2 
     Board: board 
     Card: neutralCard
+<<<<<<< HEAD
+=======
+
+>>>>>>> a46d4d0a233a742954315e5916447f6e99709ede
     ----------
     Methods
     -------
