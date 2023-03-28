@@ -62,17 +62,22 @@ class Player:
         else:
             return "Blue"
         
-    def previewMoves(self ,card:Card, piece:Piece, board:Board):
-        '''Preview possible moves from piece,
-            7s represent possible moves
+    def previewMoves(self ,card:Card, piece:Piece, board:Board) -> int:
+        """
+        A preview of possible moves the player can make
+        \n
+        Debugs an array where the possible moves are represented by 7s
+        \n
+        Returns a list of possible moves as 2d co ords
         
-        '''
-        array:int = [[0]*len(board.arr) for i in range(len(board.arr[0]))]
-        array[piece.row][piece.col]=2 
+        """
+        returnArray = []
+        debugBoard:int = [[0]*len(board.arr) for i in range(len(board.arr[0]))]
+        debugBoard[piece.row][piece.col]=2 
         #converting the board into an array of ints, i think that this should be part of the board code but i dont want to tamper with too many classes at once
         for row in range(5):
             for col in range(5):
-                array[row][col] = board.arr[row][col].Value()
+                debugBoard[row][col] = board.arr[row][col].Value()
             
         for move in card.moveset:
             #Need to flip move based on player, From the moves it looks like we assume we are player 2
@@ -81,11 +86,19 @@ class Player:
                 move[0] = -1*move[0]
             #Check if the move is within the bounds of the board
             if (((piece.row-move[0] < 5) and (piece.row-move[0] >= 0)) and  (piece.col - move[1] < 5 and piece.col - move[1] >= 0)):
-                array[piece.row-move[0]][piece.col-move[1]]=7
+                debugBoard[piece.row-move[0]][piece.col-move[1]]=7
+                returnArray.append([piece.row-move[0], piece.col-move[1]])
 
         #Printing board with possible mpves
         for row in range(5):
             for col in range(5):
-                print(array[row][col] , end = ' ')
+                print(debugBoard[row][col] , end = ' ')
             print()
-
+        #Return array of possible moves
+        return returnArray
+    
+    def MakeMove(self, possibleMoves:int):
+        """
+        Takes in the pawn and the desired location \n
+        Need to check if there is another piece in the way
+        """
