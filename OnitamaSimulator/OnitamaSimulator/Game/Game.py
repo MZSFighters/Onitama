@@ -33,8 +33,9 @@ class Game:
             player2Name: String - specifies desired username of player2 while in game
         
         '''
-        
+        self.gameState = gameState #Initial game state
         Card.makeDeck() # Make The Deck
+        self.turnCount=0 #turn count
 
         # Make the players
         self.player1 =Player(player1Name, True )
@@ -55,27 +56,28 @@ class Game:
 
         while (True):
 
-            turnCount=0
-
             if (turn=='0'):
-                turnCount=0 
+                self.turnCount=0 
             elif (turn =='1'):
-                turnCount=1
-            else: #pick player in normal way 
+                self.turnCount=1
+            else: #select turn in normal way 
 
                 if (self.player1.colour == self.neutralCard.colour):
-                    turnCount=0
+                    self.turnCount=0
                 else:
-                    turnCount=1
+                    self.turnCount=1
                 
             while(True):
 
-                if turnCount%2==0:
+                if self.turnCount%2==0:
                     player=self.player1
                 else:
                     player=self.player2
 
                 # should show all cards currently in game so opposition, neutral and their cards
+
+                print(" The current neutral card is")
+                self.neutralCard.printCard()
 
                 #  let the user select a card 
                 selectedCard = self.userSelectCard(player)
@@ -92,8 +94,13 @@ class Game:
                 self.board = Board(self.player1, self.player2)
                 self.board.printBoard()
 
-                turnCount+=1
+                # swap neutral card with card played
+                self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
 
+                self.turnCount+=1
+                #update gamestate
+                self.gameState = self.getGameState(self)
+                
             break
         
     @staticmethod
@@ -129,7 +136,6 @@ class Game:
                 
             print("Invalid coordinates given, please try again")
 
-
     @staticmethod
     def handOutCards(self, cardString):
         '''
@@ -154,6 +160,45 @@ class Game:
         self.player1.cards = cards[0:2]
         self.player2.cards = cards[2:4]
         self.neutralCard =cards[-1]
+
+    @staticmethod
+    def getGameState(self):
+        '''
+        returns the gameState string for the current game
+        '''
+
+        gameState =""
+        #get the turn count
+        gameState+=(str(self.turnCount%2))
+        
+        #next we get the coordiantes of the pieces of the players first coordinates of each player's pieces is the master
+        players =[self.player1, self.player2]
+        for player in players:
+            pieceString =["N"]*10
+            i=2
+            for piece in player.pieces:
+                if (piece.isMaster ):
+                    pieceString[0] = str(piece.row)
+                    pieceString[1]= str(piece.col)
+                else:
+                    pieceString[i]= str(piece.row)
+                    pieceString[i+1] = str(piece.col)
+                    i=i+2
+
+            gameState+= ''.join(pieceString)
+
+        # Now we add the card numbers
+
+        for player in players:
+            for card in player.cards:
+                gameState+= str(Card.Deck.index(card))
+
+        # finally the neutral card
+        gameState+= str(Card.Deck.index(self.neutralCard))
+
+        return gameState
+
+
 
 
 game = Game()
