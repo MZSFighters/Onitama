@@ -93,6 +93,8 @@ class Game:
                 self.board.printBoard()
 
                 turnCount+=1
+                # swap neutral card with card played
+                self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
 
             break
         
