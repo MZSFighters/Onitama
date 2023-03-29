@@ -166,7 +166,6 @@ class Game:
         '''
         returns the gameState string for the current game
         '''
-
         gameState =""
         #get the turn count
         gameState+=(str(self.turnCount%2))
