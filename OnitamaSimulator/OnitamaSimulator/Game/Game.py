@@ -1,7 +1,7 @@
 from Board import Board
 from Player import Player
 from Card import Card
-from Piece import Piece
+
 class Game:
 
     """
@@ -47,7 +47,6 @@ class Game:
         Game.handOutCards(self, gameState[21:]) # hand out their cards + neutral card handled as well
 
         self.board = Board(self.player1, self.player2) #Populate the  board with players' pieces
-
         
         self.startGame(gameState[0]) #start the game
 
@@ -56,17 +55,26 @@ class Game:
 
         while (True):
 
+            turnCount=0
+
             if (turn=='0'):
-                player = self.player1
+                turnCount=0 
             elif (turn =='1'):
-                player = self.player2
-            else: #pick player in normal way (i.e. whether neutral card matches their colour)
+                turnCount=1
+            else: #pick player in normal way 
+
                 if (self.player1.colour == self.neutralCard.colour):
-                    player = self.player1
+                    turnCount=0
                 else:
-                    player= self.player2
+                    turnCount=1
                 
             while(True):
+
+                if turnCount%2==0:
+                    player=self.player1
+                else:
+                    player=self.player2
+
                 # should show all cards currently in game so opposition, neutral and their cards
 
                 #  let the user select a card 
@@ -83,7 +91,9 @@ class Game:
                 #reinit the board after the move
                 self.board = Board(self.player1, self.player2)
                 self.board.printBoard()
-                break
+
+                turnCount+=1
+
             break
         
     @staticmethod

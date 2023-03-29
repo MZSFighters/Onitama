@@ -7,7 +7,8 @@ def mainMenu():
     print("5. High Score/Leaderboard")
     print("6. Settings")
     print("7. Exit")
-    print("Enter your choice (1-7): ")
+    input("Enter your choice (1-7): ")
+    
 
 def playMenu():
     print("Select game mode:")

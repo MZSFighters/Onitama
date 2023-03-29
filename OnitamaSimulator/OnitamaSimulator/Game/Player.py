@@ -2,7 +2,7 @@ from Card import Card
 from Piece import Piece
 from Board import Board
 from Tile import Tile
-import math
+
 class Player:
 
     """
@@ -189,7 +189,6 @@ class Player:
         #"to" demarcates the tile we are moving to, "from" is the piece&tile we are moving
         pieceFrom.row = row
         pieceFrom.col = col
-
 
     def deletePiece(self, piece:Piece):
         '''
