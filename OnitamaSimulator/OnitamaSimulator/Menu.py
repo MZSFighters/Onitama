@@ -232,6 +232,7 @@ def soundMenu():
         soundMenu()
 
     elif choice == '3':
+        
         # Calls a function to take you back to the settings menu
         settingsMenu()
 
