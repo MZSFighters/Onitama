@@ -190,11 +190,5 @@ class Player:
         pieceFrom.row = row
         pieceFrom.col = col
 
-    def deletePiece(self, piece:Piece):
-        '''
-        removes piece from the game
-        ---------
-        piece:Piece - piece to be removed from the game
-        '''
-        self.pieces.remove(piece)
+
 
