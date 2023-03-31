@@ -220,7 +220,7 @@ class Game:
 
 
 
-    def WinCon():
+    def WinCon(self):
         pass
         # need to check if either Sensei is taken, or in arch
         dedSensei = True
