@@ -200,5 +200,29 @@ class Game:
         gameState+= str(Card.Deck.index(self.neutralCard))
 
         return gameState
-    
+
+    def deletePiece(self, piece):
+        '''
+        removes piece from the game
+        ---------
+        piece:Piece - piece to be removed from the game
+        '''
+
+        for userPiece in self.player1.pieces:
+            if userPiece== piece:
+                self.player1.pieces.remove(userPiece)
+                return
+        
+        
+        for userPiece in self.player2.pieces:
+            if userPiece== piece:
+                self.player2.pieces.remove(userPiece)
+                return
+            
+    def WinCon():
+        pass
+        # need to check if either Sensei is taken.
+        
+
+        # need to check if arch has been reached.
 game = Game()
