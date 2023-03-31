@@ -214,4 +214,11 @@ class Game:
                     return
 
 
+
+    def WinCon():
+        pass
+        # need to check if either Sensei is taken.
+        
+
+        # need to check if arch has been reached.
 game = Game()
