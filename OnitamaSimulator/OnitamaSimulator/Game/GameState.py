@@ -6,8 +6,39 @@ import json
 
 
 class GameState:
+<<<<<<< HEAD
 
     #"N02000103044240414344NNNNN"
+=======
+    
+    """
+    A class used to store a game state during the onitama game
+    ...
+    
+    Attributes : 
+    
+    -tableName : a string that is used as the table name when creating and referring to a desired table
+    -gameString : a string that represents the game (i.e. positions of pieces, position
+                    of sensei, cards present, cards allocated)
+    
+    ------
+    Methods:
+    ------
+    
+    - createDatabase() : creates the database that will store the tables containing the game states for individual games. (If database exists locally
+                                , then the database will not be created again. Instead a connection with the database is established in order to send 
+                                queries to the database)
+    - createTable() : creates a new table in the database for a new game
+    - saveGame() : saves the current gameString to the respective table to be saved in the database. updateGameString is string passed to the method,
+                        representing the game at that turn
+    - fetchGame() : fetches a gameString from the respective table in the database. turn is an integer value representing the turn number. It is
+                        used to query a row in the table that has the desired gameString
+    
+    
+    """
+
+    #"N02000103044240414344NNNNN" : example of gameString
+>>>>>>> grou-/main
 
     def __init__(self, tableName, gameString):
         if len(gameString) != 25:
@@ -15,7 +46,11 @@ class GameState:
         self.gameString = gameString
 
         if gameString[1:2] == "NN" or gameString[11:12] == "NN": #or ZZ
+<<<<<<< HEAD
             raise Exception("Invalid game state string : Sensei piece already dead")
+=======
+            raise Exception("Invalid game state string : Sensei piece already captured")
+>>>>>>> grou-/main
 
         self.gameString = gameString
         self.tableName = tableName

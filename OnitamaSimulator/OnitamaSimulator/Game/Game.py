@@ -86,9 +86,13 @@ class Game:
                 selectedPiece =self.userSelectPiece(self, player)
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board)
 
-                #Show available moves for that card and piece
+                # Show available moves for that card and piece
                 # showavailablemoves(selectedCard, selectedPiece)
-                player.MakeMove(possibleMoves,self.board, selectedPiece)
+
+                takePiece = player.MakeMove(possibleMoves,self.board, selectedPiece)
+                if (takePiece != None):
+                    self.deletePiece(takePiece)
+                    print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
 
                 #reinit the board after the move
                 self.board = Board(self.player1, self.player2)
@@ -126,6 +130,7 @@ class Game:
                 print(piece.row, piece.col)
 
             selectedPiece = input(" Which piece would you like to select?")
+
             row = int(selectedPiece[0])
             col =int(selectedPiece[2])
 
@@ -208,5 +213,5 @@ class Game:
                     player.pieces.remove(userPiece)
                     return
 
+
 game = Game()
-    
