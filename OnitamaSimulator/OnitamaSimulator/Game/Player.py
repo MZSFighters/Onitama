@@ -190,5 +190,9 @@ class Player:
         pieceFrom.row = row
         pieceFrom.col = col
 
+        if (board.returnTile(row,col).piece != None):
+            return board.returnTile(row,col).piece
+
+
 
 

@@ -86,9 +86,13 @@ class Game:
                 selectedPiece =self.userSelectPiece(self, player)
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board)
 
-                #Show available moves for that card and piece
+                # Show available moves for that card and piece
                 # showavailablemoves(selectedCard, selectedPiece)
-                player.MakeMove(possibleMoves,self.board, selectedPiece)
+
+                takePiece = player.MakeMove(possibleMoves,self.board, selectedPiece)
+                if (takePiece != None):
+                    self.deletePiece(takePiece)
+                    print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
 
                 #reinit the board after the move
                 self.board = Board(self.player1, self.player2)
@@ -197,25 +201,4 @@ class Game:
 
         return gameState
     
-    def deletePiece(self, piece):
-        '''
-        removes piece from the game
-        ---------
-        piece:Piece - piece to be removed from the game
-        '''
-
-        for userPiece in self.player1.pieces:
-            if userPiece== piece:
-                self.player1.pieces.remove(userPiece)
-                return
-        
-        
-        for userPiece in self.player2.pieces:
-            if userPiece== piece:
-                self.player2.pieces.remove(userPiece)
-                return
-            
-
-
-
 game = Game()
