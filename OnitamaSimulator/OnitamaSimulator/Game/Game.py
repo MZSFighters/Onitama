@@ -100,8 +100,16 @@ class Game:
 
                 # swap neutral card with card played
                 self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
+                
                 # did anyone win ?
                 win:int = self.WinCon()
+                if (win == 1):
+                    print("Player 1 wins")
+                elif (win  == 2):
+                    print("Player 2 wins")
+                elif (win == 0 ):
+                    pass
+
                 if (win != 0 ):
                     break
 
@@ -226,24 +234,29 @@ class Game:
         dedSensei = True
         # Player 1 checks
         for player1 in self.player1.pieces:
-            if (player1.col == 2 and player1.row == 0):
+            if (player1.col == 2 and player1.row == 4):
+                print("p1 arch")
                 return 1
             if(player1.isMaster == True):
+               
                 dedSensei = False
                 break
         if(dedSensei == True):
-            return 2 # player 1 wins
-        
+            print("p2 take")
+            return 2 # player 2 wins
+        dedSensei = True
         #player 2
         for player2 in self.player2.pieces:
             if (player2.col == 2 and player2.row == 0):
+                print("p2 arch")
                 return 2
             if(player2.isMaster == True):
+                
                 dedSensei = False
                 break
         if(dedSensei == True):
-            print("PLAYER2 WINS")
-            return 1 # player 2 wins
+            print("p1 take")
+            return 1 # player 1 wins
         return 0 
 
 game = Game()
