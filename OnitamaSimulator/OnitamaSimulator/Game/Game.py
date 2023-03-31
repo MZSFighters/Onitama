@@ -202,20 +202,11 @@ class Game:
         ---------
         piece:Piece - piece to be removed from the game
         '''
-
-        for userPiece in self.player1.pieces:
-            if userPiece== piece:
-                self.player1.pieces.remove(userPiece)
-                return
-        
-        
-        for userPiece in self.player2.pieces:
-            if userPiece== piece:
-                self.player2.pieces.remove(userPiece)
-                return
-            
-
-
-
+        for player in [self.player1, self.player2]:
+            for userPiece in player.pieces:
+                if userPiece== piece:
+                    player.pieces.remove(userPiece)
+                    return
 
 game = Game()
+    
