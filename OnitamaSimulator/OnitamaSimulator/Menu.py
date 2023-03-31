@@ -80,6 +80,7 @@ def playerVsAIMenu():
     if choice == '1':
         playMenu()
 
+    # If the user enters a invalid choice
     elif choice is not list:
         playerVsAIMenu()
 
@@ -316,3 +317,4 @@ def customCardMenu():
         print("Invalid choice, please enter a valid choice")
         customCardMenu()
 
+mainMenu()
