@@ -1,4 +1,5 @@
 import random # for card selector function
+import re
 
 class Card:
     """Class which represents a Card within the game
@@ -138,12 +139,52 @@ class Card:
             print(row)
 
     def printCard(self):
-        '''Prints the card in the same way the cards are shown in the original game'''
+        '''Prints the card in the same way the cards are shown in the original game
+            deck must be made before calling this function
+        '''
         print(self.name)
         self._printMoveSet()
 
+    @staticmethod
+    def addCustomCard():
+        '''
+        Allows a user to add their own custom card to the deck of cards
+        '''
 
+        card = Card("", True, [])
+        inp= input("What should the name of the card be?")
+        card.name= inp
+        while (True):
 
+            inp= input("What colour should the card be? (Red or Blue)")
+            if (inp.lower()!="red" and inp.lower()!="blue"):
+                print("Invalid options please try again")
 
+            else:
+                if (inp.lower()=="red"):
+                    card.colour = False
+                else:
+                    card.colour= True
+                break
 
+        addingMoreMoves=True
+        while (addingMoreMoves):    
+            card._printMoveSet()
+            inp= input("Which coordinates (starting from the position shown below) should your cards be able to reach? insert as coordinates row col")
+            r = re.compile('[0-4]\s[0-4]')
 
+            if (r.match(inp)): #if valid format add it to the cards moveset
+                row = int(inp[0])
+                col = int(inp[2])
+                card.moveset.append([row, col])
+
+                inp= input("add another move? (yes or no)")
+                if (inp.lower()=="no"):
+                    addingMoreMoves=False
+
+            else:
+                print("Invalid option please try again")
+
+        card.printCard()
+        Card.Deck.append(card) 
+        print("Your card has been added to the deck!")
