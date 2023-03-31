@@ -100,11 +100,16 @@ class Game:
 
                 # swap neutral card with card played
                 self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
+                # did anyone win ?
+                win:int = self.WinCon()
+                if (win != 0 ):
+                    break
 
                 self.turnCount+=1
                 #update gamestate
                 self.gameState = self.getGameState(self)
                 
+               
             break
         
     @staticmethod
@@ -132,7 +137,7 @@ class Game:
             selectedPiece = input(" Which piece would you like to select?")
 
             row = int(selectedPiece[0])
-            col =int(selectedPiece[2])
+            col = int(selectedPiece[2])
 
             for piece in player.pieces:
                 if piece.row == row and piece.col ==col:
@@ -219,10 +224,30 @@ class Game:
                 self.player2.pieces.remove(userPiece)
                 return
             
-    def WinCon():
+    def WinCon(self):
         pass
-        # need to check if either Sensei is taken.
+        # need to check if either Sensei is taken, or in arch
+        dedSensei = True
+        # Player 1 checks
+        for player1 in self.player1.pieces:
+            if (player1.col == 2 and player1.row == 0):
+                return 1
+            if(player1.isMaster == True):
+                dedSensei = False
+                break
+        if(dedSensei == True):
+            return 2 # player 1 wins
         
+        #player 2
+        for player2 in self.player2.pieces:
+            if (player2.col == 2 and player2.row == 0):
+                return 2
+            if(player2.isMaster == True):
+                dedSensei = False
+                break
+        if(dedSensei == True):
+            print("PLAYER2 WINS")
+            return 1 # player 2 wins
+        return 0 
 
-        # need to check if arch has been reached.
 game = Game()
