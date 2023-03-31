@@ -49,13 +49,6 @@ class Player:
 
         self.pieces=pieces               
 
-    #Utility Functions
-    def colour(self):
-        if(self.colour == True):
-            return "Red"
-        else:
-            return "Blue"
-        
     def previewMoves(self ,card:Card, piece:Piece, board:Board) -> int:
         """
         A preview of possible moves the player can make
@@ -99,6 +92,7 @@ class Player:
         #Return array of possible moves
         return returnArray
     
+
     def MakeMove(self, possibleMoves:int, board:Board, pieceFrom:Piece):
         """
         Takes in the pawn and the desired location \n
@@ -115,14 +109,6 @@ class Player:
         pieceFrom.row = row
         pieceFrom.col = col
 
-    def printCard(self):
-        '''Prints a list of the user's card  
-          --------
-          Desired changes
-            should print cards side by side
-            '''
-        for card in self.cards:
-            card.printCard()
 
     #Utility Functions
     def colour(self):
@@ -130,69 +116,7 @@ class Player:
             return "Red"
         else:
             return "Blue"
-        
-    def previewMoves(self ,card:Card, piece:Piece, board:Board) -> int:
-        """
-        A preview of possible moves the player can make
-        \n
-        Debugs an array where the possible moves are represented by 7s
-        \n
-        Returns a list of possible moves as 2d co ords
-        
-        """
-        returnArray = [] # the array that returns possible moves that is used by the move function
-        debugBoard:int = [[0]*len(board.arr) for i in range(len(board.arr[0]))] # the board that debugs the possible moves
-        debugBoard[piece.row][piece.col]=2 
-        #converting the board into an array of ints, i think that this should be part of the board code but i dont want to tamper with too many classes at once
-        for row in range(5):
-            for col in range(5):
-                debugBoard[row][col] = board.arr[row][col].Value()
-        
-        intColor = 2
-        if (self.colour):
-            intColor = 1
-        for move in card.moveset:
-            #Need to flip move based on player, From the moves it looks like we assume we are player 2
-            if (self.colour == True):
-                move[1] = -1*move[1]
-                move[0] = -1*move[0]
-            #Check if the move is within the bounds of the board
-            #And check to see if the tile is a friendly piece
-            calcMoveRow = piece.row-move[0]
-            calcMoveCol  = piece.col - move[1]
-     
-            if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
-                if (board.returnTile(calcMoveRow,calcMoveRow).Value() != intColor):
-                    debugBoard[piece.row-move[0]][piece.col-move[1]]=7
-                    returnArray.append([piece.row-move[0], piece.col-move[1]])
 
-        #Printing board with possible moves
-        for row in range(5):
-            for col in range(5):
-                print(debugBoard[row][col] , end = ' ')
-            print()
-        #Return array of possible moves
-        return returnArray
-    
-    def MakeMove(self, possibleMoves:int, board:Board, pieceFrom:Piece):
-        """
-        Takes in the pawn and the desired location \n
-        Need to check if there is another piece in the way
-        """
-        for move in possibleMoves:
-            print(move[0]," ", move[1])
-
-        selectedMove = input(" Which move would you like to select?")
-        row = int(selectedMove[0])
-        col =int(selectedMove[2])
-        #Now I need to make a move 
-        #"to" demarcates the tile we are moving to, "from" is the piece&tile we are moving
-        pieceFrom.row = row
-        pieceFrom.col = col
-
-        if (board.returnTile(row,col).piece != None):
-            return board.returnTile(row,col).piece
-
-
-
-
+    def printCard(self):
+        for card in self.cards:
+            card.printCard()
