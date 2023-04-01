@@ -26,5 +26,8 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-  Upload coverage reports to Codecov:
-    jobs: codecov/codecov-action@v3
+  coverage workflow:
+    jobs:
+      steps:
+        - name: Upload coverage to Codecov
+          uses: codecov/codecov-action@v3
