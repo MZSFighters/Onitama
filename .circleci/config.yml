@@ -27,8 +27,10 @@ workflows:
     jobs:
       - say-hello
   coverage workflow:
+    on : [push]
     jobs:
-      steps:
-        - uses: actions/checkout@master
-        - name: Upload coverage to Codecov
-          uses: codecov/codecov-action@v3
+      run:
+        steps:
+          - uses: actions/checkout@master
+          - name: Upload coverage to Codecov
+            uses: codecov/codecov-action@v3
