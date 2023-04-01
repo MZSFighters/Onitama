@@ -29,5 +29,6 @@ workflows:
   coverage workflow:
     jobs:
       steps:
+        - uses: actions/checkout@master
         - name: Upload coverage to Codecov
           uses: codecov/codecov-action@v3
