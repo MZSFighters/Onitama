@@ -21,6 +21,8 @@ jobs:
           command: "echo Hello, World!"
     
     coverage-rep:
+      docker:
+        - image: cimg/base:stable
       steps:
         - run:
             - uses: actions/checkout@master
@@ -34,7 +36,8 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-  coverage workflow:
-    jobs:
+      - checkout
       - coverage-rep
+         
+
         
