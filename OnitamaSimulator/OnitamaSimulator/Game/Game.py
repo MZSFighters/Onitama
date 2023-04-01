@@ -74,7 +74,7 @@ class Game:
             # player can return to previous round
 
             if (input("would you like to reload to a previous round?")=="yes"):
-                i = int(input("how many rounds back would you like to go?"))
+                i = int(input("how many rounds back would you like to go? -1 to restart" ))
                 self.returnToPreviousGameState(i)
 
             while(True):
@@ -252,6 +252,9 @@ class Game:
         Parameter
         i: int - how many rounds back 
         '''
+
+        if (i==-1):
+            return Game(self.gameStates[0], [])
 
         if i>= len(self.gameStates ) :
             print("Can not go back more turns than currently played!" )
