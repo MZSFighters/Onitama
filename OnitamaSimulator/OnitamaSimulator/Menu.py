@@ -1,16 +1,8 @@
-""" import sys
-sys.path.append("./Game") """
+import sys
+sys.path.append("./Game")
+from Game import Game
 
-""" from Game import Game
-from Game import Board
-from Game import Card
-from Game import GameState
-from Game import Pair
-from Game import Piece
-from Game import Player
-from Game import Tile """
 
-#import Game.Card as Card
 
 
 def mainMenu():
@@ -76,7 +68,7 @@ def playMenu():
     elif choice == '2':
         print("Starting game...")
         # Call a function which starts the game
-        #game = Game.Game()
+        game = Game.Game()
 
     elif choice == '3':
         # Call a function which takes you back to the main menu
