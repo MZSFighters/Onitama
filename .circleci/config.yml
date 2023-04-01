@@ -34,7 +34,6 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-      - checkout
       - coverage-rep
          
 
