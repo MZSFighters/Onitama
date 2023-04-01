@@ -32,6 +32,14 @@ class Card:
         self.colour = colour
         self.alreadyInGame= False
 
+    def __str__(self):
+        print(self.name)
+        print(self.colourValue())
+        self._printMoveSet()
+        print("------------------")
+        return ""
+
+#methods
 
     @staticmethod
     def makeDeck():
@@ -53,30 +61,6 @@ class Card:
         Card.Deck =Deck
 
     @staticmethod
-    def _selectRandomCard(n):
-        """
-        helper function for selectCard.   
-        ---------
-        Parameters
-        Integer n: size of current deck
-        """
-
-        card = Card.Deck[random.randint(0,n-1)]
-        if (card.alreadyInGame):
-
-            return(Card._selectRandomCard(n))
-            
-        else:
-            card.alreadyInGame=True
-            return card
-     
-    @staticmethod
-    def _selectSpecifiedCard(n, cardNum):
-        card = Card.Deck[cardNum]
-        card.alreadyInGame =True
-        return card
-
-    @staticmethod
     def selectCard( cardNum):
         """
         Returns a specified or a random unselected card from the deck.    
@@ -94,29 +78,33 @@ class Card:
             return(Card._selectRandomCard(len(Card.Deck) ))
         else:
             return (Card._selectSpecifiedCard(len(Card.Deck), int(cardNum) ))
-    
-    
-    def _printMoveSet(self):
-        '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
+   
+    @staticmethod
+    def _selectSpecifiedCard(n, cardNum):
+        card = Card.Deck[cardNum]
+        card.alreadyInGame =True
+        return card
 
-        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
-        array[2][2]=2 
-        for move in self.moveset:
-            array[2-move[0]][2-move[1]]=1
-        for row in array:
-            print(row)
+    @staticmethod
+    def _selectRandomCard(n):
+        """
+        helper function for selectCard.   
+        ---------
+        Parameters
+        Integer n: size of current deck
+        """
 
-    def printCard(self):
-        '''Prints the card in the same way the cards are shown in the original game'''
-        print(self.name)
-        self._printMoveSet()
+        card = Card.Deck[random.randint(0,n-1)]
+        if (card.alreadyInGame):
 
-
-
-
-
+            return(Card._selectRandomCard(n))
+            
+        else:
+            card.alreadyInGame=True
+            return card
+     
     @staticmethod    
-    def selectSpecificCard(name):
+    def selectSpecifiedCard(name):
         '''
         Returns card whose name matches the name parameter
         -------------
@@ -127,28 +115,13 @@ class Card:
             if (card.name==name):
                 return card
         
-    
-    def _printMoveSet(self):
-        '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
-
-        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
-        array[2][2]=2 
-        for move in self.moveset:
-            array[2-move[0]][2-move[1]]=1
-        for row in array:
-            print(row)
-
-    def printCard(self):
-        '''Prints the card in the same way the cards are shown in the original game
-            deck must be made before calling this function
-        '''
-        print(self.name)
-        self._printMoveSet()
-
     @staticmethod
     def addCustomCard():
         '''
         Allows a user to add their own custom card to the deck of cards
+        ------
+        Errors
+        Deck can not be null when this function is called
         '''
 
         card = Card("", True, [])
@@ -174,8 +147,8 @@ class Card:
             r = re.compile('[0-4]\s[0-4]')
 
             if (r.match(inp)): #if valid format add it to the cards moveset
-                row = int(inp[0])
-                col = int(inp[2])
+                row = int(inp[0])-2
+                col = int(inp[2])-2
                 card.moveset.append([row, col])
 
                 inp= input("add another move? (yes or no)")
@@ -188,3 +161,30 @@ class Card:
         card.printCard()
         Card.Deck.append(card) 
         print("Your card has been added to the deck!")
+
+    def listAllCards():
+        '''
+        Prints a list of all cards in the deck - call deck first
+        '''
+        for i in range(0, len(Card.Deck)):
+            print(Card.Deck[i])
+
+
+#Utility Functions
+
+    def colourValue(self):
+        if(self.colour == True):
+            return "Red"
+        else:
+            return "Blue"
+    def _printMoveSet(self):
+        '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
+
+        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+        array[2][2]=2 
+        for move in self.moveset:
+            array[2-move[0]][2-move[1]]=1
+        
+        for row in array:
+            print(row)
+

@@ -22,8 +22,7 @@ class Game:
 
     """
 
-    def __init__(self, gameState="N02000103044240414344NNNNN", player1Name="Player1", player2Name= "Player2") -> None:
-        
+    def __init__(self, gameState="N02000103044240414344NNNNN", gameStates=[], player1Name="Player1", player2Name= "Player2") -> None:
         '''
         Constructor for a game instance.
         ------------------------------
@@ -33,10 +32,11 @@ class Game:
             player2Name: String - specifies desired username of player2 while in game
         
         '''
-        self.gameState = gameState #Initial game state
+        
         Card.makeDeck() # Make The Deck
         self.turnCount=0 #turn count
-
+        self.gameStates=gameStates
+        
         # Make the players
         self.player1 =Player(player1Name, True )
         self.player2 =Player(player2Name, False )
@@ -52,54 +52,74 @@ class Game:
         self.startGame(gameState[0]) #start the game
 
     #Methods
+
     def startGame(self, turn)->None:
+        
+        if (turn=='0'):
+            self.turnCount=0 
+        elif (turn =='1'):
+            self.turnCount=1
+        else: #select turn in normal way 
 
-        while (True):
-
-            if (turn=='0'):
-                self.turnCount=0 
-            elif (turn =='1'):
-                self.turnCount=1
-            else: #select turn in normal way 
-
-                if (self.player1.colour == self.neutralCard.colour):
+            if (self.player1.colour == self.neutralCard.colour):
                     self.turnCount=0
-                else:
-                    self.turnCount=1
-                
+            else:
+                self.turnCount=1
+
+        self.gameStates.append(self.getGameState(self)) #Initial game state
+
+        while (True): # while True game is running
+            print(self.gameStates)
+
+            # player can return to previous round
+
+            if (input("would you like to reload to a previous round?")=="yes"):
+                i = int(input("how many rounds back would you like to go? -1 to restart" ))
+                self.returnToPreviousGameState(i)
+
             while(True):
 
                 if self.turnCount%2==0:
-                    player=self.player1
+                    player, opp=self.player1, self.player2
                 else:
-                    player=self.player2
+                    player, opp=self.player2, self.player1
 
-                # should show all cards currently in game so opposition, neutral and their cards
-
-                print(" The current neutral card is")
-                self.neutralCard.printCard()
-
-                #  let the user select a card 
-                selectedCard = self.userSelectCard(player)
-
-                # Now a user chooses a piece
-                selectedPiece =self.userSelectPiece(self, player)
-                possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board)
-
-                # Show available moves for that card and piece
-                # showavailablemoves(selectedCard, selectedPiece)
-
-                takePiece = player.MakeMove(possibleMoves,self.board, selectedPiece)
-                if (takePiece != None):
-                    self.deletePiece(takePiece)
-                    print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
-
-                #reinit the board after the move
-                self.board = Board(self.player1, self.player2)
+                print("The current board is") # Show the current board
                 self.board.printBoard()
 
-                # swap neutral card with card played
-                self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
+                
+                print(" The neutral card is") # print neutral cards
+                print(self.neutralCard)
+
+                print("The opposition has the following cards") # print the opposition's cards
+                print(opp.cards[0], opp.cards[1])
+
+                print("Finally, your own cards are") # print the player's cards
+                print(player.cards[0], player.cards[1])
+
+                selectedCard = self.userSelectCard(player) #  let the user select a card 
+
+                selectedPiece =self.userSelectPiece(self, player) # let user a chooses a piece
+                
+                possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
+
+                if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card
+                    print("No valid moves")
+
+
+                if (input("Would you like to play one of these moves (yes or no)")=="yes"): # player can decide not to play a move
+
+                    takePiece = player.MakeMove(possibleMoves,self.board, selectedPiece)
+                    if (takePiece != None):
+                        self.deletePiece(takePiece)
+                        print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
+
+                    #reinit the board after the move
+                    self.board = Board(self.player1, self.player2)
+                    self.board.printBoard()
+
+                    # swap neutral card with card played
+                    self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
                 
                 # did anyone win ?
                 win:int = self.WinCon()
@@ -113,18 +133,46 @@ class Game:
                 if (win != 0 ):
                     break
 
-                self.turnCount+=1
-                #update gamestate
-                self.gameState = self.getGameState(self)
-                
+                    self.turnCount= self.turnCount+1
+                    #update gamestate
+                    self.gameStates.append(self.getGameState(self))
                
-            break
-        
+                    break
+
+    # Methods 
+
+    ## Methods for game initialization
+
+    @staticmethod
+    def handOutCards(self, cardString):
+        '''
+        A function which hands out player1's cards, player2's cards and the neutral card
+        ------------------------------
+        Parameters
+            cardString: String - specifies desired cards for the game (documentation for more detail) 
+        '''
+
+        cards=[Card]*5
+        #hand out specified cards first
+        for i in range(0 , 5):
+            if cardString[i]!= "N":
+                cards[i]= Card.selectCard(cardString[i])
+
+
+        # Now hand out random cards
+        for i in range(0 , 5):
+            if cardString[i]== "N":
+                cards[i]= Card.selectCard(cardString[i])
+
+        self.player1.cards = cards[0:2]
+        self.player2.cards = cards[2:4]
+        self.neutralCard =cards[-1]
+
+    ## Methods used while in a turn (try to maintain order used)
+    
     @staticmethod
     def userSelectCard(player):
         '''Function that allows the user to select a card from his hand'''
-        #Print their cards
-        player.printCard()
         while (True):
             val = input("Which card would you like to use (0 or 1) ?")
             if (val=='0' or val=='1'):
@@ -153,30 +201,24 @@ class Game:
                 
             print("Invalid coordinates given, please try again")
 
-    @staticmethod
-    def handOutCards(self, cardString):
+    def deletePiece(self, piece):
         '''
-        A function which hands out player1's cards, player2's cards and the neutral card
-        ------------------------------
-        Parameters
-            cardString: String - specifies desired cards for the game (documentation for more detail) 
+        removes piece from the game 
+        ---------
+        piece:Piece - piece to be removed from the game
         '''
+        for player in [self.player1, self.player2]:
+            for userPiece in player.pieces:
+                if userPiece== piece:
+                    player.pieces.remove(userPiece)
+                    return
 
-        cards=[Card]*5
-        #hand out specified cards first
-        for i in range(0 , 5):
-            if cardString[i]!= "N":
-                cards[i]= Card.selectCard(cardString[i])
+    def WinCon():
+        pass
+        # need to check if either Sensei is taken.
+        
 
-
-        # Now hand out random cards
-        for i in range(0 , 5):
-            if cardString[i]== "N":
-                cards[i]= Card.selectCard(cardString[i])
-
-        self.player1.cards = cards[0:2]
-        self.player2.cards = cards[2:4]
-        self.neutralCard =cards[-1]
+        # need to check if arch has been reached.
 
     @staticmethod
     def getGameState(self):
@@ -214,49 +256,31 @@ class Game:
 
         return gameState
 
-    def deletePiece(self, piece):
+
+    ## Utility Functions
+    def returnToPreviousGameState(self, i):
         '''
-        removes piece from the game
-        ---------
-        piece:Piece - piece to be removed from the game
+        Allows a user to return to a previous round in their current game
+        -----
+        Parameter
+        i: int - how many rounds back 
         '''
-        for player in [self.player1, self.player2]:
-            for userPiece in player.pieces:
-                if userPiece== piece:
-                    player.pieces.remove(userPiece)
-                    return
 
+        if (i==-1):
+            return Game(self.gameStates[0], [])
 
+        if i>= len(self.gameStates ) :
+            print("Can not go back more turns than currently played!" )
+            return 
+        
+        if len(self.gameStates)==1:
+            print("This is far back as this game goes!")
+            return 
+        
+        else:
+            return Game(self.gameStates[len(self.gameStates)-i-1], self.gameStates[:len(self.gameStates)-i-1])
 
-    def WinCon(self):
-        pass
-        # need to check if either Sensei is taken, or in arch
-        dedSensei = True
-        # Player 1 checks
-        for player1 in self.player1.pieces:
-            if (player1.col == 2 and player1.row == 4):
-                print("p1 arch")
-                return 1
-            if(player1.isMaster == True):
-               
-                dedSensei = False
-                break
-        if(dedSensei == True):
-            print("p2 take")
-            return 2 # player 2 wins
-        dedSensei = True
-        #player 2
-        for player2 in self.player2.pieces:
-            if (player2.col == 2 and player2.row == 0):
-                print("p2 arch")
-                return 2
-            if(player2.isMaster == True):
-                
-                dedSensei = False
-                break
-        if(dedSensei == True):
-            print("p1 take")
-            return 1 # player 1 wins
-        return 0 
 
 game = Game()
+
+

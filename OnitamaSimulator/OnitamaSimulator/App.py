@@ -1,15 +1,9 @@
-<<<<<<< HEAD
+import mainMenu
+
 class App():
-    pass
+
+    mainMenu.mainMenu()
+    
 
 
 
-
-=======
-class App():
-    pass
-
-
-
-
->>>>>>> grou-/main
