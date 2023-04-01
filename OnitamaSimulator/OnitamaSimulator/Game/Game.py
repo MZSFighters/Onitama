@@ -124,7 +124,7 @@ class Game:
                     self.gameStates.append(self.getGameState(self))
                
                     break
-                '''
+
                 # did anyone win ?
                 win:int = self.WinCon()
                 if (win == 1):
@@ -136,7 +136,6 @@ class Game:
 
                 if (win != 0 ):
                     break
-                    '''
 
 
     # Methods 
