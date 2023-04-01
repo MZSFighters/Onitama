@@ -20,7 +20,7 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
     
-    coverage:
+    coverage-rep:
       steps:
         - run:
             - uses: actions/checkout@master
@@ -36,5 +36,5 @@ workflows:
       - say-hello
   coverage workflow:
     jobs:
-      - coverage
+      - coverage-rep
         
