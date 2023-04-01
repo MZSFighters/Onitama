@@ -45,6 +45,8 @@ class GameState:
 
         self.gameString = gameString
         self.tableName = tableName
+        self.createDatabase()
+        self.createTable()
         
 
     def createDatabase(self): 
