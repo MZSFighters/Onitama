@@ -1,7 +1,6 @@
 from Card import Card
 from Piece import Piece
 from Board import Board
-from Tile import Tile
 
 class Player:
 
@@ -84,7 +83,7 @@ class Player:
                     debugBoard[piece.row-move[0]][piece.col-move[1]]=7
                     returnArray.append([piece.row-move[0], piece.col-move[1]])
 
-        #Printing board with possible mpves
+        #Printing board with possible moves
         for row in range(5):
             for col in range(5):
                 print(debugBoard[row][col] , end = ' ')
@@ -92,7 +91,6 @@ class Player:
         #Return array of possible moves
         return returnArray
     
-
     def MakeMove(self, possibleMoves:int, board:Board, pieceFrom:Piece):
         """
         Takes in the pawn and the desired location \n
@@ -116,7 +114,3 @@ class Player:
             return "Red"
         else:
             return "Blue"
-
-    def printCard(self):
-        for card in self.cards:
-            card.printCard()

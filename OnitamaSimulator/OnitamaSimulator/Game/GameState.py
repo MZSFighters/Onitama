@@ -6,10 +6,6 @@ import json
 
 
 class GameState:
-<<<<<<< HEAD
-
-    #"N02000103044240414344NNNNN"
-=======
     
     """
     A class used to store a game state during the onitama game
@@ -38,7 +34,6 @@ class GameState:
     """
 
     #"N02000103044240414344NNNNN" : example of gameString
->>>>>>> grou-/main
 
     def __init__(self, tableName, gameString):
         if len(gameString) != 25:
@@ -46,18 +41,12 @@ class GameState:
         self.gameString = gameString
 
         if gameString[1:2] == "NN" or gameString[11:12] == "NN": #or ZZ
-<<<<<<< HEAD
-            raise Exception("Invalid game state string : Sensei piece already dead")
-=======
             raise Exception("Invalid game state string : Sensei piece already captured")
->>>>>>> grou-/main
 
         self.gameString = gameString
         self.tableName = tableName
         
 
-        
-    
     def createDatabase(self): 
         
         conn = sqlite3.connect('OnitamaSimulator.db')
