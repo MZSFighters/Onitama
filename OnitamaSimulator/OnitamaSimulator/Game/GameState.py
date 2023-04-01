@@ -40,11 +40,17 @@ class GameState:
             raise Exception("Invalid game state string : Incorrect length")
         self.gameString = gameString
 
+<<<<<<< HEAD
         if gameString[1:2] == "NN" or gameString[11:12] == "NN": #or ZZ
+=======
+        if gameString[1:3] == "NN" or gameString[11:13] == "NN": #or ZZ
+>>>>>>> 158f712232bd898520b69b4d06a3d86c11b61560
             raise Exception("Invalid game state string : Sensei piece already captured")
 
         self.gameString = gameString
         self.tableName = tableName
+        self.createDatabase()
+        self.createTable()
         
 
     def createDatabase(self): 

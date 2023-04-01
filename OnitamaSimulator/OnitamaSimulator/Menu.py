@@ -1,3 +1,18 @@
+""" import sys
+sys.path.append("./Game") """
+
+""" from Game import Game
+from Game import Board
+from Game import Card
+from Game import GameState
+from Game import Pair
+from Game import Piece
+from Game import Player
+from Game import Tile """
+
+#import Game.Card as Card
+
+
 def mainMenu():
     print("Welcome to Onitama!")
     print("1. Play")
@@ -61,6 +76,7 @@ def playMenu():
     elif choice == '2':
         print("Starting game...")
         # Call a function which starts the game
+        #game = Game.Game()
 
     elif choice == '3':
         # Call a function which takes you back to the main menu
@@ -192,17 +208,17 @@ def AIDifficultyMenu():
 
     if choice == '1':
         # Set the AI difficulty level to easy
-        print("The AI difficulty level to Easy")
+        print("The AI difficulty level is set to Easy")
         AIDifficultyMenu()
 
     elif choice == '2':
         # Set the AI difficulty level to medium
-        print("The AI difficulty level to Medium")
+        print("The AI difficulty level is set to Medium")
         AIDifficultyMenu()
 
     elif choice == '3':
         # Set the AI difficulty level to hard
-        print("The AI difficulty level to Hard")
+        print("The AI difficulty level is set to Hard")
         AIDifficultyMenu()
 
     elif choice == '4':
@@ -300,6 +316,7 @@ def customCardMenu():
     if choice == '1':
         # Call a function to add a card
         print("Adding a new card")
+        #Card.addCustomCard()
 
     elif choice == '2':
         # Call a function to edit existing card

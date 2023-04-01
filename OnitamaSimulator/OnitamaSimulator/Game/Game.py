@@ -120,10 +120,23 @@ class Game:
 
                     # swap neutral card with card played
                     self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
+                
+                # did anyone win ?
+                win:int = self.WinCon()
+                if (win == 1):
+                    print("Player 1 wins")
+                elif (win  == 2):
+                    print("Player 2 wins")
+                elif (win == 0 ):
+                    pass
+
+                if (win != 0 ):
+                    break
 
                     self.turnCount= self.turnCount+1
                     #update gamestate
                     self.gameStates.append(self.getGameState(self))
+               
                     break
 
     # Methods 
@@ -180,7 +193,7 @@ class Game:
             selectedPiece = input(" Which piece would you like to select?")
 
             row = int(selectedPiece[0])
-            col =int(selectedPiece[2])
+            col = int(selectedPiece[2])
 
             for piece in player.pieces:
                 if piece.row == row and piece.col ==col:
