@@ -69,11 +69,8 @@ class Game:
         self.gameStates.append(self.getGameState(self)) #Initial game state
 
         while (True): # while True game is running
-            print(self.gameStates)
-
-            # player can return to previous round
-
-            if (input("would you like to reload to a previous round?")=="yes"):
+            
+            if (input("would you like to reload to a previous round?")=="yes"):# option for player to return to previous rounds
                 i = int(input("how many rounds back would you like to go? -1 to restart" ))
                 self.returnToPreviousGameState(i)
 
@@ -104,7 +101,7 @@ class Game:
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
 
                 if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card
-                    print("No valid moves")
+                    input("No valid moves, press Enter to confirm")
 
 
                 if (input("Would you like to play one of these moves (yes or no)")=="yes"): # player can decide not to play a move
@@ -120,7 +117,14 @@ class Game:
 
                     # swap neutral card with card played
                     self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
-                
+
+                    
+                    self.turnCount= self.turnCount+1
+                    #update gamestate
+                    self.gameStates.append(self.getGameState(self))
+               
+                    break
+                '''
                 # did anyone win ?
                 win:int = self.WinCon()
                 if (win == 1):
@@ -132,12 +136,8 @@ class Game:
 
                 if (win != 0 ):
                     break
+                    '''
 
-                    self.turnCount= self.turnCount+1
-                    #update gamestate
-                    self.gameStates.append(self.getGameState(self))
-               
-                    break
 
     # Methods 
 
