@@ -20,7 +20,7 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
     
-    coverage-rep:
+  coverage-rep:
       docker:
         - image: cimg/base:stable
       steps:
