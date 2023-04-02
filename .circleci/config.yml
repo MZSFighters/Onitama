@@ -30,6 +30,9 @@ jobs:
             command: npm install && make test-coverage
             name: Install and Make
         - coveralls/upload
+        - name: Coveralls GitHub Action
+          uses: coverallsapp/github-action@v2.0.0
+
 
 
 # Invoke jobs via workflows
