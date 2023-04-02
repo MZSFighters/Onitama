@@ -1,0 +1,13 @@
+name: coverage
+on: [push]
+jobs:
+  ubuntu-run:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Upload coverage reports to Codecov
+          uses: codecov/codecov-action@v3
+  windows-run:
+      runs-on: windows-latest
+      steps:
+        - name: Upload coverage reports to Codecov
+          uses: codecov/codecov-action@v3
