@@ -28,7 +28,7 @@ jobs:
         - run:
             command: npm install && make test-coverage
             name: Install and Make
-        - coveralls/upload
+      - coveralls/upload
 
 
 # Invoke jobs via workflows
