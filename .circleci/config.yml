@@ -23,8 +23,8 @@ jobs:
   build:
       docker:
         - image: 'circleci/node:10.0.0'
-          steps:
-            - checkout
+      steps:
+        - checkout
         - run:
             command: npm install && make test-coverage
             name: Install and Make
