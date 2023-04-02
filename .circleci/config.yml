@@ -4,6 +4,16 @@ version: 2.1
 
 orbs:
   coveralls: coveralls/coveralls@1.0.6
+  jobs:
+    build:
+    docker:
+      - image: 'circleci/node:10.0.0'
+        steps:
+          - checkout
+      - run:
+          command: npm install && make test-coverage
+          name: Install and Make
+      - coveralls/upload
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -20,15 +30,7 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
     
-   build:
-    docker:
-      - image: 'circleci/node:10.0.0'
-        steps:
-          - checkout
-      - run:
-          command: npm install && make test-coverage
-          name: Install and Make
-      - coveralls/upload
+  
 
 
 # Invoke jobs via workflows
