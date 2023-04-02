@@ -1,6 +1,7 @@
 from Card import Card
 from Piece import Piece
 from Board import Board
+import copy
 
 class Player:
 
@@ -68,21 +69,30 @@ class Player:
         intColor = 2
         if (self.colour):
             intColor = 1
-        for move in card.moveset:
+        
+        moves = copy.copy(card.moveset)
+        for move in moves:
             #Need to flip move based on player, From the moves it looks like we assume we are player 2
             if (self.colour == True):
-                move[1] = -1*move[1]
-                move[0] = -1*move[0]
+                calcMoveRow = piece.row + move[0]
+                calcMoveCol  = piece.col + move[1]
+
+            elif (self.colour == False):
+                calcMoveRow = piece.row - move[0]
+                calcMoveCol  = piece.col - move[1]
+     
+
             #Check if the move is within the bounds of the board
             #And check to see if the tile is a friendly piece
-            calcMoveRow = piece.row-move[0]
-            calcMoveCol  = piece.col - move[1]
-     
-            if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
-                if (board.returnTile(calcMoveRow,calcMoveRow).Value() != intColor):
-                    debugBoard[piece.row-move[0]][piece.col-move[1]]=7
-                    returnArray.append([piece.row-move[0], piece.col-move[1]])
 
+            if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
+                if (board.returnTile(calcMoveRow,calcMoveCol).Value() != intColor):
+                    debugBoard[calcMoveRow][calcMoveCol]=7
+                    returnArray.append([calcMoveRow, calcMoveCol])
+                else:
+                    print("On friendly : " , board.returnTile(calcMoveRow,calcMoveRow).Value(),", xy = ",calcMoveCol,calcMoveCol )
+            else:
+                print("Out of bounds:-- xy = ",calcMoveCol,calcMoveRow )
         #Printing board with possible moves
         for row in range(5):
             for col in range(5):
@@ -110,7 +120,9 @@ class Player:
         if (board.returnTile(row,col).piece!= None):
             return board.returnTile(row,col).piece
             
-
+    def PrintPieces(self):
+        for piece in self.pieces:
+            print("player " , self.colour , "piece :" , piece.col,piece.row)
 
     #Utility Functions
     def colour(self):
