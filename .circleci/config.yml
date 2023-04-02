@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  codecov: codecov/codecov@3.2.4
+  coveralls: coveralls/coveralls@2.0.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -20,12 +20,15 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
     
-  coverage-rep:
+  build:
       docker:
-        - image: cimg/base:stable
-      steps:
-        - checkout
-        - codecov/upload
+        - image: 'circleci/node:10.0.0'
+          steps:
+            - checkout
+        - run:
+            command: npm install && make test-coverage
+            name: Install and Make
+        - coveralls/upload
 
 
 # Invoke jobs via workflows
@@ -34,7 +37,7 @@ workflows:
   say-hello-workflow:
     jobs:
       - say-hello
-      - coverage-rep
+      - build
          
 
         
