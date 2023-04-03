@@ -1,4 +1,4 @@
-from Tile  import Tile
+from GameEngine.Tile import Tile
 
 class Board:
 

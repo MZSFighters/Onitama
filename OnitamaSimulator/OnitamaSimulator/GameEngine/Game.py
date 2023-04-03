@@ -1,6 +1,6 @@
-from Board import Board
-from Player import Player
-from Card import Card
+from GameEngine.Board import Board
+from GameEngine.Player import Player
+from GameEngine.Card import Card
 
 class Game:
 
@@ -305,6 +305,6 @@ class Game:
             return Game(self.gameStates[len(self.gameStates)-i-1], self.gameStates[:len(self.gameStates)-i-1])
 
 
-game = Game()
+#game = Game()
 
 

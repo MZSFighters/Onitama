@@ -1,8 +1,10 @@
-import sys
-sys.path.append("./Game")
-from Game import Game
-
-
+from GameEngine import Piece
+from GameEngine import Tile
+from GameEngine import Board
+from GameEngine import Card
+from GameEngine import Player
+from GameEngine import Game
+from GameEngine import GameState
 
 
 def mainMenu():
@@ -64,7 +66,6 @@ def playMenu():
         # Calls a fuction for the player vs ai  menu
         playerVsAIMenu()
 
-
     elif choice == '2':
         print("Starting game...")
         # Call a function which starts the game
@@ -78,6 +79,7 @@ def playMenu():
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         playMenu()
+
 
 def playerVsAIMenu():
     print("Sorry this feature is not supported yet. We apologise for the inconvenience")
@@ -108,6 +110,7 @@ def savedGamesMenu():
         print("Invalid choice, please enter a valid choice")
         savedGamesMenu()
 
+
 def howToPlayMenu():
     print("Instructions on how to play the Onitama Game Simulator:")
     print(" ")
@@ -136,6 +139,7 @@ def howToPlayMenu():
         howToPlayMenu()
 
 
+
 def leaderBoardMenu():
     print("High Score/Leaderboard: ")
     print(" ")
@@ -150,6 +154,7 @@ def leaderBoardMenu():
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         leaderBoardMenu()
+
 
 def settingsMenu():
     print("Game settings:")
@@ -222,6 +227,7 @@ def AIDifficultyMenu():
         print("Invalid choice, please enter a valid choice")
         AIDifficultyMenu()
 
+
 def soundMenu():
     print("Sound settings:")
     print("1. On")
@@ -251,13 +257,15 @@ def soundMenu():
         print("Invalid choice, please enter a valid choice")
         soundMenu()
 
+
 def creditsMenu():
     print("Onitama")
+    print(" ")
     print("Developed by Mohammad Zaid Moonsamy, Ulrich Main, Muhammad Omar, Lefa Moraba, Tumi and Nkosana Kasi")
     print("Artwork by Muhammad Omar and Ulrich Main")
     print("Music by Mohammad Zaid Moonsamy and Tumi")
     print("Sound Effects by Lefa Moraba")
-    print("Special Thanks to [Special Thanks List]")
+    print("Special Thanks to Tamlin Love and Branden Ingram")
     print("Thank you for playing Onitama!")
     print(" ")
     choice = input("Enter 1 to go back to settings : ")
@@ -272,6 +280,7 @@ def creditsMenu():
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         creditsMenu()
+
 
 def helpMenu():
     print("Help:")
@@ -296,6 +305,7 @@ def helpMenu():
         print("Invalid choice, please enter a valid choice")
         helpMenu()
 
+
 def customCardMenu():
     print("1. Add a card")
     print("2. Edit a card")
@@ -308,7 +318,7 @@ def customCardMenu():
     if choice == '1':
         # Call a function to add a card
         print("Adding a new card")
-        #Card.addCustomCard()
+        Card.Card.addCustomCard()
 
     elif choice == '2':
         # Call a function to edit existing card
@@ -326,5 +336,6 @@ def customCardMenu():
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         customCardMenu()
+
 
 mainMenu()

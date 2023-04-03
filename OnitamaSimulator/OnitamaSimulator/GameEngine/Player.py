@@ -1,6 +1,6 @@
-from Card import Card
-from Piece import Piece
-from Board import Board
+from GameEngine.Card import Card
+from GameEngine.Piece import Piece
+from GameEngine.Board import Board
 import copy
 
 class Player:
