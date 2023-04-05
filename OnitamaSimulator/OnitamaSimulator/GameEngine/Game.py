@@ -69,12 +69,12 @@ class Game:
         self.gameStates.append(self.getGameState(self)) #Initial game state
 
         while (True): # while True game is running
-            
-            if (input("would you like to reload to a previous round?")=="yes"):# option for player to return to previous rounds
-                i = int(input("how many rounds back would you like to go? -1 to restart" ))
-                self.returnToPreviousGameState(i)
 
             while(True):
+                            
+                if (input("would you like to reload to a previous round?")=="yes"):# option for player to return to previous rounds
+                    i = int(input("how many rounds back would you like to go? -1 to restart" ))
+                    self.returnToPreviousGameState(i)
 
                 if self.turnCount%2==0:
                     player, opp = self.player1, self.player2
