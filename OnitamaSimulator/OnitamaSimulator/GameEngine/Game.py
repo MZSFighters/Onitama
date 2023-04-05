@@ -97,7 +97,7 @@ class Game:
                 selectedCard = self.userSelectCard(player) # let the user select a card 
 
                 selectedPiece = self.userSelectPiece(self, player) # let user a chooses a piece
-                [print(card.name, card.moveset ) for card in Card.Deck]
+                #[print(card.name, card.moveset ) for card in Card.Deck]
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
                
                 if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card

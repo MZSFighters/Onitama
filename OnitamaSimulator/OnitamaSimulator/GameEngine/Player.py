@@ -89,10 +89,7 @@ class Player:
                 if (board.returnTile(calcMoveRow,calcMoveCol).Value() != intColor):
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])
-                else:
-                    print("On friendly : " , board.returnTile(calcMoveRow,calcMoveRow).Value(),", xy = ",calcMoveCol,calcMoveCol )
-            else:
-                print("Out of bounds:-- xy = ",calcMoveCol,calcMoveRow )
+               
         #Printing board with possible moves
         for row in range(5):
             for col in range(5):
