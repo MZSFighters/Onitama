@@ -1,8 +1,8 @@
-import mainMenu
+import Menu
 
 class App():
 
-    mainMenu.mainMenu()
+    Menu.mainMenu()
     
 
 
