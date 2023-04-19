@@ -1,5 +1,4 @@
-from Tile  import Tile
-
+from GameEngine.Tile import Tile 
 class Board:
 
     """
@@ -22,7 +21,8 @@ class Board:
     """
 
     def __init__(self, player1, player2) -> None:
-        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]   # dummy array
+        
+        array = [[0, 0, 0, 0, 0] ,[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]   
         # Initiate Array to be 2d array of empty tiles
 
         for i in range(0, 5):

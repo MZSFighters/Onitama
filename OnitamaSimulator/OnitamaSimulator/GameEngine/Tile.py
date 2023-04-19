@@ -1,4 +1,3 @@
-import Piece
 
 class Tile:
     """

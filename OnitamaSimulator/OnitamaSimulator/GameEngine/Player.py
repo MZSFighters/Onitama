@@ -1,6 +1,7 @@
-from Card import Card
-from Piece import Piece
-from Board import Board
+from GameEngine.Card import Card
+from GameEngine.Piece import Piece
+from GameEngine.Board import Board
+import copy
 
 class Player:
 
@@ -65,23 +66,40 @@ class Player:
             for col in range(5):
                 debugBoard[row][col] = board.arr[row][col].Value()
         
-        intColor = 2
-        if (self.colour):
-            intColor = 1
+        
         for move in card.moveset:
+
             #Need to flip move based on player, From the moves it looks like we assume we are player 2
             if (self.colour == True):
-                move[1] = -1*move[1]
-                move[0] = -1*move[0]
+                calcMoveRow = piece.row+move[0]
+                calcMoveCol  = piece.col + move[1]
+
+            elif (self.colour==False):
+                calcMoveRow = piece.row-move[0]
+                calcMoveCol  = piece.col - move[1]
+
+            
+            print("Possiblemove: ",calcMoveRow, calcMoveCol)
+     
             #Check if the move is within the bounds of the board
             #And check to see if the tile is a friendly piece
-            calcMoveRow = piece.row-move[0]
-            calcMoveCol  = piece.col - move[1]
-     
+
             if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
-                if (board.returnTile(calcMoveRow,calcMoveRow).Value() != intColor):
-                    debugBoard[piece.row-move[0]][piece.col-move[1]]=7
-                    returnArray.append([piece.row-move[0], piece.col-move[1]])
+
+                if (board.returnTile(calcMoveRow,calcMoveRow).piece==None):
+
+                    
+                    debugBoard[calcMoveRow][calcMoveCol]=7
+                    returnArray.append([calcMoveRow, calcMoveCol])   
+                                     
+                elif board.returnTile(calcMoveRow,calcMoveRow).piece.colour != self.colour  :
+
+                    debugBoard[calcMoveRow][calcMoveCol]=7
+                    returnArray.append([calcMoveRow, calcMoveCol])
+
+        print("Piece:", piece.row, piece.col)
+        print(board.printBoard())
+        print(returnArray)
 
         #Printing board with possible moves
         for row in range(5):

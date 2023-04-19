@@ -23,7 +23,7 @@ class Piece:
     def setTile(self, tile):
         '''Place piece on a tile'''
 
-    def colour(self):
+    def stringColour(self):
         if(self.colour == True):
             return "Red"
         else:

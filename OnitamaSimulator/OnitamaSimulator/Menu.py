@@ -1,9 +1,10 @@
-import sys
-sys.path.append("./Game")
-from Game import Game
-
-
-
+from GameEngine import Piece
+from GameEngine import Tile
+from GameEngine import Board
+from GameEngine import Card
+from GameEngine import Player
+from GameEngine import Game
+from GameEngine import GameState
 
 def mainMenu():
     print("Welcome to Onitama!")

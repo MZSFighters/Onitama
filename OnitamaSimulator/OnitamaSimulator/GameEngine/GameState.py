@@ -127,5 +127,6 @@ class GameState:
         return cursor
 
     def closeConnection(self):
+        conn = sqlite3.connect('OnitamaSimulator.db')
         conn.commit()
         conn.close()

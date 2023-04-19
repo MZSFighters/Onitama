@@ -1,6 +1,6 @@
-from Board import Board
-from Player import Player
-from Card import Card
+from GameEngine.Board import Board 
+from GameEngine.Player import Player
+from GameEngine.Card import Card
 
 class Game:
 
@@ -13,24 +13,42 @@ class Game:
     Player: player1, player2 
     Board: board 
     Card: neutralCard
+    gameStates: Str List - list of current and all previous game states
+    turnCount: int - the current turn number for the game
     ----------
     Methods
     -------
 
-    Game(): Initiates game by distributing two cards to each player (Player.Cards) and neutralCard, gives each player a colour,
-            setups board, and enter while loop that lasts til someone wins the game
+    Game(self, gameState, gameStates, player1Name, ppayer2Name): Initiates game by distributing two cards to each player
+            (Player.Cards) and neutralCard, gives each player a colour, setups board, and enter while loop that lasts
+            until someone wins the game 
 
+    startGame(self, turn): Initializes and begins the gameplay loop
+
+    handOutCards(self, cardString): Distributes cards from deck to players.
+
+    userSelectCard(player): returns the card selected by a player for a turn
+
+    userSelectPiece(self, player): returns the piece selected by player during a turn
+
+    deletePiece(self, piece): Removes the piece specified from the game
+
+    getGameState(self): returns a str of the current game state 
+
+    returnToPreviousGameState(self,i): function that returns the game instance to a previous GameState
     """
 
     def __init__(self, gameState="N02000103044240414344NNNNN", gameStates=[], player1Name="Player1", player2Name= "Player2") -> None:
         '''
-        Constructor for a game instance.
+        Constructor for a game instance. \n
         ------------------------------
-        Parameters
-            gameState: String - specifies the desired state of the game we want to create. (See documentation for details)
-            player1Name: String - specifies desired username of player1 while in game
-            player2Name: String - specifies desired username of player2 while in game
-        
+        Parameters \n
+
+        gameState: str - the gameState we want to create, default value is an initial game \n
+        player1Name: str - name of player1 \n
+        player2Name: str - name of player 2 \n
+        ----------------------------
+
         '''
         
         Card.makeDeck() # Make The Deck
@@ -51,9 +69,14 @@ class Game:
         
         self.startGame(gameState[0]) #start the game
 
-    #Methods
 
-    def startGame(self, turn)->None:
+    def startGame(self, turn:str)->None:
+        """
+        Initiates game loop \n
+        -------
+        Parameters:
+        string: turn: '0' if player 1 starts, '1' if player 2 starts 'N' if default starting order
+        """
         
         if (turn=='0'):
             self.turnCount=0 
@@ -69,12 +92,12 @@ class Game:
         self.gameStates.append(self.getGameState(self)) #Initial game state
 
         while (True): # while True game is running
-            
-            if (input("would you like to reload to a previous round?")=="yes"):# option for player to return to previous rounds
-                i = int(input("how many rounds back would you like to go? -1 to restart" ))
-                self.returnToPreviousGameState(i)
-
+        
             while(True):
+
+                if (input("would you like to reload to a previous round?")=="yes"): # option for player to return to previous rounds
+                    i = int(input("how many rounds back would you like to go? -1 to restart" ))
+                    self.returnToPreviousGameState(i)
 
                 if self.turnCount%2==0:
                     player, opp=self.player1, self.player2
@@ -97,14 +120,15 @@ class Game:
                 selectedCard = self.userSelectCard(player) #  let the user select a card 
 
                 selectedPiece =self.userSelectPiece(self, player) # let user a chooses a piece
-                
+                [print(card.name, card.moveset ) for card in Card.Deck]
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
+                [print(card.name, card.moveset ) for card in Card.Deck]
 
                 if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card
                     input("No valid moves, press Enter to confirm")
 
 
-                if (input("Would you like to play one of these moves (yes or no)")=="yes"): # player can decide not to play a move
+                elif (input("Would you like to play one of these moves (yes or no)")=="yes"): # player can decide not to play a move
 
                     takePiece = player.MakeMove(possibleMoves,self.board, selectedPiece)
                     if (takePiece != None):
@@ -114,30 +138,24 @@ class Game:
                     #reinit the board after the move
                     self.board = Board(self.player1, self.player2)
                     self.board.printBoard()
-
+                   
                     # swap neutral card with card played
                     self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
 
-                    
                     self.turnCount= self.turnCount+1
                     #update gamestate
                     self.gameStates.append(self.getGameState(self))
-               
-                    break
-
-                # did anyone win ?
-                win:int = self.WinCon()
-                if (win == 1):
-                    print("Player 1 wins")
-                elif (win  == 2):
-                    print("Player 2 wins")
-                elif (win == 0 ):
-                    pass
-
-                if (win != 0 ):
-                    break
-
-
+                    # did anyone win ?
+                    
+                    win:int = self.WinCon()
+                    if (win == 1):
+                        print("Player 1 wins")
+                    elif (win  == 2):
+                        print("Player 2 wins")
+                    elif (win == 0 ):
+                        pass
+         
+                        
     # Methods 
 
     ## Methods for game initialization
@@ -145,10 +163,10 @@ class Game:
     @staticmethod
     def handOutCards(self, cardString):
         '''
-        A function which hands out player1's cards, player2's cards and the neutral card
+        A function which hands out player1's cards, player2's cards and the neutral card \n
         ------------------------------
         Parameters
-            cardString: String - specifies desired cards for the game (documentation for more detail) 
+            cardString: String - specifies desired cards for the game (look at documentation for more detail) \n
         '''
 
         cards=[Card]*5
@@ -168,10 +186,12 @@ class Game:
         self.neutralCard =cards[-1]
 
     ## Methods used while in a turn (try to maintain order used)
-    
     @staticmethod
     def userSelectCard(player):
-        '''Function that allows the user to select a card from his hand'''
+        '''
+        Function that allows the user to select a card from his hand \n
+        '''
+
         while (True):
             val = input("Which card would you like to use (0 or 1) ?")
             if (val=='0' or val=='1'):
@@ -181,7 +201,12 @@ class Game:
 
     @staticmethod
     def userSelectPiece(self, player):
-        '''Function that allows the user to select one of their pawns'''
+        '''
+        Function that allows the user to select one of their pawns \n
+        -----------
+        Parameters \n
+        player: Player - the player instance currently selecting a Piece
+        '''
         while True:
 
             self.board.printBoard()
@@ -202,9 +227,9 @@ class Game:
 
     def deletePiece(self, piece):
         '''
-        removes piece from the game 
+        removes piece from the game \n
         ---------
-        piece:Piece - piece to be removed from the game
+        piece:Piece - piece to be removed from the game \n
         '''
         for player in [self.player1, self.player2]:
             for userPiece in player.pieces:
@@ -212,7 +237,7 @@ class Game:
                     player.pieces.remove(userPiece)
                     return
 
-    def WinCon():
+    def WinCon(self):
         pass
         # need to check if either Sensei is taken.
         
@@ -220,9 +245,9 @@ class Game:
         # need to check if arch has been reached.
 
     @staticmethod
-    def getGameState(self):
+    def getGameState(self)-> str:
         '''
-        returns the gameState string for the current game
+        returns the gameState for game as a string \n
         '''
         gameState =""
         #get the turn count
@@ -255,14 +280,13 @@ class Game:
 
         return gameState
 
-
     ## Utility Functions
     def returnToPreviousGameState(self, i):
         '''
-        Allows a user to return to a previous round in their current game
+        Allows a user to return to a previous round in their current game \n
         -----
         Parameter
-        i: int - how many rounds back 
+        i: int - how many turns back to go, -1 to restart game \n
         '''
 
         if (i==-1):
@@ -278,8 +302,3 @@ class Game:
         
         else:
             return Game(self.gameStates[len(self.gameStates)-i-1], self.gameStates[:len(self.gameStates)-i-1])
-
-
-game = Game()
-
-
