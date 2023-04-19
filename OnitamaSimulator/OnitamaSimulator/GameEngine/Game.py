@@ -1,4 +1,4 @@
-from GameEngine.Board import Board 
+from GameEngine.Board import Board
 from GameEngine.Player import Player
 from GameEngine.Card import Card
 
@@ -88,21 +88,21 @@ class Game:
                     self.turnCount=0
             else:
                 self.turnCount=1
-
+        
         self.gameStates.append(self.getGameState(self)) #Initial game state
 
         while (True): # while True game is running
-        
-            while(True):
 
-                if (input("would you like to reload to a previous round?")=="yes"): # option for player to return to previous rounds
+            while(True):
+                            
+                if (input("would you like to reload to a previous round?")=="yes"):# option for player to return to previous rounds
                     i = int(input("how many rounds back would you like to go? -1 to restart" ))
                     self.returnToPreviousGameState(i)
 
                 if self.turnCount%2==0:
-                    player, opp=self.player1, self.player2
+                    player, opp = self.player1, self.player2
                 else:
-                    player, opp=self.player2, self.player1
+                    player, opp = self.player2, self.player1
 
                 print("The current board is") # Show the current board
                 self.board.printBoard()
@@ -120,9 +120,8 @@ class Game:
                 selectedCard = self.userSelectCard(player) #  let the user select a card 
 
                 selectedPiece =self.userSelectPiece(self, player) # let user a chooses a piece
-                [print(card.name, card.moveset ) for card in Card.Deck]
+                
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
-                [print(card.name, card.moveset ) for card in Card.Deck]
 
                 if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card
                     input("No valid moves, press Enter to confirm")
@@ -136,26 +135,34 @@ class Game:
                         print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
 
                     #reinit the board after the move
+                    #debugging 
                     self.board = Board(self.player1, self.player2)
                     self.board.printBoard()
                    
                     # swap neutral card with card played
                     self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
 
+                    #did a player win?
+                    win = self.WinCon()
+                    if(win == 1):
+                        print("Player 1 wins")
+                    elif(win == 2):
+                        print("Player 2 wins")
+                    elif(win == 0):
+                        pass
+                    if(win != 0):
+                        print("game over")
+                        return
                     self.turnCount= self.turnCount+1
                     #update gamestate
                     self.gameStates.append(self.getGameState(self))
-                    # did anyone win ?
-                    
-                    win:int = self.WinCon()
-                    if (win == 1):
-                        print("Player 1 wins")
-                    elif (win  == 2):
-                        print("Player 2 wins")
-                    elif (win == 0 ):
-                        pass
-         
-                        
+                    break
+                else:
+                    continue
+                break
+                
+
+
     # Methods 
 
     ## Methods for game initialization
@@ -238,11 +245,34 @@ class Game:
                     return
 
     def WinCon(self):
-        pass
-        # need to check if either Sensei is taken.
-        
-
-        # need to check if arch has been reached.
+        # need to check if either Sensei is taken, or in arch
+        dedSensei = True
+        # Player 1 checks
+        for player1 in self.player1.pieces:
+            if (player1.col == 2 and player1.row == 4):
+                print("p1 arch")
+                return 1
+            if(player1.isMaster == True):
+               
+                dedSensei = False
+                break
+        if(dedSensei == True):
+            print("p2 take")
+            return 2 # player 2 wins
+        dedSensei = True
+        #player 2
+        for player2 in self.player2.pieces:
+            if (player2.col == 2 and player2.row == 0):
+                print("p2 arch")
+                return 2
+            if(player2.isMaster == True):
+                
+                dedSensei = False
+                break
+        if(dedSensei == True):
+            print("p1 take")
+            return 1 # player 1 wins
+        return 0 
 
     @staticmethod
     def getGameState(self)-> str:

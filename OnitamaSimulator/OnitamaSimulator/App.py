@@ -1,8 +1,10 @@
-from GameEngine.test import *
+from GameEngine import *
 import Menu
 
 class App():
 
-    pass    
+    Menu.mainMenu()
+    
 
-CLASSBITCH.printFUCK()
+
+

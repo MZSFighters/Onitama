@@ -66,21 +66,22 @@ class Player:
             for col in range(5):
                 debugBoard[row][col] = board.arr[row][col].Value()
         
+        intColor = 2
+        if (self.colour):
+            intColor = 1
         
-        for move in card.moveset:
-
+        moves = copy.copy(card.moveset)
+        for move in moves:
             #Need to flip move based on player, From the moves it looks like we assume we are player 2
             if (self.colour == True):
-                calcMoveRow = piece.row+move[0]
+                calcMoveRow = piece.row + move[0]
                 calcMoveCol  = piece.col + move[1]
 
-            elif (self.colour==False):
-                calcMoveRow = piece.row-move[0]
+            elif (self.colour == False):
+                calcMoveRow = piece.row - move[0]
                 calcMoveCol  = piece.col - move[1]
-
-            
-            print("Possiblemove: ",calcMoveRow, calcMoveCol)
      
+
             #Check if the move is within the bounds of the board
             #And check to see if the tile is a friendly piece
 
@@ -128,7 +129,9 @@ class Player:
         if (board.returnTile(row,col).piece!= None):
             return board.returnTile(row,col).piece
             
-
+    def PrintPieces(self):
+        for piece in self.pieces:
+            print("player " , self.colour , "piece :" , piece.col,piece.row)
 
     #Utility Functions
     def colour(self):

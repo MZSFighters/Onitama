@@ -51,15 +51,15 @@ class GameState:
 
         """
 
-        if len(gameString) != 25:
-            raise Exception("Invalid game state string : Incorrect length")
-        self.gameString = gameString
+        # if len(gameString) != 25:
+        #     raise Exception("Invalid game state string : Incorrect length")
+        # self.gameString = gameString
 
-        if gameString[1:3] == "NN" or gameString[11:13] == "NN": #or ZZ
-            raise Exception("Invalid game state string : Sensei piece already captured")
+        # if gameString[1:3] == "NN" or gameString[11:13] == "NN": #or ZZ
+        #     raise Exception("Invalid game state string : Sensei piece already captured")
 
 
-        thisTableName = "GamesTable"
+        #thisTableName = "GamesTable"
         self.gameStringsArr = gameStringsArr
         self.playersNames = playersNames
         self.createDatabase()
@@ -78,7 +78,7 @@ class GameState:
 
         
     def createTable(self):
-        #thisTableName = "GamesTable"
+        thisTableName = playersNames
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
         cursor.execute("CREATE TABLE IF NOT EXISTS " + thisTableName + "(gameStringsArr TEXT, PlayersNames TEXT)")
@@ -87,6 +87,7 @@ class GameState:
         conn.close()
 
     def saveGame(self, gameStringsArr):
+        thisTableName = playersNames
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
 
@@ -110,6 +111,7 @@ class GameState:
 
         #cursor = createConnection() will test this at a later time
         
+        thisTableName = playersNames
         gameNo = str(gameNo)
         cursor.execute("SELECT * FROM " + thisTableName + " WHERE rowid=" + gameNo)
         collect = cursor.fetchone()
