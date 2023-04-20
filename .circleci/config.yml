@@ -27,7 +27,8 @@ jobs:
         - checkout
         - codecov/upload
       
-
+  - name: Upload coverage reports to Codecov
+    uses: codecov/codecov-action@v3
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
