@@ -26,6 +26,12 @@ jobs:
       steps:
         - checkout
         - codecov/upload
+        
+  
+  hello-test:
+      script: 
+        - apt-get update && apt-get install -y python3
+        - python3 helloworld.py
 
 
 # Invoke jobs via workflows
@@ -35,3 +41,5 @@ workflows:
     jobs:
       - say-hello
       - coverage-rep
+      
+ 
