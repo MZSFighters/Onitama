@@ -89,7 +89,7 @@ class Game:
             else:
                 self.turnCount=1
         
-        self.gameStates.append(self.getGameState(self)) #Initial game state
+        self.gameStates.append(self.getGameState(self)) #Initial game state added to list of all game states
 
         while (True): # while True game is running
 

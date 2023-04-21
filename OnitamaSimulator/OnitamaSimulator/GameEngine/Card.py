@@ -1,5 +1,6 @@
 import random # for card selector function
 import re
+from GameState import GameState as GameState
 
 class Card:
 
@@ -47,7 +48,7 @@ class Card:
     @staticmethod
     def makeDeck():
         """
-        Makes the deck of cards for the game
+        Makes the deck of cards for the game including custom cards
 
         Parameters
         ----------
@@ -61,7 +62,6 @@ class Card:
         Deck.append(Card( 'Boar', False, [[0,-1], [0, 1], [1, 0] ])) 
         Deck.append(Card( 'Elephant', False, [[0,1], [0, -1], [1,-1], [1, 1] ]))
 
-        Card.Deck =Deck
 
     @staticmethod
     def selectCard( cardNum):
@@ -192,3 +192,7 @@ class Card:
         for row in array:
             print(row)
 
+
+
+
+Card.makeDeck()
