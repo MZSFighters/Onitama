@@ -1,6 +1,5 @@
 import random # for card selector function
 import re
-from GameState import GameState as GameState
 
 class Card:
 
