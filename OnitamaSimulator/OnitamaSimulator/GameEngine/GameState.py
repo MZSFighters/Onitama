@@ -71,7 +71,7 @@ class GameState:
         
         conn = sqlite3.connect('OnitamaSimulator.db')
 
-        cursor = conn.cursor()
+        #cursor = conn.cursor()
 
         conn.commit()
         conn.close()
@@ -85,6 +85,16 @@ class GameState:
 
         conn.commit()
         conn.close()
+
+    def createTableCustCard(self):
+        TableName = "ThisName" #Placeholder for now
+        conn = sqlite3.connect("OnitamaSimulator.db")
+        cursor = conn.cursor()
+        cursor.execute("CREATE TABELE IF NOT EXISTS " + TableName + "(Card TEXT, CardName TEXT)")
+
+        conn.commit()
+        conn.close()
+
 
     def saveGame(self, gameStringsArr):
         thisTableName = playersNames
@@ -122,6 +132,40 @@ class GameState:
         conn.close()
 
         return fetchedGameArray
+    
+    def saveCard(self, card, cardName):
+        TableName = "ThisName"
+        conn = sqlite3.connect("OnitamaSimulator.db")
+        cursor = conn.cursor()
+
+        jsonListCard = json.dumps(card)
+
+        cursor.execute("INSERT INTO " + TableName + "VALUES(?)", (jsonListCard,))
+
+        conn.commit()
+        conn.close()
+
+    def fetchGame(self, cardName): 
+        """        
+        """
+
+        conn = sqlite3.connect('OnitamaSimulator.db')
+        cursor = conn.cursor()
+
+        #cursor = createConnection() will test this at a later time
+        
+        TableName = "ThisName"
+        cursor.execute("SELECT * FROM " + TableName + " WHERE rowid=" + cardName)
+        collect = cursor.fetchone()
+        process = collect[0]
+        fetchedCard = json.loads(process)
+
+        conn.commit()
+        conn.close()
+
+        return fetchedCard
+
+    
 
     def createConnection(self):
         conn = sqlite3.connect('OnitamaSimulator.db')
