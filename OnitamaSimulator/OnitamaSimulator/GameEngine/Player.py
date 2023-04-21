@@ -86,10 +86,22 @@ class Player:
             #And check to see if the tile is a friendly piece
 
             if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
-                if (board.returnTile(calcMoveRow,calcMoveCol).Value() != intColor):
+
+                if (board.returnTile(calcMoveRow,calcMoveRow).piece==None):
+
+                    
+                    debugBoard[calcMoveRow][calcMoveCol]=7
+                    returnArray.append([calcMoveRow, calcMoveCol])   
+                                     
+                elif board.returnTile(calcMoveRow,calcMoveRow).piece.colour != self.colour  :
+
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])
-               
+
+        print("Piece:", piece.row, piece.col)
+        print(board.printBoard())
+        print(returnArray)
+
         #Printing board with possible moves
         for row in range(5):
             for col in range(5):

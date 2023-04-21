@@ -25,7 +25,9 @@ jobs:
         - image: cimg/base:stable
       steps:
         - checkout
-        - codecov/upload
+        - run:
+            name: Upload coverage report to Codecov
+            command: bash <(curl -s https://codecov.io/bash) -t 8ae53bed-b9ea-4002-bc39-1ee6d8d9a91c
 
 
 # Invoke jobs via workflows
@@ -35,3 +37,5 @@ workflows:
     jobs:
       - say-hello
       - coverage-rep
+      
+ 

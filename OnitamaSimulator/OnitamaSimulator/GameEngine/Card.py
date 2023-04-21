@@ -2,6 +2,7 @@ import random # for card selector function
 import re
 
 class Card:
+
     """Class which represents a Card within the game
 
      ----------
@@ -12,16 +13,19 @@ class Card:
      moveset(2D integer array) - all possible moves a card allows. Each move is is 2-vector [down/up, left/right] down is negative, left is negative
      Colour (Boolean) - True is Blue, red is False
 
-     Internal Attributes
+     private Attributes
      alreadyInGame (Boolean) - card has already been picked in current game
-
      ------
      Methods
 
      makeDeck(): Makes the deck of Cards - must be called whenever a game is made -> plan to add to database/lib
      selectCard() Selects a new card from the deck
-     """
+     addCustomCard(): Allows user to add custom card to deck
+     listAllCards(): Lists all cards in the deck
 
+     _printMoveSet(self): Prints the move set for the specified card
+     """
+    
      #Attributes
     Deck= None
 
@@ -40,7 +44,6 @@ class Card:
         return ""
 
 #methods
-
     @staticmethod
     def makeDeck():
         """
@@ -66,7 +69,7 @@ class Card:
         Returns a specified or a random unselected card from the deck.    
         ---------
         Parameters
-        cardNum: String of size 1 - returns the card at index cardNum form the deck
+        cardNum: String of length 1 - returns the card at index cardNum form the deck
                  if cardNum== 'N' picks a random card
         ---------
 
@@ -106,7 +109,7 @@ class Card:
     @staticmethod    
     def selectSpecifiedCard(name):
         '''
-        Returns card whose name matches the name parameter
+        Returns card whose name matches the name parameter \n
         -------------
         Parameters
         name: String - name of the card wanted
@@ -168,6 +171,7 @@ class Card:
         '''
         for i in range(0, len(Card.Deck)):
             print(Card.Deck[i])
+
 
 
 #Utility Functions
