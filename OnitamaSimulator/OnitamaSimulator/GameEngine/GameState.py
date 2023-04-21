@@ -44,66 +44,82 @@ class GameState:
     
     """
 
-    def __init__(self, playersNames, gameStringsArr):
+    def __init__(self):
 
         """
         Note : will implement proper checks at later time. These can be ignored for now.
 
+        (Sprint 2 notes)
+        Note : Will probably need to create an instance of GameState somewhere early in the program (Maybe main menu,
+                right at the start of the game etc.)
+
+                The reasoning for this is on creation of an instance, the tables for the custom cards 
+                and the table for the games are created. Allowing a user to create and save a custom card from 
+                the main menu. When wanting to save the final game list (List of gameState strings), need to be done 
+                only once at the end of the game.
+
+                To do : Put instance and function calls in correct place
+
         """
 
-        # if len(gameString) != 25:
-        #     raise Exception("Invalid game state string : Incorrect length")
-        # self.gameString = gameString
-
-        # if gameString[1:3] == "NN" or gameString[11:13] == "NN": #or ZZ
-        #     raise Exception("Invalid game state string : Sensei piece already captured")
-
-
-        #thisTableName = "GamesTable"
-        self.gameStringsArr = gameStringsArr
-        self.playersNames = playersNames
+        #self.gameStringsArr = gameStringsArr
+        self.GameTableName = "GamesTable"
+        self.CustCardTableName = "CardsTable"
+    
         self.createDatabase()
         self.createTable()
-        self.saveGame(gameStringsArr)
+        self.createTableCustCard()
+        #self.saveGame(gameStringsArr)
 
-
+       
     def createDatabase(self): 
         
         conn = sqlite3.connect('OnitamaSimulator.db')
 
-        #cursor = conn.cursor()
-
         conn.commit()
         conn.close()
 
-        
+    
+    """
+    Creation of Tables:
+    -------------------
+    One table for games
+
+    One table for the custom card
+
+    """
+
     def createTable(self):
-        thisTableName = playersNames
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
-        cursor.execute("CREATE TABLE IF NOT EXISTS " + thisTableName + "(gameStringsArr TEXT, PlayersNames TEXT)")
+        cursor.execute("CREATE TABLE IF NOT EXISTS " + self.GameTableName + " (gameStringsArr TEXT)")
 
         conn.commit()
         conn.close()
 
     def createTableCustCard(self):
-        TableName = "ThisName" #Placeholder for now
         conn = sqlite3.connect("OnitamaSimulator.db")
         cursor = conn.cursor()
-        cursor.execute("CREATE TABELE IF NOT EXISTS " + TableName + "(Card TEXT, CardName TEXT)")
+        cursor.execute("CREATE TABLE IF NOT EXISTS " + self.CustCardTableName + " (Card TEXT, CardName TEXT)")
 
         conn.commit()
         conn.close()
 
 
+    """
+    SaveGame and fetchGame (For the gameState)
+    -----------------------------------------
+    
+    """
+
+
     def saveGame(self, gameStringsArr):
-        thisTableName = playersNames
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
 
         jsonList = json.dumps(gameStringsArr)
 
-        cursor.execute("INSERT INTO " + thisTableName + " VALUES(?)" ,(jsonList,))
+        cursor.execute("INSERT INTO " + self.GameTableName + " VALUES(?)" ,(jsonList,))
 
         conn.commit()
         conn.close()
@@ -119,11 +135,8 @@ class GameState:
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
 
-        #cursor = createConnection() will test this at a later time
-        
-        thisTableName = playersNames
         gameNo = str(gameNo)
-        cursor.execute("SELECT * FROM " + thisTableName + " WHERE rowid=" + gameNo)
+        cursor.execute("SELECT * FROM " + self.GameTableName + " WHERE rowid=" + gameNo)
         collect = cursor.fetchone()
         process = collect[0]
         fetchedGameArray = json.loads(process)
@@ -133,37 +146,42 @@ class GameState:
 
         return fetchedGameArray
     
-    def saveCard(self, card, cardName):
-        TableName = "ThisName"
+
+
+    """
+    saveCard and fetchCard (For the custom card)
+    --------------------------------------------
+
+    """
+
+    def saveCard(self, card):
         conn = sqlite3.connect("OnitamaSimulator.db")
         cursor = conn.cursor()
+        cardName = card[0]
 
         jsonListCard = json.dumps(card)
 
-        cursor.execute("INSERT INTO " + TableName + "VALUES(?)", (jsonListCard,))
+        cursor.execute("INSERT INTO " + self.CustCardTableName + " VALUES(? , ?)", (cardName, jsonListCard))
 
         conn.commit()
         conn.close()
 
-    def fetchGame(self, cardName): 
+    def fetchCards(self): 
         """        
         """
 
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
-
-        #cursor = createConnection() will test this at a later time
         
-        TableName = "ThisName"
-        cursor.execute("SELECT * FROM " + TableName + " WHERE rowid=" + cardName)
+        cursor.execute("SELECT * FROM " + self.CustCardTableName)
         collect = cursor.fetchone()
         process = collect[0]
-        fetchedCard = json.loads(process)
+        fetchedCards = json.loads(process)
 
         conn.commit()
         conn.close()
 
-        return fetchedCard
+        return fetchedCards
 
     
 
