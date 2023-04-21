@@ -157,6 +157,15 @@ class Game:
                     self.turnCount= self.turnCount+1
                     #update gamestate
                     self.gameStates.append(self.getGameState(self))
+
+                    #Save Game
+                    if (input("Would you like to save current game?(yes/no)") == "yes"):
+                        gameName = input("Enter name to save game as: ")
+                        self.SaveGame(self.getGameState(self), gameName)
+                        choice=input("Game Saved!\nWould you like to continue playing?(yes/no): ")
+                        if choice != "yes":
+                            return
+
                     break
                 else:
                     continue
@@ -342,34 +351,14 @@ class Game:
         GameState: string - GameString with state to be saved \n
         GameName: string - Name of the game to be saved,used to create new section in config file \n
         """
+        #create ConfigParser object and read the config file
         config = ConfigParser()
-        config.read("gameconfig.ini")
+        config.read("save_game_config.ini")
 
+        #add info to be saved to config file
         config.add_section(GameName)
         config.set(GameName,"GameString",GameState)
 
-        with open("gameconfig.ini", "w") as configfile:
+        with open("save_game_config.ini", "w") as configfile:
             config.write(configfile)
 
-    def LoadGame(self) -> str:
-        """
-        Displays Saved Games and allows user to select one
-
-        returns the gameState for game as a string \n
-        """
-        config = ConfigParser()
-        config.read("gameconfig.ini")
-
-        print("Available Games: ")
-        for section in config.sections():
-            print(section)
-
-        gamename = input("Write the game name you wish to load: ")
-
-        try:
-            gameData = config[gamename]
-        except:
-            print("Game not found!Please enter a name from the list.")
-            self.LoadGame()
-
-        return gameData['GameString']

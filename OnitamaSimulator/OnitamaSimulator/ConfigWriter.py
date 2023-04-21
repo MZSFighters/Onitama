@@ -2,7 +2,7 @@ from configparser import ConfigParser
 
 config = ConfigParser()
 
-config["DefaultGameState"] = {
+config["DefaultGame"] = {
     "GameString" : "N02000103044240414344NNNNN"
     # Could add more game info to the section(dictionary) if needed
     # e.g
@@ -15,5 +15,5 @@ config["DefaultGameState"] = {
 
 }
 
-with open("gameconfig.ini", "w") as configfile:
+with open("save_game_config.ini", "w") as configfile:
     config.write(configfile)
