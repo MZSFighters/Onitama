@@ -1,6 +1,7 @@
 from GameEngine.Board import Board
 from GameEngine.Player import Player
 from GameEngine.Card import Card
+from configparser import ConfigParser
 
 class Game:
 
@@ -332,3 +333,43 @@ class Game:
         
         else:
             return Game(self.gameStates[len(self.gameStates)-i-1], self.gameStates[:len(self.gameStates)-i-1])
+
+    def SaveGame(self, GameState,GameName):
+        """
+        Allows a user to save game state to config file \n
+        -----
+        Parameter
+        GameState: string - GameString with state to be saved \n
+        GameName: string - Name of the game to be saved,used to create new section in config file \n
+        """
+        config = ConfigParser()
+        config.read("gameconfig.ini")
+
+        config.add_section(GameName)
+        config.set(GameName,"GameString",GameState)
+
+        with open("gameconfig.ini", "w") as configfile:
+            config.write(configfile)
+
+    def LoadGame(self) -> str:
+        """
+        Displays Saved Games and allows user to select one
+
+        returns the gameState for game as a string \n
+        """
+        config = ConfigParser()
+        config.read("gameconfig.ini")
+
+        print("Available Games: ")
+        for section in config.sections():
+            print(section)
+
+        gamename = input("Write the game name you wish to load: ")
+
+        try:
+            gameData = config[gamename]
+        except:
+            print("Game not found!Please enter a name from the list.")
+            self.LoadGame()
+
+        return gameData['GameString']
