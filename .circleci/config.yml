@@ -25,7 +25,7 @@ jobs:
           name: Run tests with coverage
           command: |
             coverage run --source=test -m unittest discover '*_test.py'
-            coverage report
+
 
 
 
