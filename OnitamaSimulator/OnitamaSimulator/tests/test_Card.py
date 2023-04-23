@@ -43,7 +43,13 @@ class testCard(unittest.TestCase):
 
 
     def test_addCustomCard(self):
-        pass
+        card = Card("TheSittingSiiter", True, [])
+        Card.makeDeck()
+        Card.addCustomCard(card)
+
+        self.assertIn(card, Card.Deck)
+
+
 
     def test_listAllCards(self):
         # Assert that the function returns all cards in the deck

@@ -1,7 +1,7 @@
 import random # for card selector function
 import re
 from  GameEngine.GameState import GameState
-# from GameEngine import GameState
+
 class Card:
 
     """Class which represents a Card within the game
@@ -129,7 +129,7 @@ class Card:
                 return card
         
     @staticmethod
-    def addCustomCard():
+    def addCustomCard(inputCard=None):
         '''
         Allows a user to add their own custom card to the deck of cards
         ------
@@ -137,39 +137,43 @@ class Card:
         Deck can not be null when this function is called
         '''
 
-        card = Card("", True, [])
-        inp= input("What should the name of the card be?")
-        card.name= inp
-        while (True):
+        if (inputCard != None): # then card info was passed through as a paramater
+            card = inputCard
 
-            inp= input("What colour should the card be? (Red or Blue)")
-            if (inp.lower()!="red" and inp.lower()!="blue"):
-                print("Invalid options please try again")
+        else:
+            card = Card("", True, [])
+            inp= input("What should the name of the card be?")
+            card.name= inp
+            while (True):
 
-            else:
-                if (inp.lower()=="red"):
-                    card.colour = False
+                inp= input("What colour should the card be? (Red or Blue)")
+                if (inp.lower()!="red" and inp.lower()!="blue"):
+                    print("Invalid options please try again")
+
                 else:
-                    card.colour= True
-                break
+                    if (inp.lower()=="red"):
+                        card.colour = False
+                    else:
+                        card.colour= True
+                    break
 
-        addingMoreMoves=True
-        while (addingMoreMoves):    
-            card._printMoveSet()
-            inp= input("Which coordinates (starting from the position shown below) should your cards be able to reach? insert as coordinates row col")
-            r = re.compile('[0-4]\s[0-4]')
+            addingMoreMoves=True
+            while (addingMoreMoves):    
+                card._printMoveSet()
+                inp= input("Which coordinates (starting from the position shown below) should your cards be able to reach? insert as coordinates row col")
+                r = re.compile('[0-4]\s[0-4]')
 
-            if (r.match(inp)): #if valid format add it to the cards moveset
-                row = int(inp[0])-2
-                col = int(inp[2])-2
-                card.moveset.append([row, col])
+                if (r.match(inp)): #if valid format add it to the cards moveset
+                    row = int(inp[0])-2
+                    col = int(inp[2])-2
+                    card.moveset.append([row, col])
 
-                inp= input("add another move? (yes or no)")
-                if (inp.lower()=="no"):
-                    addingMoreMoves=False
+                    inp= input("add another move? (yes or no)")
+                    if (inp.lower()=="no"):
+                        addingMoreMoves=False
 
-            else:
-                print("Invalid option please try again")
+                else:
+                    print("Invalid option please try again")
 
         print(card)
         Card.Deck.append(card) 
