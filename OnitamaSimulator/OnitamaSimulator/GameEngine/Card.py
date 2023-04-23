@@ -1,6 +1,7 @@
 import random # for card selector function
 import re
-
+from  GameEngine.GameState import GameState
+# from GameEngine import GameState
 class Card:
 
     """Class which represents a Card within the game
@@ -60,6 +61,16 @@ class Card:
         Deck.append(Card( 'Dragon', False, [[-1,-1], [-1, 1], [1, -2], [1, -2]] ))
         Deck.append(Card( 'Boar', False, [[0,-1], [0, 1], [1, 0] ])) 
         Deck.append(Card( 'Elephant', False, [[0,1], [0, -1], [1,-1], [1, 1] ]))
+
+
+        ## Add custom cards to deck
+        gs = GameState()
+        customCards = gs.fetchCards()
+        for card in customCards:
+            # have to convert moveset to an integer 2d aray instead of a string 2d array
+            Deck.append(Card( card[0], card[1], card[2] ))
+        
+        Card.Deck=Deck
 
 
     @staticmethod
@@ -160,26 +171,39 @@ class Card:
             else:
                 print("Invalid option please try again")
 
-        card.printCard()
+        print(card)
         Card.Deck.append(card) 
+        gs = GameState()
+        gs.saveCard(card)
         print("Your card has been added to the deck!")
 
-    def listAllCards():
+    @staticmethod
+    def listAllCards(testing=False):
         '''
         Prints a list of all cards in the deck - call deck first
         '''
+        Card.makeDeck()
+
+
+        if (testing==True):
+            seenCards=[]
+            for i in range(0 , len(Card.Deck)):
+                card = Card.Deck[i]
+                if card not in seenCards:
+                    seenCards.append(Card)
+            return seenCards
+
         for i in range(0, len(Card.Deck)):
             print(Card.Deck[i])
-
 
 
 #Utility Functions
 
     def colourValue(self):
         if(self.colour == True):
-            return "Red"
-        else:
             return "Blue"
+        else:
+            return "Red"
     def _printMoveSet(self):
         '''Prints a a board of all possible moves for a given card (assuming the pawn is at position (2,2))'''
 
@@ -192,6 +216,3 @@ class Card:
             print(row)
 
 
-
-
-Card.makeDeck()

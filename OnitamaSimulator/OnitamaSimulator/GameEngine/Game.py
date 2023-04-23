@@ -66,9 +66,7 @@ class Game:
         Game.handOutCards(self, gameState[21:]) # hand out their cards + neutral card handled as well
 
         self.board = Board(self.player1, self.player2) #Populate the  board with players' pieces
-        
-        self.startGame(gameState[0]) #start the game
-
+        self.gameStates.append(self.getGameState(self)) #Initial game state added to list of all game states
 
     def startGame(self, turn:str)->None:
         """
@@ -88,8 +86,6 @@ class Game:
                     self.turnCount=0
             else:
                 self.turnCount=1
-        
-        self.gameStates.append(self.getGameState(self)) #Initial game state added to list of all game states
 
         while (True): # while True game is running
 
@@ -117,10 +113,12 @@ class Game:
                 print("Finally, your own cards are") # print the player's cards
                 print(player.cards[0], player.cards[1])
 
-                selectedCard = self.userSelectCard(player) #  let the user select a card 
+                 #  Ask user which card they want and fetch it
+                selectedCardNum = self.getSelectedCardFromUser(player)
+                selectedCard = self.fetchSelectedCard(player,selectedCardNum)
 
-                selectedPiece =self.userSelectPiece(self, player) # let user a chooses a piece
-                
+                selectedPieceCoords = self.getSelectedPieceFromUser(self, player) # let user a chooses a piece
+                selectedPiece = self.fetchSelectedPiece( player, selectedPieceCoords)
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
 
                 if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card
@@ -161,12 +159,9 @@ class Game:
                     continue
                 break
                 
-
-
     # Methods 
 
     ## Methods for game initialization
-
     @staticmethod
     def handOutCards(self, cardString):
         '''
@@ -193,44 +188,62 @@ class Game:
         self.neutralCard =cards[-1]
 
     ## Methods used while in a turn (try to maintain order used)
+
     @staticmethod
-    def userSelectCard(player):
+    def getSelectedCardFromUser(player):
         '''
-        Function that allows the user to select a card from his hand \n
+        Function that returns user input for which card they want to use as an integer
         '''
 
-        while (True):
+        while True:
             val = input("Which card would you like to use (0 or 1) ?")
             if (val=='0' or val=='1'):
-                return player.cards[int(val)]
+                return int(val)
             else:
                 print("You selected an invalid option. Please try again")
+    @staticmethod
+    def fetchSelectedCard(player, val):
+        '''
+        Function that returns a user's selected card \n
+        '''
+        return player.cards[val]
+
 
     @staticmethod
-    def userSelectPiece(self, player):
+    def getSelectedPieceFromUser(self, player):
         '''
-        Function that allows the user to select one of their pawns \n
-        -----------
-        Parameters \n
-        player: Player - the player instance currently selecting a Piece
+        Function that allows a user to select a piece they want to play
         '''
-        while True:
 
+        while True:
             self.board.printBoard()
             print("Your pieces are at the following positions")
             for piece in player.pieces:
                 print(piece.row, piece.col)
 
             selectedPiece = input(" Which piece would you like to select?")
-
             row = int(selectedPiece[0])
             col = int(selectedPiece[2])
 
             for piece in player.pieces:
                 if piece.row == row and piece.col ==col:
-                    return piece
-                
+                    return [row,col]
+            
             print("Invalid coordinates given, please try again")
+
+    @staticmethod
+    def fetchSelectedPiece( player, coords):
+        '''
+        Function that allows the user to select one of their pawns \n
+        -----------
+        Parameters \n
+        player: Player - the player instance currently selecting a Piece
+        '''
+        
+        for piece in player.pieces:
+            if piece.row == coords[0] and piece.col ==coords[1]:
+                return piece
+                            
 
     def deletePiece(self, piece):
         '''
@@ -283,7 +296,7 @@ class Game:
         #get the turn count
         gameState+=(str(self.turnCount%2))
         
-        #next we get the coordiantes of the pieces of the players first coordinates of each player's pieces is the master
+        #next we get the coordinates of the pieces of the players first coordinates of each player's pieces is the master
         players =[self.player1, self.player2]
         for player in players:
             pieceString =["N"]*10

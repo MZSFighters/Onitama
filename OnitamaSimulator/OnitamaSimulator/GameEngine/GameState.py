@@ -1,6 +1,3 @@
-#import Board
-#import Piece
-#import Tile
 import sqlite3
 import json
 
@@ -157,9 +154,10 @@ class GameState:
     def saveCard(self, card):
         conn = sqlite3.connect("OnitamaSimulator.db")
         cursor = conn.cursor()
-        cardName = card[0]
+        cardName = card.name
 
-        jsonListCard = json.dumps(card)
+        cardAsList= [cardName, card.colour, card.moveset]
+        jsonListCard = json.dumps(cardAsList)
 
         cursor.execute("INSERT INTO " + self.CustCardTableName + " VALUES(? , ?)", (cardName, jsonListCard))
 
@@ -170,21 +168,25 @@ class GameState:
         """        
         """
 
+        cards=[]
+
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
         
         cursor.execute("SELECT * FROM " + self.CustCardTableName)
-        collect = cursor.fetchone()
-        process = collect[0]
-        fetchedCards = json.loads(process)
+        collect = cursor.fetchall()
+        
+        for cardDict in collect:
+            cards.append(json.loads(cardDict[1] ))
+
 
         conn.commit()
         conn.close()
 
-        return fetchedCards
+        return cards
+
 
     
-
     def createConnection(self):
         conn = sqlite3.connect('OnitamaSimulator.db')
         cursor = conn.cursor()
@@ -194,3 +196,4 @@ class GameState:
         conn = sqlite3.connect('OnitamaSimulator.db')
         conn.commit()
         conn.close()
+

@@ -70,6 +70,7 @@ def playMenu():
         print("Starting game...")
         # Call a function which starts the game
         game = Game.Game()
+        game.startGame(game.gameStates[0][0]) #start the game
 
     elif choice == '3':
         # Call a function which takes you back to the main menu
@@ -310,10 +311,11 @@ def customCardMenu():
     print("1. Add a card")
     print("2. Edit a card")
     print("3. Delete a card")
-    print("4. Back to main menu")
+    print("4. See all cards currently in the game")
+    print("5. Back to main menu")
     choice = input("Enter your choice (1-4): ")
 
-    list = ['1', '2', '3', '4']
+    list = ['1', '2', '3', '4', '5']
 
     if choice == '1':
         # Call a function to add a card
@@ -330,6 +332,10 @@ def customCardMenu():
 
     elif choice == '4':
         # Call a function to take you back to the main menu
+        Card.Card.makeDeck()
+        Card.Card.listAllCards()
+
+    elif choice =='5':
         mainMenu()
 
     # If the user enters a invalid choice
