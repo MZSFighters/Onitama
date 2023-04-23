@@ -5,6 +5,7 @@ from GameEngine import Card
 from GameEngine import Player
 from GameEngine import Game
 from GameEngine import GameState
+from configparser import ConfigParser
 
 
 def mainMenu():
@@ -97,19 +98,29 @@ def playerVsAIMenu():
 
 
 def savedGamesMenu():
-    print("Saved Games:")
-    print(" ")
-    choice = input("Enter 1 to go back to main menu: ")
+    #print("Saved Games:")
+    #print(" ")
+    gameString = LoadGame()
 
-    list = ['1']
+    if gameString == "":
+        choice = input("Enter 1 to go back to main menu: ")
 
-    if choice == '1':
+        list = ['1']
+
+        if choice == '1':
+            mainMenu()
+
+        # If the user enters an invalid choice
+        elif choice is not list:
+            print("Invalid choice, please enter a valid choice")
+            savedGamesMenu()
+    else:
+        #start game at selected state
+        game = Game.Game(gameString)
+
+        #return to menu when loaded game is exited
         mainMenu()
 
-    # If the user enters a invalid choice
-    elif choice is not list:
-        print("Invalid choice, please enter a valid choice")
-        savedGamesMenu()
 
 
 def howToPlayMenu():
@@ -343,5 +354,31 @@ def customCardMenu():
         print("Invalid choice, please enter a valid choice")
         customCardMenu()
 
+def LoadGame() -> str:
+    """
+    Displays Saved Games and allows user to select one
+
+    returns the gameState for game as a string \n
+    """
+    config = ConfigParser()
+    config.read("save_game_config.ini")
+
+    print("Available Games: ")
+    for section in config.sections():
+        print(section)
+
+    if(len(config.sections())==0):
+        print("No saved Games!")
+        return ""
+
+    gamename = input("Write the name of the game you wish to load: ")
+
+    try:
+        gameData = config[gamename]
+    except:
+        print("Game not found!Please enter a name from the list.")
+        LoadGame()
+    gamestring = gameData['GameString']
+    return gamestring
 
 mainMenu()

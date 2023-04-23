@@ -1,6 +1,7 @@
 from GameEngine.Board import Board
 from GameEngine.Player import Player
 from GameEngine.Card import Card
+from configparser import ConfigParser
 
 class Game:
 
@@ -154,6 +155,15 @@ class Game:
                     self.turnCount= self.turnCount+1
                     #update gamestate
                     self.gameStates.append(self.getGameState(self))
+
+                    #Save Game
+                    if (input("Would you like to save current game?(yes/no)") == "yes"):
+                        gameName = input("Enter name to save game as: ")
+                        self.SaveGame(self.getGameState(self), gameName)
+                        choice=input("Game Saved!\nWould you like to continue playing?(yes/no): ")
+                        if choice != "yes":
+                            return
+
                     break
                 else:
                     continue
@@ -345,3 +355,23 @@ class Game:
         
         else:
             return Game(self.gameStates[len(self.gameStates)-i-1], self.gameStates[:len(self.gameStates)-i-1])
+
+    def SaveGame(self, GameState,GameName):
+        """
+        Allows a user to save game state to config file \n
+        -----
+        Parameter
+        GameState: string - GameString with state to be saved \n
+        GameName: string - Name of the game to be saved,used to create new section in config file \n
+        """
+        #create ConfigParser object and read the config file
+        config = ConfigParser()
+        config.read("save_game_config.ini")
+
+        #add info to be saved to config file
+        config.add_section(GameName)
+        config.set(GameName,"GameString",GameState)
+
+        with open("save_game_config.ini", "w") as configfile:
+            config.write(configfile)
+
