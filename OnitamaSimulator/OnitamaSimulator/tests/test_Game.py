@@ -4,8 +4,8 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 sys.path.append( parentdir+ '\\GameEngine')
-from Game import Game
-from Card import Card
+from GameEngine.Game import Game
+from GameEngine.Card import Card
 
 class testGame(unittest.TestCase):
 
