@@ -69,6 +69,7 @@ class Game:
         self.board = Board(self.player1, self.player2) #Populate the  board with players' pieces
         self.gameStates.append(self.getGameState(self)) #Initial game state added to list of all game states
 
+
     def startGame(self, turn:str)->None:
         """
         Initiates game loop \n
@@ -120,6 +121,7 @@ class Game:
 
                 selectedPieceCoords = self.getSelectedPieceFromUser(self, player) # let user a chooses a piece
                 selectedPiece = self.fetchSelectedPiece( player, selectedPieceCoords)
+                
                 possibleMoves = player.previewMoves(selectedCard,selectedPiece,self.board) # let user see all possible moves
 
                 if (len(possibleMoves)==0): # there are no valid moves, player should reselect piece and card

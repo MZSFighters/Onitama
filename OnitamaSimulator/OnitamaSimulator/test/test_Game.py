@@ -15,8 +15,7 @@ class testGame(unittest.TestCase):
 
     
     def test_startGame(self):
-        pass
-
+        game= Game()
 
     def test_handOutCards(self):
         game = Game()
@@ -75,6 +74,8 @@ class testGame(unittest.TestCase):
             self.assertNotIn(piece, pieces)
         
     
+    
+
     def test_WinCon(self):
         pass
 
