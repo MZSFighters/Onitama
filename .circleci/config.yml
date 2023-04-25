@@ -15,7 +15,7 @@ jobs:
           command: pip install -r requirements.txt
       - run:
           name: Run tests with coverage
-          command: coverage run -m pytest ....
+          command: coverage run -m pytest test
       - run:
           name: Upload coverage report to Codecov
           command: bash <(curl -s https://codecov.io/bash) -t a0fb5f22-c434-45bc-aa82-2d5f2622a3d1
