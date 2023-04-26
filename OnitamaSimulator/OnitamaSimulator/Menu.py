@@ -54,6 +54,7 @@ def mainMenu():
         print("Invalid choice, please enter a valid choice")
         mainMenu()
 
+
 def playMenu():
     print("Select game mode:")
     print("1. Player vs AI")
@@ -98,29 +99,37 @@ def playerVsAIMenu():
 
 
 def savedGamesMenu():
-    #print("Saved Games:")
-    #print(" ")
-    gameString = LoadGame()
 
-    if gameString == "":
-        choice = input("Enter 1 to go back to main menu: ")
+    print("Load Game Menu:")
+    print("1. Load Game State")
+    print("2. Delete Game State")
+    print("3. Back To Main Menu")
+    choice = input("Enter your choice (1-3): ")
 
-        list = ['1']
+    if choice == '1':
 
-        if choice == '1':
+        gameString = LoadGame()
+
+        if gameString == "":
+            savedGamesMenu()
+
+        else:
+            # start game at selected state
+            game = Game.Game(gameString)
+
+            # return to menu when loaded game is exited
             mainMenu()
 
-        # If the user enters an invalid choice
-        elif choice is not list:
-            print("Invalid choice, please enter a valid choice")
-            savedGamesMenu()
-    else:
-        #start game at selected state
-        game = Game.Game(gameString)
+    elif choice == '2':
+        deleteMenu()
+        savedGamesMenu()
 
-        #return to menu when loaded game is exited
+    elif choice == '3':
         mainMenu()
 
+    else:
+        print("Invalid choice, please enter a valid choice")
+        savedGamesMenu()
 
 
 def howToPlayMenu():
@@ -131,7 +140,7 @@ def howToPlayMenu():
     print("Players take turns moving one of their pawns according to the movement card they have.")
     print("There are five movement cards in play each game, two for each player and one neutral card.")
     print("Each movement card shows possible moves for any pawn on the board.")
-    print("A pawn may move any number of spaces in any direction shown on the card,") 
+    print("A pawn may move any number of spaces in any direction shown on the card,")
     print("given that making that move lands you outside the board or on top ofyour own pawn.")
     print("If a pawn lands on a space occupied by an opponent's pawn, that pawn is captured and removed from the board.")
     print("If a player cannot make a move on their turn, they lose the game.")
@@ -149,7 +158,6 @@ def howToPlayMenu():
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         howToPlayMenu()
-
 
 
 def leaderBoardMenu():
@@ -260,7 +268,7 @@ def soundMenu():
         soundMenu()
 
     elif choice == '3':
-        
+
         # Calls a function to take you back to the settings menu
         settingsMenu()
 
@@ -354,12 +362,14 @@ def customCardMenu():
         print("Invalid choice, please enter a valid choice")
         customCardMenu()
 
+
 def LoadGame() -> str:
     """
     Displays Saved Games and allows user to select one
 
     returns the gameState for game as a string \n
     """
+
     config = ConfigParser()
     config.read("save_game_config.ini")
 
@@ -367,18 +377,60 @@ def LoadGame() -> str:
     for section in config.sections():
         print(section)
 
-    if(len(config.sections())==0):
+    if (len(config.sections()) == 0):
         print("No saved Games!")
         return ""
 
-    gamename = input("Write the name of the game you wish to load: ")
+    gamename = input("Write the name of the game you wish to load(Enter 0 To Go Back): ")
+
+    if gamename == '0':
+        return ""
 
     try:
         gameData = config[gamename]
     except:
-        print("Game not found!Please enter a name from the list.")
+        print("Game not found!Please enter a name from the list.(Case Sensitive!)")
         LoadGame()
     gamestring = gameData['GameString']
     return gamestring
+
+
+def deleteMenu():
+    """
+    Displays Saved Games and allows user to select one to delete(remove from config file)
+
+    """
+
+    config = ConfigParser()
+    config.read("save_game_config.ini")
+
+    print("Available Games: ")
+    for section in config.sections():
+        print(section)
+
+    if (len(config.sections()) == 0):
+        print("No saved Games!")
+        return
+
+    gamename = input("Write the name of the game you wish to delete(Enter 0 To Go Back): ")
+
+    if gamename == '0':
+        return
+
+    try:  # check if given name is a valid config file section
+        gameData = config[gamename]
+    except:
+        print("Game not found!Please enter a name from the list.(case sensitive)")
+        deleteMenu()
+
+    # remove game
+    config.remove_section(gamename)
+
+    # update config file
+    with open("save_game_config.ini", "w") as configfile:
+        config.write(configfile)
+
+    print("Game Removed!")
+
 
 mainMenu()
