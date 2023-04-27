@@ -6,7 +6,7 @@ from GameEngine import Player
 from GameEngine import Game
 from GameEngine import GameState
 from configparser import ConfigParser
-
+from UseEnv import UseEnv
 
 def mainMenu():
     print("Welcome to Onitama!")
@@ -60,6 +60,7 @@ def playMenu():
     print("1. Player vs AI")
     print("2. Player vs Player")
     print("3. Back to main menu")
+    print("4. AI vs AI ")
     choice = input("Enter your choice (1-3): ")
 
     list = ['1', '2', '3']
@@ -77,11 +78,16 @@ def playMenu():
     elif choice == '3':
         # Call a function which takes you back to the main menu
         mainMenu()
+    elif choice == '4':
+        doEnv()
 
     # If the user enters a invalid choice
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         playMenu()
+def doEnv():
+    envClass = UseEnv()
+    envClass.DoTheEnv()
 
 
 def playerVsAIMenu():
