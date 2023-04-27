@@ -1,6 +1,6 @@
 import random # for card selector function
 import re
-from  GameEngine.GameState import GameState
+from GameEngine.GameState import GameState
 
 class Card:
 
@@ -58,9 +58,24 @@ class Card:
         Deck=[]
         Deck.append(Card( 'Tiger', True, [[-1,0], [2, 0]])) 
         Deck.append(Card( 'Crab', True, [[1,0], [0, 2], [0, -2]])) 
+        Deck.append(Card( 'Monkey', True, [[1,-1], [1, 1], [-1, 1], [-1,-1]])) 
+        Deck.append(Card( 'Crane', True, [[1,0], [-1, -1], [-1, 1]])) 
         Deck.append(Card( 'Dragon', False, [[-1,-1], [-1, 1], [1, -2], [1, -2]] ))
-        Deck.append(Card( 'Boar', False, [[0,-1], [0, 1], [1, 0] ])) 
         Deck.append(Card( 'Elephant', False, [[0,1], [0, -1], [1,-1], [1, 1] ]))
+        Deck.append(Card( 'Mantis', False, [[-1,0], [1,-1], [1, 1] ]))
+        Deck.append(Card( 'Boar', False, [[0,-1], [0, 1], [1, 0] ])) 
+        Deck.append(Card( 'Frog', False, [[1,1], [-1, -1], [0,2] ]))
+        Deck.append(Card( 'Goose', True, [[0,1], [0, -1], [-1,-1], [1,1] ]))
+        Deck.append(Card( 'Horse', False, [[1,0], [-1, 0], [0,1] ]))
+        Deck.append(Card( 'Eel', True, [[-1,1], [1, 1], [0,-1] ]))
+        Deck.append(Card( 'Rabbit', True, [[-1,1], [1, -1], [0,-2] ]))
+        Deck.append(Card( 'Rooster', False, [[0,-1], [1, -1], [0,1], [-1,1] ]))
+        Deck.append(Card( 'Ox', True, [[-1,0], [1, 0], [0,-1] ]))
+        Deck.append(Card( 'Cobra', False, [[0,1], [1, -1], [-1,-1] ]))
+        
+
+        
+        
 
 
         ## Add custom cards to deck

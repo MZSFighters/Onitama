@@ -22,11 +22,6 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash) -t a0fb5f22-c434-45bc-aa82-2d5f2622a3d1
 
 
-
-
-
-
-
 workflows:
   version: 2.
   build-test:
