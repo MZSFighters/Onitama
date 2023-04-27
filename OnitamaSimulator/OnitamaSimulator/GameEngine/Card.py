@@ -72,12 +72,7 @@ class Card:
         Deck.append(Card( 'Rooster', False, [[0,-1], [1, -1], [0,1], [-1,1] ]))
         Deck.append(Card( 'Ox', True, [[-1,0], [1, 0], [0,-1] ]))
         Deck.append(Card( 'Cobra', False, [[0,1], [1, -1], [-1,-1] ]))
-        
-
-        
-        
-
-
+    
         ## Add custom cards to deck
         gs = GameState()
         customCards = gs.fetchCards()
