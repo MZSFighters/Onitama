@@ -2,4 +2,4 @@ coverage
 codecov
 pytest
 numpy
-gymasium
+gymnasium
