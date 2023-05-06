@@ -167,45 +167,15 @@ class Game:
         Parameters:
         string: turn: '0' if player 1 starts, '1' if player 2 starts 'N' if default starting order
         """
-        
-        self.determineStartingTurn(turn)
+        # I think step will need to run AImakeTurn so a game loop for the AI might be pointlesss
+        pass
 
-        while (True): # while True game is running
-
-            while (True):
-                        
-                if self.turnCount%2==0:
-                        player, opp = self.player1, self.player2
-                else:
-                        player, opp = self.player2, self.player1
-
-
-                playedTurn =self.AImakeTurn()
-
-                if (playedTurn==True):
-                    break
-
-            #reinit the board after the move
-
-            
-            # swap neutral card with card played
-
-            #did a player win?
-            win = self.WinCon()
-            if(win == 1):
-                print("Player 1 wins")
-            elif(win == 2):
-                print("Player 2 wins")
-            elif(win == 0):
-                pass
-            if(win != 0):
-                print("game over")
-                break
-            self.turnCount= self.turnCount+1
-            #update gamestate
-            self.gameStates.append(self.getGameState())
 
     def AImakeTurn(self, player,  piece, card, move):
+        '''Right now it takes in which player is making their turn, card object they want to use, piece object\n 
+        they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
+        in a card number and piece coordinate/number.
+        '''
 
         if (piece not in player.pieces):
             return False
@@ -217,7 +187,20 @@ class Game:
 
         if move in moves:
             self.makeMove(move[0], move[1], piece)
-            return True
+
+            win = self.WinCon()
+            if(win == 1):
+                print("Player 1 wins")
+            elif(win == 2):
+                print("Player 2 wins")
+            elif(win == 0):
+                pass
+            if(win != 0):
+                print("game over")
+            self.turnCount= self.turnCount+1
+            #update gamestate
+            self.gameStates.append(self.getGameState())
+
 
     def playerMakeTurn(self, player, opp):
 
