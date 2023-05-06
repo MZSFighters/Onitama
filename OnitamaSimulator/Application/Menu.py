@@ -1,12 +1,4 @@
-from GameEngine import Piece
-from GameEngine import Tile
-from GameEngine import Board
-from GameEngine import Card
-from GameEngine import Player
-from GameEngine import Game
-from GameEngine import GameState
-from configparser import ConfigParser
-from UseEnv import UseEnv
+from GameEngine import *
 
 def mainMenu():
     print("Welcome to Onitama!")
