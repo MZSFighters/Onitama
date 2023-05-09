@@ -176,7 +176,6 @@ class Game:
         they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
         in a card number and piece coordinate/number.
         '''
-
         if (piece not in player.pieces):
             return False
         
@@ -187,7 +186,7 @@ class Game:
 
         if move in moves:
             self.makeMove(move[0], move[1], piece)
-
+            
             win = self.WinCon()
             if(win == 1):
                 print("Player 1 wins")
@@ -514,4 +513,5 @@ class Game:
         gameState+= str(Card.Deck.index(self.neutralCard))
 
         return gameState
-      
+##### Methods to extract variables
+
