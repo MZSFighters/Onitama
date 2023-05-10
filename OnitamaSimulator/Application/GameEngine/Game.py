@@ -170,7 +170,6 @@ class Game:
         # I think step will need to run AImakeTurn so a game loop for the AI might be pointlesss
         pass
 
-
     def AImakeTurn(self, player,  piece, card, move):
         '''Right now it takes in which player is making their turn, card object they want to use, piece object\n 
         they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
@@ -200,7 +199,6 @@ class Game:
             self.turnCount= self.turnCount+1
             #update gamestate
             self.gameStates.append(self.getGameState())
-
 
     def playerMakeTurn(self, player, opp):
 
