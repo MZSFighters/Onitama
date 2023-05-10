@@ -171,7 +171,8 @@ class Game:
         pass
 
     def AImakeTurn(self, player,  piece, card, move):
-        '''Right now it takes in which player is making their turn, card object they want to use, piece object\n 
+        '''
+        Right now it takes in which player is making their turn, card object they want to use, piece object\n 
         they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
         in a card number and piece coordinate/number.
         '''
