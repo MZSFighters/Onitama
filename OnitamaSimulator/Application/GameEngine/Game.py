@@ -175,31 +175,46 @@ class Game:
         '''Right now it takes in which player is making their turn, card object they want to use, piece object\n 
         they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
         in a card number and piece coordinate/number.
+        returns 1 = player 1 wins
+                2 = player 2 wins
+                3 = invalid move
         '''
         if (piece not in player.pieces):
             return False
         
         if (card not in player.cards):
             return False
-        
-        moves = player.previewMoves(card, piece,self.board)
+        ## need to convert the abstract move into a co-ordinate
+        if (player.colour == True):
+            calcMoveRow = piece.row + move[0]
+            calcMoveCol  = piece.col + move[1]
+        elif (player.colour == False):
+            calcMoveRow = piece.row - move[0]
+            calcMoveCol  = piece.col - move[1]
+        move = [calcMoveRow,calcMoveCol]
+
+        #check if the move is valid
+        moves = self.getPossibleMoves(player, card, piece,self.board)
 
         if move in moves:
             self.makeMove(move[0], move[1], piece)
             
-            win = self.WinCon()
-            if(win == 1):
-                print("Player 1 wins")
-            elif(win == 2):
-                print("Player 2 wins")
-            elif(win == 0):
-                pass
-            if(win != 0):
-                print("game over")
             self.turnCount= self.turnCount+1
             #update gamestate
             self.gameStates.append(self.getGameState())
-
+            win = self.WinCon()
+            if(win != 0):
+                print("game over")
+            if(win == 1):
+                print("Player 1 wins")
+                return 1
+            elif(win == 2):
+                print("Player 2 wins")
+                return 2
+            elif(win == 0):
+                pass
+        else:
+            return 3
 
     def playerMakeTurn(self, player, opp):
 
@@ -403,6 +418,9 @@ class Game:
             for userPiece in player.pieces:
                 if userPiece== piece:
                     player.pieces.remove(userPiece)
+                    # setting row and column to identify the piece object as dead
+                    userPiece.row = -1
+                    userPiece.col = -1
                     return
 
     def WinCon(self):
