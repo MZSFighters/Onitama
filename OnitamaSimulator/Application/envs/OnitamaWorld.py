@@ -192,7 +192,7 @@ class OnitamaEnv(gym.Env):
                 reward = DEFAULT_REWARDS("Player 1 Wins")
         
         # termination if someone won or if an invalid move was chosen
-        if(reward ==DEFAULT_REWARDS("Player 1 Wins") or reward<0):
+        if(reward == DEFAULT_REWARDS("Player 1 Wins") or reward<0):
             terminated = True
         else:
             terminated = False
@@ -205,8 +205,7 @@ class OnitamaEnv(gym.Env):
             self._currentPlayer = 2
         else:
             self._currentPlayer = 1
-
-
+        print("Reward is ", reward)
         return obs, reward, terminated, False, info
 
     def MovePiece(self,piece,place):
