@@ -1,5 +1,5 @@
 from GameEngine import *
-
+import UseEnv
 def mainMenu():
     print("Welcome to Onitama!")
     print("1. Play")
@@ -78,7 +78,7 @@ def playMenu():
         print("Invalid choice, please enter a valid choice")
         playMenu()
 def doEnv():
-    envClass = UseEnv()
+    envClass = UseEnv.UseEnv()
     envClass.DoTheEnv()
 
 

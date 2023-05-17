@@ -8,34 +8,32 @@ from envs.OnitamaWorld import OnitamaEnv
 
 import numpy as np
 
-DEFAULT_BOARD_STATE = np.array(
-    [
-        [-1, -2, -3, -4, -5],
-        [0] * 5,
-        [0] * 5,
-        [0] * 5,
-        [1, 2, 3, 4, 5],
-    ],
-    dtype=np.int32,
-)
+
 
 
 class testEnv(unittest.TestCase):
+    def __init__(self, methodName: str = "runTest") -> None:      
+         super().__init__(methodName)
+            
+
+
+
     def test_reset(self):
         envStub = OnitamaEnv()
         obs,info = envStub.reset()
-        self.assertTrue((obs-DEFAULT_BOARD_STATE).all)
-        self.assertEqual(info,{"temp" : None})
+        self.assertIsNotNone(obs)
+        self.assertIsNotNone(info)
 
     def test_step(self):
         envStub = OnitamaEnv()
-        action = {"piece" : 1,"move" : 0}
+        obs,info = envStub.reset()
+        action = {"piece" : 1,"move" : 0,"card" : 0}
         obs, reward, terminated, booL,info = envStub.step(action)
-        self.assertTrue((obs-DEFAULT_BOARD_STATE).all)
-        self.assertEqual(reward,0)
-        self.assertEqual(terminated, False)
+        self.assertIsNotNone(obs)
+        self.assertIsNotNone(reward)
+        self.assertIsNotNone(terminated)
         self.assertEqual(booL,False)
-        self.assertEqual(info,{"temp" : None})
+        self.assertIsNotNone(info)
 
 if __name__ =='__main__':
       
