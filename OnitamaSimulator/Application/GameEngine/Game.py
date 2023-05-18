@@ -378,6 +378,9 @@ class Game:
             for userPiece in player.pieces:
                 if userPiece== piece:
                     player.pieces.remove(userPiece)
+                    # setting row and column to identify the piece object as dead
+                    userPiece.row = -1
+                    userPiece.col = -1
                     return
 
     def WinCon(self):

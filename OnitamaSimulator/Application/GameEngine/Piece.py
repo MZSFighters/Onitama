@@ -14,7 +14,7 @@
 """
 
 class Piece:
-    def __init__(self, colour, isMaster, row=0, col =0):
+    def __init__(self, colour, isMaster, row = 0, col  = 0):
         self.isMaster = isMaster
         self.colour = colour
         self.row =row 
@@ -29,3 +29,4 @@ class Piece:
         else:
             return "Blue"
         
+    
