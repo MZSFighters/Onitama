@@ -5,10 +5,8 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 sys.path.append( parentdir+ '\\GameEngine')
 from GameEngine.Game import Game
-from GameEngine.Card import Card
 
 class testGame(unittest.TestCase):
-
 
     def test_Constructor(self):
         pass
@@ -82,7 +80,7 @@ class testGame(unittest.TestCase):
     
     def test_getGameState(self):
         game = Game()
-        self.assertEqual(game.gameStates[-1], game.getGameState(game))
+        self.assertEqual(game.gameStates[-1], game.getGameState())
 
 
     def test_returnToPreviousGameState(self):

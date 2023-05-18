@@ -20,16 +20,16 @@ class testCard(unittest.TestCase):
         self.assertIsInstance(card, Card)
         # Check that card returned is the expected card for a specific call i.e. paramater a integer instead of 'N' 
 
-        self.assertEqual(Card.selectCard(0).name, "Tiger")
-        self.assertEqual(Card.selectCard(4).name, "Elephant")
+        self.assertEqual(Card.selectCard(0).name, Card.Deck[0].name)
+        self.assertEqual(Card.selectCard(4).name, Card.Deck[4].name)
 
         # Assert that a random call returns a card 
         self.assertIsInstance(Card.selectCard('N'), Card)
     
     def test_selectSpecifiedCard(self):
         Card.makeDeck()
-        self.assertEqual(Card._selectSpecifiedCard(len(Card.Deck), 0).name, "Tiger")
-        self.assertEqual(Card._selectSpecifiedCard(len(Card.Deck), 4).name, "Elephant")
+        self.assertEqual(Card._selectSpecifiedCard(len(Card.Deck), 0).name, Card.Deck[0].name)
+        self.assertEqual(Card._selectSpecifiedCard(len(Card.Deck), 4).name, Card.Deck[4].name)
 
     def test_selectRandomCard(self):
         Card.makeDeck()

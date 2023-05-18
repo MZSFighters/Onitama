@@ -59,13 +59,14 @@ def playMenu():
 
     if choice == '1':
         # Calls a fuction for the player vs ai  menu
-        playerVsAIMenu()
+        game = Game.Game()
+        game.startGame(game.gameStates[0][0], "easy") #start the game
 
     elif choice == '2':
         print("Starting game...")
         # Call a function which starts the game
         game = Game.Game()
-        game.startGame(game.gameStates[0][0]) #start the game
+        game.startGame(game.gameStates[0][0], "Player2") #start the game
 
     elif choice == '3':
         # Call a function which takes you back to the main menu
@@ -77,6 +78,7 @@ def playMenu():
     elif choice is not list:
         print("Invalid choice, please enter a valid choice")
         playMenu()
+
 def doEnv():
     envClass = UseEnv.UseEnv()
     envClass.DoTheEnv()
