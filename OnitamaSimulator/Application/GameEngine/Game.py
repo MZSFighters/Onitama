@@ -349,7 +349,6 @@ class Game:
 
         return(player.pieces[i])                          
 
-
     ## Core Loop functions
 
     def playerPickMove(self,possibleMoves:int):
@@ -379,8 +378,8 @@ class Game:
 
         if (self.board.returnTile(row,col).piece!= None):
             takePiece = self.board.returnTile(row, col).piece
+            print("Took piece at tile : ", int(row), " ", int(col))
             self.deletePiece(takePiece)
-            print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
             return self.board.returnTile(row,col).piece
 
     def getPossibleMoves(self,player ,card:Card, piece, board:Board, PRINT= True) -> int:
@@ -421,12 +420,12 @@ class Game:
 
             if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
 
-                if (board.returnTile(calcMoveRow,calcMoveRow).piece==None):
+                if (board.returnTile(calcMoveRow,calcMoveCol).piece==None):
                  
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])   
                                      
-                elif board.returnTile(calcMoveRow,calcMoveRow).piece.colour != player.colour :
+                elif board.returnTile(calcMoveRow,calcMoveCol).piece.colour != player.colour :
 
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])

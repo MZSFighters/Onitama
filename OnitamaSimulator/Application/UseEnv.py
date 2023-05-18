@@ -29,5 +29,3 @@ class UseEnv():
             if terminated or truncated:
                 observation, info = env.reset()
 
-env = UseEnv()
-env.DoTheEnv()
