@@ -48,13 +48,3 @@ class Board:
             for j in range(5):
                 print(str(self.arr[i][j].Value()),end=" ")           # arr[i][j] is the tile and we are calling a function of tile called Value()
             print("")
-
-    def makeIntegerRepresentationOfBoard(self):
-        board=[]
-        for i in range(5):
-            row =[]
-            for j in range(5):
-                row.append(self.arr[i][j].Value())         # arr[i][j] is the tile and we are calling a function of tile called Value()
-            board.append(row)
-
-        return board

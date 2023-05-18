@@ -1,4 +1,4 @@
 from .OnitamaWorld import OnitamaEnv
 
 
-__all__ = ["OnitamaEnv", "UseEnv"]
+__all__ = ["OnitamaEnv"]
