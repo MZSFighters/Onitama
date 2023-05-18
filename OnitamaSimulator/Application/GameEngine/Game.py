@@ -4,6 +4,13 @@ from GameEngine.Card import Card
 from configparser import ConfigParser
 import copy
 import random
+import logging
+
+logging.basicConfig(level=logging.DEBUG,
+                    format="{asctime} {levelname:<8} {message}",
+                    style='{',
+                    filename="%slog" %__file__[:-2],
+                    filemode='w')
 
 class Game:
 
@@ -158,6 +165,9 @@ class Game:
     def startGame(self, turn:str, player2Name):
         '''A function which either starts a player-controlled game or an AI-controlled game'''
 
+        logging.debug("Game Starting")
+        logging.debug(f"Turn count : {self.turnCount}")
+
         if (player2Name=="Player2"): # second player is another human player
             self._startGame(turn, self.playerMakeTurn)
 
@@ -180,8 +190,12 @@ class Game:
 
             if self.turnCount%2==0:
                     player, opp = self.player1, self.player2
+                    logging.debug(f"Player 1 colour : {player.colour}")
+                    logging.debug(f"Player 2 colour : {opp.colour}")
             else:
                     player, opp = self.player2, self.player1
+                    logging.debug(f"Player 1 colour : {opp.colour}")
+                    logging.debug(f"Player 2 colour : {player.colour}")
 
             while (True):
 
@@ -194,6 +208,10 @@ class Game:
                 self.board.printBoard()
 
                 if (playedTurn==True):
+                    for i in range(len(player.pieces)):
+                        logging.debug(f"Current player pieces after move : piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
+                    for i in range(len(opp.pieces)):
+                        logging.debug(f"Waiting player pieces after move : piece {i} : position [{opp.pieces[i].row}][{opp.pieces[i].col}]")
                     break
 
             #did a player win?
@@ -208,6 +226,7 @@ class Game:
                 print("game over")
                 break
             self.turnCount= self.turnCount+1
+            logging.debug('\n'f"Current turn : {self.turnCount}")
             self.gameStates.append(self.getGameState())
 
     def playerMakeTurn(self, player, opp):
@@ -217,15 +236,21 @@ class Game:
                 
                 print(" The neutral card is") # print neutral cards
                 print(self.neutralCard)
+                logging.debug(f"Neutral Card : {self.neutralCard.name}")
 
                 print("The opposition has the following cards") # print the opposition's cards
                 print(opp.cards[0], opp.cards[1])
+                logging.debug(f"Opponent card; number 0 : {opp.cards[0].name}")
+                logging.debug(f"Opponent card; number 1 : {opp.cards[1].name}")
 
                  #  Ask user which card they want and fetch it
-                selectedCardNum = self.getSelectedCardFromUser(self,player)
+                selectedCardNum = self.getSelectedCardFromUser(self,player) 
+                logging.debug(f"Player Selected card number : {selectedCardNum}")
                 selectedCard = self.fetchSelectedCard(player,selectedCardNum)
+                logging.debug(f"Player selected card name : {selectedCard.name}")
 
                 selectedPieceCoords = self.getSelectedPieceFromUser(self, player) # let user a chooses a piece
+                logging.debug(f"Player selected piece at coordinates : {selectedPieceCoords}")
                 selectedPiece = self.fetchSelectedPiece( player, selectedPieceCoords)
                 
                 possibleMoves = self.getPossibleMoves( player, selectedCard,selectedPiece,self.board) # let user see all possible moves
@@ -236,6 +261,7 @@ class Game:
 
                 elif (input("Would you like to play one of these moves (yes or no)")=="yes"): # player can decide not to play a move
                     move = self.playerPickMove(possibleMoves)
+                    logging.debug(f"Player selected move : ")
                     self.makeMove(move[0], move[1], selectedPiece)
                     self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
                     return True
@@ -257,6 +283,8 @@ class Game:
 
             for card in player.cards:
                 print(card)
+            logging.debug(f"Player card; number 0 : {player.cards[0].name}")
+            logging.debug(f"Player card; number 1 : {player.cards[1].name}")
 
             selectedCard = int(input("Which card would you like to use? 0 or 1?"))
 
@@ -284,6 +312,9 @@ class Game:
             print("Your pieces are at the following positions")
             for piece in player.pieces:
                 print(piece.row, piece.col)
+            for i in range(len(player.pieces)):
+                logging.debug(f"Current player pieces before move: piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
+            #for i in range(len(.pieces))
 
             selectedPiece = input(" Which piece would you like to select?")
             row = int(selectedPiece[0])
@@ -334,6 +365,7 @@ class Game:
         selectedMove = input(" Which move would you like to select?")
         row = int(selectedMove[0])
         col =int(selectedMove[2])
+        logging.debug(f"Player selected to move to position : [{row}][{col}]")
 
         return row, col
 
