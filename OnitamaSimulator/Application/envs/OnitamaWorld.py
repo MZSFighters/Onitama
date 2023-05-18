@@ -8,6 +8,7 @@ sys.path[0] =sys.path[0] + ('\../')
 from GameEngine import *
 
 
+
 DEFAULT_BOARD = np.array(
     [
         [-1, -2, -3, -4, -5],
