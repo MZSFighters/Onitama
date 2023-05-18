@@ -3,6 +3,7 @@ from GameEngine.Player import Player
 from GameEngine.Card import Card
 from configparser import ConfigParser
 import copy
+import random
 
 class Game:
 
@@ -110,16 +111,16 @@ class Game:
 
 ### Methods used in game architecture
 
-    def startGame(self, turn:str, mode ="player"):
+    def startGame(self, turn:str, player2Name):
         '''A function which either starts a player-controlled game or an AI-controlled game'''
 
-        if (mode=="player"):
-            self.startGamePlayer(turn)
+        if (player2Name=="Player2"): # second player is another human player
+            self._startGame(turn, self.playerMakeTurn)
 
-        else:
-            self.startGameAI(turn)
+        if (player2Name=="easy"):
+            self._startGame(turn, self.easy)
 
-    def startGamePlayer(self, turn:str)->None:
+    def _startGame(self, turn:str, player2AI)->None:
         """
         Initiates game loop for human player \n
         -------
@@ -127,18 +128,24 @@ class Game:
         string: turn: '0' if player 1 starts, '1' if player 2 starts 'N' if default starting order
         """
         
+        AIs = [self.playerMakeTurn, player2AI]
+
         self.determineStartingTurn(turn)
 
         while (True): # while True game is running
 
-            while (True):
-                        
-                if self.turnCount%2==0:
-                        player, opp = self.player1, self.player2
-                else:
-                        player, opp = self.player2, self.player1
+            if self.turnCount%2==0:
+                    player, opp = self.player1, self.player2
+            else:
+                    player, opp = self.player2, self.player1
 
-                playedTurn =self.playerMakeTurn(player, opp)
+            while (True):
+
+                if player == self.player1:
+                    playedTurn =AIs[0](player, opp)
+                else:
+                    playedTurn= AIs[1](player, opp)
+
                 self.board = Board(self.player1, self.player2)
                 self.board.printBoard()
 
@@ -157,64 +164,7 @@ class Game:
                 print("game over")
                 break
             self.turnCount= self.turnCount+1
-            #update gamestate
             self.gameStates.append(self.getGameState())
-
-    def startGameAI(self, turn:str)->None:
-        """
-        Initiates game loop for AI player \n
-        -------
-        Parameters:
-        string: turn: '0' if player 1 starts, '1' if player 2 starts 'N' if default starting order
-        """
-        # I think step will need to run AImakeTurn so a game loop for the AI might be pointlesss
-        pass
-
-
-    def AImakeTurn(self, player,  piece, card, move):
-        '''Right now it takes in which player is making their turn, card object they want to use, piece object\n 
-        they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
-        in a card number and piece coordinate/number.
-        returns 1 = player 1 wins
-                2 = player 2 wins
-                3 = invalid move
-        '''
-        if (piece not in player.pieces):
-            return False
-        
-        if (card not in player.cards):
-            return False
-        ## need to convert the abstract move into a co-ordinate
-        if (player.colour == True):
-            calcMoveRow = piece.row + move[0]
-            calcMoveCol  = piece.col + move[1]
-        elif (player.colour == False):
-            calcMoveRow = piece.row - move[0]
-            calcMoveCol  = piece.col - move[1]
-        move = [calcMoveRow,calcMoveCol]
-
-        #check if the move is valid
-        moves = self.getPossibleMoves(player, card, piece,self.board)
-
-        if move in moves:
-            self.makeMove(move[0], move[1], piece)
-            
-            self.turnCount= self.turnCount+1
-            #update gamestate
-            self.gameStates.append(self.getGameState())
-            win = self.WinCon()
-            if(win != 0):
-                print("game over")
-            if(win == 1):
-                print("Player 1 wins")
-                return 1
-            elif(win == 2):
-                print("Player 2 wins")
-                return 2
-            elif(win == 0):
-                pass
-        else:
-            return 3
 
     def playerMakeTurn(self, player, opp):
 
@@ -226,7 +176,6 @@ class Game:
 
                 print("The opposition has the following cards") # print the opposition's cards
                 print(opp.cards[0], opp.cards[1])
-
 
                  #  Ask user which card they want and fetch it
                 selectedCardNum = self.getSelectedCardFromUser(self,player)
@@ -313,10 +262,20 @@ class Game:
         
         for piece in player.pieces:
             if piece.row == coords[0] and piece.col ==coords[1]:
-                return piece                     
+                return piece   
+
+    def fetchSelectedPieceFromPlayerPieces(self, player, i):
+        '''
+        Function that allows the user to select one of their pawns \n
+        -----------
+        Parameters \n
+        player: Player - the player instance currently selecting a Piece
+        '''
+
+        return(player.pieces[i])                          
 
 
-### Core Loop functions
+    ## Core Loop functions
 
     def playerPickMove(self,possibleMoves:int):
         '''
@@ -348,7 +307,7 @@ class Game:
             print("Took piece at tile : ", int(takePiece.row), " ", int(takePiece.col))
             return self.board.returnTile(row,col).piece
 
-    def getPossibleMoves(self,player ,card:Card, piece, board:Board) -> int:
+    def getPossibleMoves(self,player ,card:Card, piece, board:Board, PRINT= True) -> int:
         """
         A preview of possible moves the player can make
         \n
@@ -396,16 +355,17 @@ class Game:
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])
 
-        print("Piece:", piece.row, piece.col)
-        print(board.printBoard())
-        print(returnArray)
+        if PRINT==True:
+            print("Piece:", piece.row, piece.col)
+            print(board.printBoard())
+            print(returnArray)
 
-        #Printing board with possible moves
-        for row in range(5):
-            for col in range(5):
-                print(debugBoard[row][col] , end = ' ')
-            print()
-        #Return array of possible moves
+            #Printing board with possible moves
+            for row in range(5):
+                for col in range(5):
+                    print(debugBoard[row][col] , end = ' ')
+                print()
+            #Return array of possible moves
         return returnArray
     
     def deletePiece(self, piece):
@@ -452,8 +412,6 @@ class Game:
             print("p1 take")
             return 1 # player 1 wins
         return 0 
-
-
 
     ## Utility Functions
     def returnToPreviousGameState(self, i):
@@ -531,5 +489,24 @@ class Game:
         gameState+= str(Card.Deck.index(self.neutralCard))
 
         return gameState
-##### Methods to extract variables
 
+    ## AI functions
+
+    def easy(self, player, opp):
+
+        card = self.fetchSelectedCard(player, random.randint(0, len(player.cards)-1))
+        piece = self.fetchSelectedPieceFromPlayerPieces(player, random.randint(0, len(player.pieces)-1))
+        moves = self.getPossibleMoves(player, card, piece, self.board, False)
+
+        if (len(moves)==0):
+            return self.easy(self, player)
+
+        move = moves[random.randint(0, len(moves)-1)]
+        self.makeMove(move[0], move[1], piece)
+        self.neutralCard, player.cards[player.cards.index(card) ] = card, self.neutralCard
+        print("Easy AI makes an incredible move!")
+        return True
+
+    def medium(self, player, opp):
+        ''' use minimax to make optimal move with depth 3'''
+        pass
