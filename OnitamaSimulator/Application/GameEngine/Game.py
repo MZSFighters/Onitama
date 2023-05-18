@@ -542,7 +542,7 @@ class Game:
         moves = self.getPossibleMoves(player, card, piece, self.board, False)
 
         if (len(moves)==0):
-            return self.easy(self, player)
+            return self.easy(player, opp)
 
         move = moves[random.randint(0, len(moves)-1)]
         self.makeMove(move[0], move[1], piece)
