@@ -1,5 +1,6 @@
 from GameEngine import *
 import UseEnv
+import configparser
 def mainMenu():
     print("Welcome to Onitama!")
     print("1. Play")
@@ -214,6 +215,15 @@ def settingsMenu():
 
 
 def AIDifficultyMenu():
+
+    config = configparser.ConfigParser()
+    config.read("main_menu_terminal.ini")
+
+    config_data = config["DEFAULT"]
+
+    myDict = {'1': 'Easy', '2': 'Medium', '3': 'Hard'}
+
+    print('\n'"Current Difficulty : " + config_data["AIDifficulty"])
     print("Choose difficulty:")
     print("1. Easy")
     print("2. Medium")
@@ -221,61 +231,96 @@ def AIDifficultyMenu():
     print("4. Back to settings menu")
     choice = input("Enter your choice (1-4): ")
 
-    list = ['1', '2', '3', '4']
-
-    if choice == '1':
-        # Set the AI difficulty level to easy
-        print("The AI difficulty level is set to Easy")
-        AIDifficultyMenu()
-
-    elif choice == '2':
-        # Set the AI difficulty level to medium
-        print("The AI difficulty level is set to Medium")
-        AIDifficultyMenu()
-
-    elif choice == '3':
-        # Set the AI difficulty level to hard
-        print("The AI difficulty level is set to Hard")
+    if choice == '1' or choice == '2' or choice == '3':
+        update = str(myDict[choice])
+        config.set("DEFAULT", 'AIDifficulty', update)
+        with open("main_menu_terminal.ini", 'w') as f:
+            config.write(f)
         AIDifficultyMenu()
 
     elif choice == '4':
-        # Calls a function to take you back to the settings menu
         settingsMenu()
-
-    # If the user enters a invalid choice
-    elif choice is not list:
-        print("Invalid choice, please enter a valid choice")
+    else:
+        print("Invalid choice. Please enter a valid choice")
         AIDifficultyMenu()
+
+    # list = ['1', '2', '3', '4']
+
+    # if choice == '1':
+    #     # Set the AI difficulty level to easy
+    #     print("The AI difficulty level is set to Easy")
+    #     AIDifficultyMenu()
+
+    # elif choice == '2':
+    #     # Set the AI difficulty level to medium
+    #     print("The AI difficulty level is set to Medium")
+    #     AIDifficultyMenu()
+
+    # elif choice == '3':
+    #     # Set the AI difficulty level to hard
+    #     print("The AI difficulty level is set to Hard")
+    #     AIDifficultyMenu()
+
+    # elif choice == '4':
+    #     # Calls a function to take you back to the settings menu
+    #     settingsMenu()
+
+    # # If the user enters a invalid choice
+    # elif choice is not list:
+    #     print("Invalid choice, please enter a valid choice")
+    #     AIDifficultyMenu()
 
 
 def soundMenu():
+
+    config = configparser.ConfigParser()
+    config.read("main_menu_terminal.ini")
+
+    config_data = config["DEFAULT"]
+
+    print('\n'"Sound is currently : " + config_data["Sound"])
     print("Sound settings:")
     print("1. On")
     print("2. Off")
     print("3. Back to settings menu")
     choice = input("Enter your choice (1-3): ")
 
-    list = ['1', '2', '3']
+    myDict = {'1': 'On', '2': 'Off'}
 
-    if choice == '1':
-        # Turns on the sound
-        print("Sound is turned on")
+    if choice == '1' or choice == '2':
+        update = str(myDict[choice])
+        config.set("DEFAULT", "Sound", update)
+        with open("main_menu_terminal.ini", 'w') as f:
+            config.write(f)
         soundMenu()
-
-    elif choice == '2':
-        # Turns off the sound
-        print("Sound is turned off")
-        soundMenu()
-
     elif choice == '3':
-
         # Calls a function to take you back to the settings menu
         settingsMenu()
-
-    # If the user enters a invalid choice
-    elif choice is not list:
+    else:
         print("Invalid choice, please enter a valid choice")
         soundMenu()
+
+    # list = ['1', '2', '3']
+
+    # if choice == '1':
+    #     # Turns on the sound
+    #     print("Sound is turned on")
+    #     soundMenu()
+
+    # elif choice == '2':
+    #     # Turns off the sound
+    #     print("Sound is turned off")
+    #     soundMenu()
+
+    # elif choice == '3':
+
+    #     # Calls a function to take you back to the settings menu
+    #     settingsMenu()
+
+    # # If the user enters a invalid choice
+    # elif choice is not list:
+    #     print("Invalid choice, please enter a valid choice")
+    #     soundMenu()
 
 
 def creditsMenu():
@@ -370,7 +415,7 @@ def LoadGame() -> str:
     returns the gameState for game as a string \n
     """
 
-    config = ConfigParser()
+    config = config.ConfigParser()
     config.read("save_game_config.ini")
 
     print("Available Games: ")
@@ -401,7 +446,7 @@ def deleteMenu():
 
     """
 
-    config = ConfigParser()
+    config = config.ConfigParser()
     config.read("save_game_config.ini")
 
     print("Available Games: ")
