@@ -88,13 +88,13 @@ class Player:
 
             if (((calcMoveRow < 5) and (calcMoveRow >= 0)) and  (calcMoveCol < 5 and calcMoveCol >= 0)):
 
-                if (board.returnTile(calcMoveRow,calcMoveRow).piece==None):
+                if (board.returnTile(calcMoveRow,calcMoveCol).piece==None):
 
                     
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])   
                                      
-                elif board.returnTile(calcMoveRow,calcMoveRow).piece.colour != self.colour  :
+                elif board.returnTile(calcMoveRow,calcMoveCol).piece.colour != self.colour  :
 
                     debugBoard[calcMoveRow][calcMoveCol]=7
                     returnArray.append([calcMoveRow, calcMoveCol])
