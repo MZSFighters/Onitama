@@ -1,0 +1,38 @@
+2023-05-24 10:27:35,032 DEBUG    Game Starting
+2023-05-24 10:27:35,032 DEBUG    Turn count : 0
+2023-05-24 10:27:35,032 DEBUG    Player 1 colour : True
+2023-05-24 10:27:35,032 DEBUG    Player 2 colour : False
+2023-05-24 10:27:35,033 DEBUG    Neutral Card : Eel
+2023-05-24 10:27:35,034 DEBUG    Opponent card; number 0 : Ox
+2023-05-24 10:27:35,034 DEBUG    Opponent card; number 1 : Goose
+2023-05-24 10:27:35,036 DEBUG    Player card; number 0 : Monkey
+2023-05-24 10:27:35,036 DEBUG    Player card; number 1 : Elephant
+2023-05-24 10:27:37,735 DEBUG    Player Selected card number : 0
+2023-05-24 10:27:37,735 DEBUG    Player selected card name : Monkey
+2023-05-24 10:27:37,736 DEBUG    Current player pieces before move: piece 0 : position [0][2]
+2023-05-24 10:27:37,736 DEBUG    Current player pieces before move: piece 1 : position [0][0]
+2023-05-24 10:27:37,736 DEBUG    Current player pieces before move: piece 2 : position [0][1]
+2023-05-24 10:27:37,736 DEBUG    Current player pieces before move: piece 3 : position [0][3]
+2023-05-24 10:27:37,736 DEBUG    Current player pieces before move: piece 4 : position [0][4]
+2023-05-24 10:27:39,719 DEBUG    Player selected piece at coordinates : [0, 2]
+2023-05-24 10:27:44,295 DEBUG    Player selected to move to position : [1][3]
+2023-05-24 10:27:44,295 DEBUG    Player selected move : 
+2023-05-24 10:27:44,296 DEBUG    Current player pieces after move : piece 0 : position [1][3]
+2023-05-24 10:27:44,296 DEBUG    Current player pieces after move : piece 1 : position [0][0]
+2023-05-24 10:27:44,296 DEBUG    Current player pieces after move : piece 2 : position [0][1]
+2023-05-24 10:27:44,296 DEBUG    Current player pieces after move : piece 3 : position [0][3]
+2023-05-24 10:27:44,296 DEBUG    Current player pieces after move : piece 4 : position [0][4]
+2023-05-24 10:27:44,296 DEBUG    Waiting player pieces after move : piece 0 : position [4][2]
+2023-05-24 10:27:44,296 DEBUG    Waiting player pieces after move : piece 1 : position [4][0]
+2023-05-24 10:27:44,296 DEBUG    Waiting player pieces after move : piece 2 : position [4][1]
+2023-05-24 10:27:44,296 DEBUG    Waiting player pieces after move : piece 3 : position [4][3]
+2023-05-24 10:27:44,296 DEBUG    Waiting player pieces after move : piece 4 : position [4][4]
+2023-05-24 10:27:44,296 DEBUG    
+Current turn : 1
+2023-05-24 10:27:44,296 DEBUG    Player 1 colour : True
+2023-05-24 10:27:44,296 DEBUG    Player 2 colour : False
+2023-05-24 10:27:44,298 DEBUG    Neutral Card : Monkey
+2023-05-24 10:27:44,299 DEBUG    Opponent card; number 0 : Eel
+2023-05-24 10:27:44,299 DEBUG    Opponent card; number 1 : Elephant
+2023-05-24 10:27:44,301 DEBUG    Player card; number 0 : Ox
+2023-05-24 10:27:44,301 DEBUG    Player card; number 1 : Goose

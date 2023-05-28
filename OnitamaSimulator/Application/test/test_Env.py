@@ -24,6 +24,14 @@ class testEnv(unittest.TestCase):
         self.assertIsNotNone(obs)
         self.assertIsNotNone(info)
 
+
+# The kind of tests that one can do,
+# Give it a particular state - know what next board state is -> compare this to what the board is supposed to be
+# Can do this for a few cases -> Look at equivelance classes
+     
+#      E.g if we are looking at chess - lets test a move 
+#                     taking another piece
+#                     a board state one step away from winning -> arch -> king
     def test_step(self):
         envStub = OnitamaEnv()
         obs,info = envStub.reset()
