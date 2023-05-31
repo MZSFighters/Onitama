@@ -23,10 +23,10 @@ class TestPiece(unittest.TestCase):
 
 
     #testing test_colour method
-    def test_color(self):
+    def test_colour(self):
         print("Running test_colour...")
-        self.assertEqual(self.player_1.color(), "Red")
-        self.assertEqual(self.player_2.color(), "Blue")
+        self.assertEqual(self.player_1.colour(), "Red")
+        self.assertEqual(self.player_2.colour(), "Blue")
 
     def test_printPieces(self):
          print("Running test_printPieces...")
