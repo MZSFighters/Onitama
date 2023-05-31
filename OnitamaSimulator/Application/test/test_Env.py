@@ -25,15 +25,15 @@ class testEnv(unittest.TestCase):
          super().__init__(methodName)
             
     def test_reset(self):
-        
+
         envStub = DummyEnv()
-        obs,info = envStub.reset("10200010304424041434412345")
+        obs,info = envStub.reset(None,"10200010304424041434412345")
         self.assertIsNotNone(obs)
         self.assertIsNotNone(info)
 
     def test_step(self):
         envStub = DummyEnv()
-        obs,info = envStub.reset("10200010304424041434412345")
+        obs,info = envStub.reset(None,"10200010304424041434412345")
         action = {"piece" : 1,"move" : 0,"card" : 0}
 
         obs, reward, terminated, booL,info = envStub.step(action)

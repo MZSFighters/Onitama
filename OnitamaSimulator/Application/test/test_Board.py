@@ -19,7 +19,6 @@ class TestPiece(unittest.TestCase):
         self.player_1 = Player("player1", True)
         self.player_2 = Player("player2", False)
         self.board = Board(self.player_1, self.player_2)
-        
 
     def tearDown(self):
         print("Running tearDown method...")
