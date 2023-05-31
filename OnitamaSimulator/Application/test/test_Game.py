@@ -11,7 +11,6 @@ class testGame(unittest.TestCase):
     def test_Constructor(self):
         pass
 
-    
     def test_startGame(self):
         game= Game()
 
@@ -46,7 +45,6 @@ class testGame(unittest.TestCase):
         self.assertEqual(game.fetchSelectedCard(game.player2, 1), player2Cards[1])
 
 
-
     def test_fetchSelectedPiece(self):
         game = Game()
         pieces = game.player1.pieces
@@ -72,7 +70,14 @@ class testGame(unittest.TestCase):
             self.assertNotIn(piece, pieces)
         
     
-    
+    def test_determineStartingTurn(self):
+        game = Game()
+        game.determineStartingTurn('0')
+        self.assertEqual(game.turnCount, 0)
+        game.determineStartingTurn('1')
+        self.assertEqual(game.turnCount, 1)
+        game.determineStartingTurn('N')
+
 
     def test_WinCon(self):
         pass

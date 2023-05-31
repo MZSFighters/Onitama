@@ -50,7 +50,6 @@ class testCard(unittest.TestCase):
         self.assertIn(card, Card.Deck)
 
 
-
     def test_listAllCards(self):
         # Assert that the function returns all cards in the deck
 

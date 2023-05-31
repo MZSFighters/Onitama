@@ -128,6 +128,7 @@ class Game:
 
         if (card not in player.cards):
             return False
+        
         ## need to convert the abstract move into a co-ordinate
         if (player.colour == True):
             calcMoveRow = piece.row + move[0]
@@ -368,7 +369,7 @@ class Game:
 
         return row, col
 
-    def makeMove(self, row, col, pieceFrom):
+    def makeMove(self, row, col, pieceFrom, print=True):
         """
         Takes in the pawn and the desired location and moves the pawn \n
         to that location
@@ -378,7 +379,9 @@ class Game:
 
         if (self.board.returnTile(row,col).piece!= None):
             takePiece = self.board.returnTile(row, col).piece
-            print("Took piece at tile : ", int(row), " ", int(col))
+
+            if (print==True):
+                print("Took piece at tile : ", int(row), " ", int(col))
             self.deletePiece(takePiece)
             return self.board.returnTile(row,col).piece
 
@@ -441,6 +444,8 @@ class Game:
                     print(debugBoard[row][col] , end = ' ')
                 print()
             #Return array of possible moves
+
+
         return returnArray
     
     def deletePiece(self, piece):
@@ -558,14 +563,14 @@ class Game:
 
         for player in players:
             for card in player.cards:
-                gameState+= str(Card.Deck.index(card))
+                gameState+= hex(Card.Deck.index(card))[2::]
 
         # finally the neutral card
-        gameState+= str(Card.Deck.index(self.neutralCard))
-
+        gameState+= hex(Card.Deck.index(self.neutralCard))[2::]
         return gameState
 
     ## AI functions
+
 
     def easy(self, player, opp):
 
@@ -582,6 +587,10 @@ class Game:
         print("Easy AI makes an incredible move!")
         return True
 
+
+
     def medium(self, player, opp):
-        ''' use minimax to make optimal move with depth 3'''
         pass
+
+
+    

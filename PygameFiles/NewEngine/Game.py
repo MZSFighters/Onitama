@@ -151,7 +151,6 @@ class Game:
             
             pygame.display.update()
 
-
     # Checking input from user
     def check_events(self,player):
 
@@ -191,13 +190,6 @@ class Game:
                 elif event.button  == 3:
                     self.pos_x,self.pos_y = self.mousepos
                     self.makePossibleMove(self.pos_x, self.pos_y)
-                    
-                    
-            
-                    
-                                
-    
-
 
     ## Methods for game initialization
     @staticmethod
@@ -268,7 +260,6 @@ class Game:
             
             return [-1,-1]
             
-
     @staticmethod
     def fetchSelectedPiece( player, coords):
         '''
@@ -377,8 +368,6 @@ class Game:
                     player.pieces.remove(userPiece)
                     return
 
-
-    
     '''
 
     Drawing methods below:
