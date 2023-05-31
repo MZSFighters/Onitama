@@ -50,7 +50,7 @@ class Board:
     def printBoard(self, display,curr_board):
         # board image drawn on display screen
         self.display = display
-        board_image = pygame.image.load("NewEngine/images/board_background.jpg")
+        board_image = pygame.image.load("PygameFiles/NewEngine/images/board_background.jpg")
         board_image = pygame.transform.scale(board_image, (BOARD_WIDTH, BOARD_HEIGHT)).convert_alpha()
         self.display.blit(board_image, (0, 0))
 
@@ -63,12 +63,12 @@ class Board:
                     if curr_board.arr[row][col].piece.isMaster:
                         
                         #pygame.draw.rect(self.display, RED, (col*SQUARE_SIZE + self.offset, row*SQUARE_SIZE + self.offset, 50,80))
-                        red_king = pygame.image.load("NewEngine/images/red_king.png")
+                        red_king = pygame.image.load("PygameFiles/NewEngine/images/red_king.png")
                         red_king = pygame.transform.scale(red_king, (SQUARE_SIZE*1.4, SQUARE_SIZE*1.4)).convert_alpha()
                         self.display.blit(red_king, (col*SQUARE_SIZE ,row*SQUARE_SIZE))
                     else:
                         #pygame.draw.rect(self.display, RED, (col*SQUARE_SIZE + self.offset, row*SQUARE_SIZE + self.offset, 50,50))
-                        red_pawn = pygame.image.load("NewEngine/images/red_pawn.png")
+                        red_pawn = pygame.image.load("PygameFiles/NewEngine/images/red_pawn.png")
                         red_pawn = pygame.transform.scale(red_pawn, (SQUARE_SIZE, SQUARE_SIZE)).convert_alpha()
                         self.display.blit(red_pawn, (col*SQUARE_SIZE + self.offset,row*SQUARE_SIZE + self.offset))
 
@@ -76,12 +76,12 @@ class Board:
                     
                     if curr_board.arr[row][col].piece.isMaster:
                         #pygame.draw.rect(self.display, BLUE, (col*SQUARE_SIZE + self.offset, row*SQUARE_SIZE + self.offset, 50,80))
-                        blue_king = pygame.image.load("NewEngine/images/blue_king.png")
+                        blue_king = pygame.image.load("PygameFiles/NewEngine/images/blue_king.png")
                         blue_king = pygame.transform.scale(blue_king, (SQUARE_SIZE, SQUARE_SIZE-20)).convert_alpha()
                         self.display.blit(blue_king, (col*SQUARE_SIZE + self.offset,row*SQUARE_SIZE + self.offset+10))
                     else:
                         #pygame.draw.rect(self.display, BLUE, (col*SQUARE_SIZE + self.offset, row*SQUARE_SIZE + self.offset, 50,50))
-                        blue_pawn = pygame.image.load("NewEngine/images/blue_pawn.png")
+                        blue_pawn = pygame.image.load("PygameFiles/NewEngine/images/blue_pawn.png")
                         blue_pawn = pygame.transform.scale(blue_pawn, (SQUARE_SIZE, SQUARE_SIZE)).convert_alpha()
                         self.display.blit(blue_pawn, (col*SQUARE_SIZE + self.offset,row*SQUARE_SIZE + self.offset))
                 

@@ -46,7 +46,7 @@ class Game:
             clock.tick(self.FPS)
 
             # display background on screen
-            background = pygame.image.load("NewEngine/images/background.jpg")
+            background = pygame.image.load("PygameFiles/NewEngine/images/background.jpg")
             background = pygame.transform.scale(background, (WIDTHEXCB, HEIGHT)).convert_alpha()
             self.display.blit(background, (WIDTH / 2, 0))
 
@@ -393,7 +393,7 @@ class Game:
 
     def draw_card(self, display, cardName, x, y):
 
-        img = pygame.image.load("NewEngine/images/FireandIceCardBackground.jpg")
+        img = pygame.image.load("PygameFiles/NewEngine/images/FireandIceCardBackground.jpg")
         pygame.draw.rect(display, RED,( x, y,card_width, card_height))
         img = pygame.transform.scale(img, (card_width,card_height)).convert_alpha()
        

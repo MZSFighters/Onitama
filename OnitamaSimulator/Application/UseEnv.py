@@ -23,9 +23,17 @@ class UseEnv():
         env = gym.make('OnitamaEnv-v0')
         observation, info = env.reset()
         for _ in range(10):
+            '''
+            Notes - could use if statements to check what to reward each agent. 
+                - Only do learning after the pair make an action.
+                - 
+            '''
+            # agent 0
+            action = env.action_space.sample(mask={"piece":info["pieceMask"],"move":info["moveMask"],"card":info["cardMask"]})  # agent policy that uses the observation and info
+            observation, reward, terminated, truncated, info = env.step(action)
+            # agent 1
             action = env.action_space.sample(mask={"piece":info["pieceMask"],"move":info["moveMask"],"card":info["cardMask"]})  # agent policy that uses the observation and info
             observation, reward, terminated, truncated, info = env.step(action)
 
             if terminated or truncated:
                 observation, info = env.reset()
-
