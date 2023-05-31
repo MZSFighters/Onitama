@@ -3,3 +3,4 @@ codecov
 pytest
 numpy
 gymnasium
+IPython
