@@ -1,11 +1,12 @@
 import os, sys
 import unittest
+from IPython.utils.capture import capture_output
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-
+from GameEngine.Game import Game
 from GameEngine.Board import Board
 from GameEngine.Player import Player
 
@@ -32,9 +33,17 @@ class TestPiece(unittest.TestCase):
         self.assertEqual(self.board.arr[1][4], self.board.returnTile(1, 4))
         self.assertEqual(self.board.arr[4][1], self.board.returnTile(4, 1))
         
+
     def test_printBoard(self):
          print("Running test_printBoard...")
-         pass
+         game = Game()
+
+         with capture_output() as c:
+            game.board.printBoard()
+
+         c()
+         self.assertIsNotNone(c.stdout)
+
  
 
     @classmethod

@@ -128,6 +128,7 @@ class Game:
 
         if (card not in player.cards):
             return False
+        
         ## need to convert the abstract move into a co-ordinate
         if (player.colour == True):
             calcMoveRow = piece.row + move[0]
@@ -162,19 +163,19 @@ class Game:
 
 ### Methods used in game architecture
 
-    def startGame(self, turn:str, player2Name):
+    def startGame(self, turn:str, player2Name, stopLoop=False):
         '''A function which either starts a player-controlled game or an AI-controlled game'''
 
         logging.debug("Game Starting")
         logging.debug(f"Turn count : {self.turnCount}")
 
         if (player2Name=="Player2"): # second player is another human player
-            self._startGame(turn, self.playerMakeTurn)
+            self._startGame(turn, self.playerMakeTurn, stopLoop)
 
         if (player2Name=="easy"):
-            self._startGame(turn, self.easy)
+            self._startGame(turn, self.easy, stopLoop)
 
-    def _startGame(self, turn:str, player2AI)->None:
+    def _startGame(self, turn:str, player2AI, stopLoop=False)->None:
         """
         Initiates game loop for human player \n
         -------
@@ -228,6 +229,9 @@ class Game:
             self.turnCount= self.turnCount+1
             logging.debug('\n'f"Current turn : {self.turnCount}")
             self.gameStates.append(self.getGameState())
+
+            if stopLoop==True:
+                return
 
     def playerMakeTurn(self, player, opp):
 
@@ -368,7 +372,7 @@ class Game:
 
         return row, col
 
-    def makeMove(self, row, col, pieceFrom):
+    def makeMove(self, row, col, pieceFrom, print=True):
         """
         Takes in the pawn and the desired location and moves the pawn \n
         to that location
@@ -378,7 +382,9 @@ class Game:
 
         if (self.board.returnTile(row,col).piece!= None):
             takePiece = self.board.returnTile(row, col).piece
-            print("Took piece at tile : ", int(row), " ", int(col))
+
+            if (print==True):
+                print("Took piece at tile : ", int(row), " ", int(col))
             self.deletePiece(takePiece)
             return self.board.returnTile(row,col).piece
 
@@ -441,6 +447,8 @@ class Game:
                     print(debugBoard[row][col] , end = ' ')
                 print()
             #Return array of possible moves
+
+
         return returnArray
     
     def deletePiece(self, piece):
@@ -558,14 +566,14 @@ class Game:
 
         for player in players:
             for card in player.cards:
-                gameState+= str(Card.Deck.index(card))
+                gameState+= hex(Card.Deck.index(card))[2::]
 
         # finally the neutral card
-        gameState+= str(Card.Deck.index(self.neutralCard))
-
+        gameState+= hex(Card.Deck.index(self.neutralCard))[2::]
         return gameState
 
     ## AI functions
+
 
     def easy(self, player, opp):
 
@@ -582,6 +590,10 @@ class Game:
         print("Easy AI makes an incredible move!")
         return True
 
+
+
     def medium(self, player, opp):
-        ''' use minimax to make optimal move with depth 3'''
         pass
+
+
+    

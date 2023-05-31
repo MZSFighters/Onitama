@@ -1,5 +1,6 @@
 import os, sys
 import unittest
+import unittest.mock as mock  
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -47,6 +48,13 @@ class testCard(unittest.TestCase):
         Card.makeDeck()
         Card.addCustomCard(card)
 
+        self.assertIn(card, Card.Deck)
+
+    @mock.patch('builtins.input', side_effect=['Bugatti', 'Red', '1 1','no'])
+    def test_addCustomCard_userInput(self, input):
+    
+        Card.addCustomCard()
+        card =Card.selectSpecifiedCard('Bugatti')
         self.assertIn(card, Card.Deck)
 
 

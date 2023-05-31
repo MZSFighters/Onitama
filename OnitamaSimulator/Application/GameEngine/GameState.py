@@ -29,11 +29,6 @@ class GameState:
                         what is says but can make a better use of this feature in next sprint. Will fix properly in next sprint)
     
     
-    """
-
-    #"N02000103044240414344NNNNN" : example of gameString
-
-    """
     UPDATE: No longer using strings. Now inserting whole array representing array into table.
             fixes issue with multiple games between two people.
 

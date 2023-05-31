@@ -1,5 +1,15 @@
-from Game import Game
 
+# importing game
+from MainMenu.game import Game
+
+# making an instance of game class
 g = Game()
-g.playing = True
-g.game_loop()
+
+# until the game runs, display the menu on screen and loop the game
+while g.running:  
+    g.curr_menu.display_menu()
+    g.game_loop()
+
+
+
+

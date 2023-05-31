@@ -54,7 +54,7 @@ class Player:
             print("player " , self.colour , "piece :" , piece.col,piece.row)
 
     #Utility Functions
-    def colour(self):
+    def getColour(self):
         if(self.colour == True):
             return "Red"
         else:
