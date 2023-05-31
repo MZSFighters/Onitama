@@ -31,9 +31,7 @@ class UseEnv():
             # agent 0
             action = env.action_space.sample(mask={"piece":info["pieceMask"],"move":info["moveMask"],"card":info["cardMask"]})  # agent policy that uses the observation and info
             observation, reward, terminated, truncated, info = env.step(action)
-            # agent 1
-            action = env.action_space.sample(mask={"piece":info["pieceMask"],"move":info["moveMask"],"card":info["cardMask"]})  # agent policy that uses the observation and info
-            observation, reward, terminated, truncated, info = env.step(action)
-
+            
             if terminated or truncated:
                 observation, info = env.reset()
+

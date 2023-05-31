@@ -92,7 +92,15 @@ class OnitamaEnv(gym.Env):
              self.player2Pieces[x] = self.game.player2.pieces[x]
         
         # make it also return cards available
-        self.observation_space = spaces.Box(-5, 5, (5,5), dtype=int)
+        self.observation_space = spaces.Dict(
+            {
+            "Board":spaces.Box(-5, 5, (5,5), dtype=int),
+            "Cards":spaces.MultiDiscrete([16,16,16,16,16])
+            }
+        )
+        
+        
+        
         # We have many actions, select card, select move, select piece
         self.action_space = spaces.Dict(
             {
@@ -108,10 +116,10 @@ class OnitamaEnv(gym.Env):
         selectedCard = DEFAULT_CARDS[card]
         if(self._currentPlayer ==1):
             if selectedCard in self.game.player1.cards:
-                return None
+                return selectedCard
             else:
-                return self.game.player1.cards[0]
-        if(self._currentPlayer ==2):
+                return None
+        elif(self._currentPlayer ==2):
             if selectedCard in self.game.player2.cards:
                 return selectedCard
             else:
@@ -188,7 +196,43 @@ class OnitamaEnv(gym.Env):
 
     def get_obs(self):
             #self.game.board -> int board 
-            return self._board
+            board = np.array(
+                    [
+                        [0] * 5,
+                        [0] * 5,
+                        [0] * 5,
+                        [0] * 5,
+                        [0] * 5,
+                    ],
+                    dtype=np.int32,
+                )
+            # need to place each piece on the board
+            
+            for x in range(len(self.player1Pieces)):
+                if(self.player1Pieces[x].row != -1):
+                    board[self.player1Pieces[x].row,self.player1Pieces[x].col] = 1
+            for x in range(len(self.player2Pieces)):
+                if(self.player2Pieces[x].row != -1):
+                    board[self.player2Pieces[x].row,self.player2Pieces[x].col] = 2
+            
+            print(board)
+
+            cards = []
+            #Loook for cards
+            for x in range(len(DEFAULT_CARDS)):
+                print(x , " : ", DEFAULT_CARDS[x].name, " =? ",self.game.player1.cards[0].name)
+                if (DEFAULT_CARDS[x].name == self.game.player1.cards[0].name or DEFAULT_CARDS[x] == self.game.player1.cards[1].name):
+                    cards.append(x)
+            for x in range(len(DEFAULT_CARDS)):
+                if (DEFAULT_CARDS[x].name == self.game.player2.cards[0].name or DEFAULT_CARDS[x] == self.game.player2.cards[1].name):
+                    cards.append(x)
+            for x in range(len(DEFAULT_CARDS)):
+                if (DEFAULT_CARDS[x].name == self.game.neutralCard.name):
+                    cards.append(x)
+            return {
+                    "Board":board,
+                    "Cards":cards
+            }
     
     def reset(self, seed = None, options = None):
         super().reset(seed = seed)
@@ -196,6 +240,15 @@ class OnitamaEnv(gym.Env):
         self._currentPlayer = 2
         self.game = Game.Game()
         
+        # Player 1 pieces
+        self.player1Pieces:dict = {}
+        for x in range(len(self.game.player1.pieces)):
+             self.player1Pieces[x] = self.game.player1.pieces[x]
+        #Player 2 pieces
+        self.player2Pieces:dict = {}
+        for x in range(len(self.game.player2.pieces)):
+             self.player2Pieces[x] = self.game.player2.pieces[x]
+
         info = self.get_info()
         obs = self.get_obs()
 
@@ -230,7 +283,7 @@ class OnitamaEnv(gym.Env):
             turnReward = self.game.AImakeTurn(player,piece,card,move)
 
             if (turnReward == 3):
-                reward = DEFAULT_REWARDS["Incorrect Acion"]
+                reward = DEFAULT_REWARDS["Incorrect Action"]
             elif(turnReward == 1 or turnReward == 2):
                 reward = DEFAULT_REWARDS["Player 1 Win"]
         
