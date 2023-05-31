@@ -1,0 +1,18 @@
+2023-05-31 18:34:03,489 DEBUG    Player 1 colour : True
+2023-05-31 18:34:03,490 DEBUG    Player 2 colour : False
+2023-05-31 18:34:03,495 DEBUG    Current player pieces after move : piece 0 : position [0][2]
+2023-05-31 18:34:03,495 DEBUG    Current player pieces after move : piece 1 : position [0][0]
+2023-05-31 18:34:03,495 DEBUG    Current player pieces after move : piece 2 : position [0][1]
+2023-05-31 18:34:03,495 DEBUG    Current player pieces after move : piece 3 : position [0][3]
+2023-05-31 18:34:03,495 DEBUG    Current player pieces after move : piece 4 : position [0][4]
+2023-05-31 18:34:03,495 DEBUG    Waiting player pieces after move : piece 0 : position [4][2]
+2023-05-31 18:34:03,495 DEBUG    Waiting player pieces after move : piece 1 : position [4][0]
+2023-05-31 18:34:03,495 DEBUG    Waiting player pieces after move : piece 2 : position [4][1]
+2023-05-31 18:34:03,495 DEBUG    Waiting player pieces after move : piece 3 : position [4][3]
+2023-05-31 18:34:03,495 DEBUG    Waiting player pieces after move : piece 4 : position [4][4]
+2023-05-31 18:34:03,495 DEBUG    
+Current turn : 1
+2023-05-31 18:34:03,507 DEBUG    Game Starting
+2023-05-31 18:34:03,507 DEBUG    Turn count : 0
+2023-05-31 18:34:03,508 DEBUG    Game Starting
+2023-05-31 18:34:03,509 DEBUG    Turn count : 0

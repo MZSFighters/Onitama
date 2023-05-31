@@ -163,19 +163,19 @@ class Game:
 
 ### Methods used in game architecture
 
-    def startGame(self, turn:str, player2Name):
+    def startGame(self, turn:str, player2Name, stopLoop=False):
         '''A function which either starts a player-controlled game or an AI-controlled game'''
 
         logging.debug("Game Starting")
         logging.debug(f"Turn count : {self.turnCount}")
 
         if (player2Name=="Player2"): # second player is another human player
-            self._startGame(turn, self.playerMakeTurn)
+            self._startGame(turn, self.playerMakeTurn, stopLoop)
 
         if (player2Name=="easy"):
-            self._startGame(turn, self.easy)
+            self._startGame(turn, self.easy, stopLoop)
 
-    def _startGame(self, turn:str, player2AI)->None:
+    def _startGame(self, turn:str, player2AI, stopLoop=False)->None:
         """
         Initiates game loop for human player \n
         -------
@@ -229,6 +229,9 @@ class Game:
             self.turnCount= self.turnCount+1
             logging.debug('\n'f"Current turn : {self.turnCount}")
             self.gameStates.append(self.getGameState())
+
+            if stopLoop==True:
+                return
 
     def playerMakeTurn(self, player, opp):
 

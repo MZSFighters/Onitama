@@ -1,13 +1,13 @@
 import os, sys
 import unittest
+from IPython.utils.capture import capture_output
 
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-
-
 from GameEngine.Player import Player
+from GameEngine.Game import Game
 
 class TestPiece(unittest.TestCase):
     @classmethod
@@ -23,14 +23,20 @@ class TestPiece(unittest.TestCase):
 
 
     #testing test_colour method
-    def test_colour(self):
+    def test_getColour(self):
         print("Running test_colour...")
-        self.assertEqual(self.player_1.colour(), "Red")
-        self.assertEqual(self.player_2.colour(), "Blue")
+        game = Game()
+        self.assertEqual(self.player_1.getColour(), "Red")
+        self.assertEqual(self.player_2.getColour(), "Blue")
 
     def test_printPieces(self):
          print("Running test_printPieces...")
-         pass
+         game = Game()
+
+         with capture_output() as c:
+            game.player1.PrintPieces()
+         c()
+         self.assertIsNotNone(c.stdout)
    
     @classmethod
     def tearDownClass(cls):

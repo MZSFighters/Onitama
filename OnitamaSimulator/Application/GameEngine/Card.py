@@ -100,7 +100,7 @@ class Card:
         if (cardNum=='N'):
             return(Card._selectRandomCard(len(Card.Deck) ))
         else:
-            return (Card._selectSpecifiedCard(len(Card.Deck), int(cardNum, 16) ))
+            return (Card._selectSpecifiedCard(len(Card.Deck), cardNum ))
    
     @staticmethod
     def _selectSpecifiedCard(n, cardNum):
