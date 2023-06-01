@@ -96,7 +96,6 @@ class Card:
         """
         if (Card.Deck== None):
             raise TypeError("Deck is type None, call makeDeck()")
-
         if (cardNum=='N'):
             return(Card._selectRandomCard(len(Card.Deck) ))
         else:
@@ -104,7 +103,7 @@ class Card:
    
     @staticmethod
     def _selectSpecifiedCard(n, cardNum):
-        card = Card.Deck[cardNum]
+        card = Card.Deck[int(cardNum)]
         card.alreadyInGame =True
         return card
 

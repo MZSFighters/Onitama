@@ -1,5 +1,6 @@
 import os, sys
 import unittest
+
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -21,28 +22,73 @@ import numpy as np
 
 
 class testEnv(unittest.TestCase):
-    def __init__(self, methodName: str = "runTest") -> None:      
-         super().__init__(methodName)
-            
-    def test_reset(self):
+     def __init__(self, methodName: str = "runTest") -> None:      
+          super().__init__(methodName)
+               
+     def test_reset(self):
 
-        envStub = DummyEnv()
-        obs,info = envStub.reset(None,"10200010304424041434412345")
-        self.assertIsNotNone(obs)
-        self.assertIsNotNone(info)
+          envStub = DummyEnv()
+          obs,info = envStub.reset(seed=None,options="10200010304424041434412345")
+          expectedBoard = np.array(
+                    [
+                        [1] * 5,
+                        [0] * 5,
+                        [0] * 5,
+                        [0] * 5,
+                        [2] * 5,
+                    ],
+                    dtype=np.int32,
+                )
+            # need to place each piece 
+          expectedcards = np.array([1,2])
+          # Testing returned board
+          self.assertTrue((expectedBoard == obs["Board"]).all())
+          
+          # Testing returned Cards
+          self.assertEqual(expectedcards[0],obs["Cards"][0])
+          self.assertEqual(expectedcards[1],obs["Cards"][1])
 
-    def test_step(self):
-        envStub = DummyEnv()
-        obs,info = envStub.reset(None,"10200010304424041434412345")
-        action = {"piece" : 1,"move" : 0,"card" : 0}
+     def test_step(self):
+          
+          envStub = DummyEnv()
+          obs,info = envStub.reset(seed=None,options="10200010304424041434412345")
+          print("STEP TEST")
+          action = {"piece" : 2,"move" : 5,"card" : 1}
+          obs, reward, terminated, booL,info = envStub.step(action)
+          expectedBoard = np.array([
+                                   [1, 0, 1, 1, 1],
+                                   [0, 1, 0, 0, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [2, 2, 2, 2, 2]
+                                   ])
+          self.assertTrue((expectedBoard == obs["Board"]).all())
+          self.assertEqual(reward,0)
 
-        obs, reward, terminated, booL,info = envStub.step(action)
+     def test_win(self):
+          
+          envStub = DummyEnv()
+        
+          obs,info = envStub.reset(seed=None,options="10200010304424041434412345")
 
-        self.assertIsNotNone(obs)
-        self.assertIsNotNone(reward)
-        self.assertIsNotNone(terminated)
-        self.assertEqual(booL,False)
-        self.assertIsNotNone(info)
+          print("WIN TEST")
+          envStub.game.makeMove(1,1,envStub.game.player2.pieces[0])
+          action = {"piece" : 2,"move" : 5,"card" : 1}
+          obs, reward, terminated, booL,info = envStub.step(action)
+
+
+
+          expectedBoard = np.array([
+                                   [1, 0, 1, 1, 1],
+                                   [0, 1, 0, 0, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [2, 2, 0, 2, 2]
+                                   ])
+          self.assertTrue((expectedBoard == obs["Board"]).all())
+          self.assertEqual(reward,100)
+
+
 
 class DummyEnv(OnitamaEnv):
      def __init__(self,
@@ -61,7 +107,12 @@ class DummyEnv(OnitamaEnv):
              self.player2Pieces[x] = self.game.player2.pieces[x]
         
         # make it also return cards available
-        self.observation_space = spaces.Box(-5, 5, (5,5), dtype=int)
+        self.observation_space = spaces.Dict(
+            {
+            "Board":spaces.Box(-5, 5, (5,5), dtype=int),
+            "Cards":spaces.MultiDiscrete([16,16,16,16,16])
+            }
+        )
         # We have many actions, select card, select move, select piece
         self.action_space = spaces.Dict(
             {

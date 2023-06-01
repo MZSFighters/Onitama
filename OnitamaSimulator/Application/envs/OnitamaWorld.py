@@ -111,19 +111,16 @@ class OnitamaEnv(gym.Env):
         )   
 
     # Space Converters
-    def get_card(self, card:int):
+    def get_card(self, card:int,player:Player):
         # return the appropriate card and validate said card
+
         selectedCard = DEFAULT_CARDS[card]
-        if(self._currentPlayer ==1):
-            if selectedCard in self.game.player1.cards:
-                return selectedCard
-            else:
-                return None
-        elif(self._currentPlayer ==2):
-            if selectedCard in self.game.player2.cards:
-                return selectedCard
-            else:
-                return None
+        if(selectedCard.name == player.cards[0].name):
+            return player.cards[0]
+        elif( selectedCard.name == player.cards[1].name):
+            return player.cards[1]
+        else:
+            return None
 
     def get_move(self, action:int):
         return DEFAULT_MOVES[action]
@@ -164,8 +161,6 @@ class OnitamaEnv(gym.Env):
         for x in range(len(currentPieces)):
             if(currentPieces[x].row == -1):
                 pieceMask[x] = 0
-        print(currentCards[0].name)
-        print(currentCards[1].name)
         # make a mask for the card
         cardMask = np.zeros(len(DEFAULT_CARDS),dtype='int8')
         for x in range(len(cardMask)):
@@ -215,30 +210,34 @@ class OnitamaEnv(gym.Env):
                 if(self.player2Pieces[x].row != -1):
                     board[self.player2Pieces[x].row,self.player2Pieces[x].col] = 2
             
-            print(board)
+            print("OBS :",board)
+
 
             cards = []
             #Loook for cards
             for x in range(len(DEFAULT_CARDS)):
-                print(x , " : ", DEFAULT_CARDS[x].name, " =? ",self.game.player1.cards[0].name)
-                if (DEFAULT_CARDS[x].name == self.game.player1.cards[0].name or DEFAULT_CARDS[x] == self.game.player1.cards[1].name):
+                if ((DEFAULT_CARDS[x].name == self.game.player1.cards[0].name) or DEFAULT_CARDS[x].name == self.game.player1.cards[1].name):
                     cards.append(x)
-            for x in range(len(DEFAULT_CARDS)):
-                if (DEFAULT_CARDS[x].name == self.game.player2.cards[0].name or DEFAULT_CARDS[x] == self.game.player2.cards[1].name):
+                if ((DEFAULT_CARDS[x].name == self.game.player2.cards[0].name) or DEFAULT_CARDS[x].name == self.game.player2.cards[1].name):
                     cards.append(x)
-            for x in range(len(DEFAULT_CARDS)):
                 if (DEFAULT_CARDS[x].name == self.game.neutralCard.name):
                     cards.append(x)
+
+
             return {
                     "Board":board,
                     "Cards":cards
-            }
+                    }
     
     def reset(self, seed = None, options = None):
         super().reset(seed = seed)
         self._board = DEFAULT_BOARD
         self._currentPlayer = 2
-        self.game = Game.Game()
+        if(options!=None):
+            self.game = Game.Game(options)
+        else:
+            self.game = Game.Game()
+       
         
         # Player 1 pieces
         self.player1Pieces:dict = {}
@@ -263,13 +262,17 @@ class OnitamaEnv(gym.Env):
 
         # Set current Player
         if (self._currentPlayer == 1):
-             player:Player = self.game.player1
+            player:Player = self.game.player1
+            print("PLAYER 1")
         else:
-             player:Player = self.game.player2
-        
+            player:Player = self.game.player2
+            print("Player 2")
+        print("CARD : ",player.cards[0].name)
+        print("CARD : ",player.cards[1].name)
+
         #Get move, piece and card
         move = self.get_move(action["move"])
-        card:Card = self.get_card(action["card"])
+        card:Card = self.get_card(action["card"],player)
         piece:Piece = self.get_piece(action["piece"]) 
 
         #init reward at 0

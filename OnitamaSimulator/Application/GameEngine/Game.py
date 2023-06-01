@@ -115,7 +115,7 @@ class Game:
             else:
                 self.turnCount=1
   
-    def AImakeTurn(self, player,  piece, card, move):
+    def AImakeTurn(self, player:Player,  piece, card, move):
         '''Right now it takes in which player is making their turn, card object they want to use, piece object\n 
         they want to move and which coordinates [row, col] they want to move to. Would be very easy to make it take \n
         in a card number and piece coordinate/number.
@@ -123,11 +123,14 @@ class Game:
                 2 = player 2 wins
                 3 = invalid move
         '''
+        self.board = Board(self.player1,self.player2)
         if (piece not in player.pieces):
-            return False
+            print("INCORRECT PIECE")
+            return 3
 
         if (card not in player.cards):
-            return False
+            print("INCORRECT CARD")
+            return 3
         
         ## need to convert the abstract move into a co-ordinate
         if (player.colour == True):
@@ -143,7 +146,6 @@ class Game:
 
         if move in moves:
             self.makeMove(move[0], move[1], piece)
-
             self.turnCount= self.turnCount+1
             #update gamestate
             self.gameStates.append(self.getGameState())
@@ -372,18 +374,17 @@ class Game:
 
         return row, col
 
-    def makeMove(self, row, col, pieceFrom, print=True):
+    def makeMove(self, row, col, pieceFrom, isPrint=True):
         """
         Takes in the pawn and the desired location and moves the pawn \n
         to that location
         """
         pieceFrom.row = row
         pieceFrom.col = col
-
         if (self.board.returnTile(row,col).piece!= None):
             takePiece = self.board.returnTile(row, col).piece
 
-            if (print==True):
+            if (isPrint==True):
                 print("Took piece at tile : ", int(row), " ", int(col))
             self.deletePiece(takePiece)
             return self.board.returnTile(row,col).piece
@@ -475,7 +476,6 @@ class Game:
                 print("p1 arch")
                 return 1
             if(player1.isMaster == True):
-               
                 dedSensei = False
                 break
         if(dedSensei == True):
