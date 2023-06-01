@@ -87,6 +87,24 @@ class testEnv(unittest.TestCase):
                                    ])
           self.assertTrue((expectedBoard == obs["Board"]).all())
           self.assertEqual(reward,100)
+     def test_win(self):
+          
+          envStub = DummyEnv()
+        
+          obs,info = envStub.reset(seed=None,options="10200010304424041434412345")
+
+          print("WIN TEST")
+          action = {"piece" : 2,"move" : 4,"card" : 1}
+          obs, reward, terminated, booL,info = envStub.step(action)
+          expectedBoard = np.array([
+                                   [1, 1, 1, 1, 1],
+                                   [0, 0, 0, 0, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [2, 2, 2, 2, 2]
+                                   ])
+          self.assertTrue((expectedBoard == obs["Board"]).all())
+          self.assertEqual(reward,-10)
 
 
 
