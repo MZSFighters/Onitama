@@ -39,6 +39,8 @@ class Board:
         self.arr = array
 
 
+    def returnArr(self, row, col):
+        return (self.arr[row][col].Value())
     def returnTile(self, i,j):
         '''Returns the tile at the position i,j on the board'''
         return(self.arr[i][j])
