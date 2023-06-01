@@ -2,15 +2,36 @@ from GameEngine.Board import Board
 from GameEngine.Player import Player
 from GameEngine.Card import Card
 from configparser import ConfigParser
+from datetime import *
+import os 
 import copy
 import random
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    format="{asctime} {levelname:<8} {message}",
-                    style='{',
-                    filename="%slog" %__file__[:-2],
-                    filemode='w')
+dateStamp = datetime.now().strftime('%Y-%m-%d  %H:%M:%S')
+pathDir = os.getcwd()
+folderDetailed = "/log_files_terminal/"
+folderSimple = "/simple_logs_terminal/"
+filenameSimp = str(pathDir) + folderSimple + str(dateStamp) + ".log"
+filenameDet = str(pathDir) + folderDetailed + str(dateStamp) + ".log"
+format='%(asctime)s - %(levelname)s - %(message)s'
+
+
+logger = logging.getLogger('game_logs')
+logger.setLevel(logging.DEBUG)
+
+simp_handler = logging.FileHandler(filenameSimp)
+simp_handler.setLevel(logging.INFO)
+simp_format = logging.Formatter(format)
+simp_handler.setFormatter(simp_format)
+
+det_handler = logging.FileHandler(filenameDet)
+det_handler.setLevel(logging.DEBUG)
+det_format = logging.Formatter(format)
+det_handler.setFormatter(det_format)
+
+logger.addHandler(simp_handler)
+logger.addHandler(det_handler)
 
 class Game:
 
@@ -168,8 +189,8 @@ class Game:
     def startGame(self, turn:str, player2Name, stopLoop=False):
         '''A function which either starts a player-controlled game or an AI-controlled game'''
 
-        logging.debug("Game Starting")
-        logging.debug(f"Turn count : {self.turnCount}")
+        logger.info("Game Starting")
+        logger.info(f"Turn count : {self.turnCount}")
 
         if (player2Name=="Player2"): # second player is another human player
             self._startGame(turn, self.playerMakeTurn, stopLoop)
@@ -193,12 +214,12 @@ class Game:
 
             if self.turnCount%2==0:
                     player, opp = self.player1, self.player2
-                    logging.debug(f"Player 1 colour : {player.colour}")
-                    logging.debug(f"Player 2 colour : {opp.colour}")
+                    logger.debug(f"Player 1 colour : {player.colour}")
+                    logger.debug(f"Player 2 colour : {opp.colour}")
             else:
                     player, opp = self.player2, self.player1
-                    logging.debug(f"Player 1 colour : {opp.colour}")
-                    logging.debug(f"Player 2 colour : {player.colour}")
+                    logger.debug(f"Player 1 colour : {opp.colour}")
+                    logger.debug(f"Player 2 colour : {player.colour}")
 
             while (True):
 
@@ -212,9 +233,9 @@ class Game:
 
                 if (playedTurn==True):
                     for i in range(len(player.pieces)):
-                        logging.debug(f"Current player pieces after move : piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
+                        logger.debug(f"Current player pieces after move : piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
                     for i in range(len(opp.pieces)):
-                        logging.debug(f"Waiting player pieces after move : piece {i} : position [{opp.pieces[i].row}][{opp.pieces[i].col}]")
+                        logger.debug(f"Waiting player pieces after move : piece {i} : position [{opp.pieces[i].row}][{opp.pieces[i].col}]")
                     break
 
             #did a player win?
@@ -229,7 +250,7 @@ class Game:
                 print("game over")
                 break
             self.turnCount= self.turnCount+1
-            logging.debug('\n'f"Current turn : {self.turnCount}")
+            logger.info('\n'f"Current turn : {self.turnCount}")
             self.gameStates.append(self.getGameState())
 
             if stopLoop==True:
@@ -239,24 +260,28 @@ class Game:
 
                 print("The current board is") # Show the current board
                 self.board.printBoard()
+                logger.info("Board : ")
+                logger.info(f"""[{self.board.returnArr(0, 0)}, {self.board.returnArr(0, 1)}, {self.board.returnArr(0, 2)}, {self.board.returnArr(0, 3)}, {self.board.returnArr(0, 4)}], [{self.board.returnArr(1, 0)}, {self.board.returnArr(1, 1)}, {self.board.returnArr(1, 1)}, {self.board.returnArr(1, 3)}, {self.board.returnArr(1, 4)}], [{self.board.returnArr(2, 0)}, {self.board.returnArr(2, 1)}, {self.board.returnArr(2, 1)}, {self.board.returnArr(2, 3)}, {self.board.returnArr(2, 4)}], [{self.board.returnArr(3, 0)}, {self.board.returnArr(3, 1)}, {self.board.returnArr(3, 1)}, {self.board.returnArr(3, 3)}, {self.board.returnArr(3, 4)}], [{self.board.returnArr(4, 0)}, {self.board.returnArr(4, 1)}, {self.board.returnArr(4, 1)}, {self.board.returnArr(4, 3)}, {self.board.returnArr(4, 4)}] """)
                 
                 print(" The neutral card is") # print neutral cards
                 print(self.neutralCard)
-                logging.debug(f"Neutral Card : {self.neutralCard.name}")
+                logger.info(f"Neutral card : {self.neutralCard.name}")
 
                 print("The opposition has the following cards") # print the opposition's cards
                 print(opp.cards[0], opp.cards[1])
-                logging.debug(f"Opponent card; number 0 : {opp.cards[0].name}")
-                logging.debug(f"Opponent card; number 1 : {opp.cards[1].name}")
+                logger.info(f"Opponent card; number 0 : {opp.cards[0].name}")
+                logger.info(f"Opponent card; number 1 : {opp.cards[1].name}")
 
                  #  Ask user which card they want and fetch it
                 selectedCardNum = self.getSelectedCardFromUser(self,player) 
-                logging.debug(f"Player Selected card number : {selectedCardNum}")
+                logger.info(f"Player Selected card number : {selectedCardNum}")
                 selectedCard = self.fetchSelectedCard(player,selectedCardNum)
-                logging.debug(f"Player selected card name : {selectedCard.name}")
+                logger.info(f"Player selected card name : {selectedCard.name}")
 
                 selectedPieceCoords = self.getSelectedPieceFromUser(self, player) # let user a chooses a piece
-                logging.debug(f"Player selected piece at coordinates : {selectedPieceCoords}")
+                for i in range(len(opp.pieces)):
+                    logger.debug(f"Waiting player pieces before move : piece {i} : position [{opp.pieces[i].row}][{opp.pieces[i].col}]")
+                logger.info(f"Player selected piece at coordinates : {selectedPieceCoords}")
                 selectedPiece = self.fetchSelectedPiece( player, selectedPieceCoords)
                 
                 possibleMoves = self.getPossibleMoves( player, selectedCard,selectedPiece,self.board) # let user see all possible moves
@@ -267,7 +292,7 @@ class Game:
 
                 elif (input("Would you like to play one of these moves (yes or no)")=="yes"): # player can decide not to play a move
                     move = self.playerPickMove(possibleMoves)
-                    logging.debug(f"Player selected move : ")
+                    logger.info(f"Player selected move : ")
                     self.makeMove(move[0], move[1], selectedPiece)
                     self.neutralCard, player.cards[player.cards.index(selectedCard) ] = selectedCard, self.neutralCard
                     return True
@@ -289,8 +314,8 @@ class Game:
 
             for card in player.cards:
                 print(card)
-            logging.debug(f"Player card; number 0 : {player.cards[0].name}")
-            logging.debug(f"Player card; number 1 : {player.cards[1].name}")
+            logger.info(f"Player card; number 0 : {player.cards[0].name}")
+            logger.info(f"Player card; number 1 : {player.cards[1].name}")
 
             selectedCard = int(input("Which card would you like to use? 0 or 1?"))
 
@@ -319,7 +344,7 @@ class Game:
             for piece in player.pieces:
                 print(piece.row, piece.col)
             for i in range(len(player.pieces)):
-                logging.debug(f"Current player pieces before move: piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
+                logger.debug(f"Current player pieces before move: piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
             #for i in range(len(.pieces))
 
             selectedPiece = input(" Which piece would you like to select?")
@@ -370,7 +395,7 @@ class Game:
         selectedMove = input(" Which move would you like to select?")
         row = int(selectedMove[0])
         col =int(selectedMove[2])
-        logging.debug(f"Player selected to move to position : [{row}][{col}]")
+        logger.debug(f"Player selected to move to position : [{row}][{col}]")
 
         return row, col
 
@@ -578,15 +603,32 @@ class Game:
     def easy(self, player, opp):
 
         card = self.fetchSelectedCard(player, random.randint(0, len(player.cards)-1))
+        logger.info("Board : ")
+        logger.info(f"""[{self.board.returnArr(0, 0)}, {self.board.returnArr(0, 1)}, {self.board.returnArr(0, 2)}, {self.board.returnArr(0, 3)}, {self.board.returnArr(0, 4)}], [{self.board.returnArr(1, 0)}, {self.board.returnArr(1, 1)}, {self.board.returnArr(1, 1)}, {self.board.returnArr(1, 3)}, {self.board.returnArr(1, 4)}], [{self.board.returnArr(2, 0)}, {self.board.returnArr(2, 1)}, {self.board.returnArr(2, 1)}, {self.board.returnArr(2, 3)}, {self.board.returnArr(2, 4)}], [{self.board.returnArr(3, 0)}, {self.board.returnArr(3, 1)}, {self.board.returnArr(3, 1)}, {self.board.returnArr(3, 3)}, {self.board.returnArr(3, 4)}], [{self.board.returnArr(4, 0)}, {self.board.returnArr(4, 1)}, {self.board.returnArr(4, 1)}, {self.board.returnArr(4, 3)}, {self.board.returnArr(4, 4)}] """)
+        logger.info(f"Neutral card : {self.neutralCard.name}")
+        logger.info(f"Opponent (Player) cards : card 0 : {opp.cards[0].name} ; card 1 : {opp.cards[1].name}")
+        logger.info(f"AI card number 0 : {player.cards[0].name}")
+        logger.info(f"AI card number 1 : {player.cards[1].name}")
+
+        for i in range(len(player.pieces)):
+            logger.debug(f"AI pieces before move : piece {i} : position [{player.pieces[i].row}][{player.pieces[i].col}]")
+
+        for i in range(len(opp.pieces)):
+            logger.debug(f"Opponent (Player) pieces before move : piece {i} : position [{opp.pieces[i].row}][{opp.pieces[i].col}]")
+        logger.info(f"AI selected card : {card.name}")
         piece = self.fetchSelectedPieceFromPlayerPieces(player, random.randint(0, len(player.pieces)-1))
+        logger.info(f"AI selected piece at position : [{piece.row}][{piece.col}]")
         moves = self.getPossibleMoves(player, card, piece, self.board, False)
 
         if (len(moves)==0):
             return self.easy(player, opp)
 
         move = moves[random.randint(0, len(moves)-1)]
+        logger.info(f"AI selected move : {move}")
         self.makeMove(move[0], move[1], piece)
         self.neutralCard, player.cards[player.cards.index(card) ] = card, self.neutralCard
+        logger.debug(f"Neutral card after AI move : {self.neutralCard.name}")
+        logger.debug(f"AI cards after move : card 0 : {player.cards[0].name} card 1 : {player.cards[1].name}")
         print("Easy AI makes an incredible move!")
         return True
 
