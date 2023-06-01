@@ -426,6 +426,10 @@ class Game:
 
         grid_img = pygame.image.load("PygameFiles/NewEngine/images/"+cardName+".jpg")
         grid_img = pygame.transform.scale(grid_img, (card_width/2, card_height-57)).convert_alpha()
+        if y == 190:
+            copy_img = grid_img.copy()
+            img_with_flip = pygame.transform.flip(copy_img, True, False)
+            grid_img = pygame.transform.flip(img_with_flip, False, True)
         self.display.blit(img, (x,y-35))
         self.display.blit(grid_img, (x + card_width / 4, y+10))
         self.draw_text(cardName, 25, x + card_width / 2, y-10, WHITE, "center")
