@@ -1,0 +1,11 @@
+2023-06-01 22:07:26,732 - INFO - Game Starting
+2023-06-01 22:07:26,732 - INFO - Turn count : 0
+2023-06-01 22:07:26,732 - INFO - Board : 
+2023-06-01 22:07:26,732 - INFO - [1, 1, 1, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [2, 2, 2, 2, 2] 
+2023-06-01 22:07:26,733 - INFO - Neutral card : Crane
+2023-06-01 22:07:26,735 - INFO - Opponent card; number 0 : Dragon
+2023-06-01 22:07:26,735 - INFO - Opponent card; number 1 : Monkey
+2023-06-01 22:07:26,736 - INFO - Player card; number 0 : Cobra
+2023-06-01 22:07:26,737 - INFO - Player card; number 1 : Elephant
+2023-06-01 22:07:28,810 - INFO - Player Selected card number : 0
+2023-06-01 22:07:28,811 - INFO - Player selected card name : Cobra

@@ -8,7 +8,7 @@ import copy
 import random
 import logging
 
-dateStamp = datetime.now().strftime('%Y-%m-%d  %H:%M:%S')
+dateStamp = datetime.now().strftime('%Y-%m-%d  %H-%M-%S')
 pathDir = os.getcwd()
 folderDetailed = "/log_files_terminal/"
 folderSimple = "/simple_logs_terminal/"
