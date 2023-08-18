@@ -91,9 +91,9 @@ To do:
 
 
 ## Acknowledgements
-- This project was inspired by Branden Ingram
+- This project was inspired by Branden Ingram.
 - This project was based on the game of Onitama.
-- Many thanks to Branden and the entire team
+- Many thanks to Branden and the entire team of Big Theta.
 
 
 ## Contact
