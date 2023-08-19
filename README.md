@@ -39,9 +39,8 @@ of the game (state based or image based), and should integrate with OpenAI gym.
 
 
 ## General Information
-- Provide general information about your project here.
-- What problem does it (intend to) solve? 
-- What is the purpose of your project? The purpose of our project was to create 
+- Big Theta developed a japanese board game called Onitama. We are also in the process of making a fully functioning AI learning environment using Gym AI in the next semester. This game would not just help one play the challenging game of onitama but also train an AI on the environment.
+- What is the purpose of your project? The purpose of our project was to create the game of Onitama and a reinforcement learning environment in which anyone can train their agents to become better at the game of Onitama. It is very mcuh like chess and just like chess, we want to train some hard-to-beat onitama agents.
 - Why did you undertake it? It was a project undertaken as part of the Softwarre Design module in Computer Science.
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
